@@ -2,52 +2,54 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
-from .models import Book
+from .models import Lote
 
-class BookForm(ModelForm):
+class LoteForm(ModelForm):
     class Meta:
-        model = Book
-        fields = ['name', 'pages']
+        model = Lote
+        fields = ['name', 'summary', 'qty',
+                  'category', 'condition', 'min_value',
+                  'opening_date']
 
 @login_required
-def book_list(request, template_name='leilao_fbv_user/book_list.html'):
+def lote_list(request, template_name='leilao_fbv_user/lote_list.html'):
     if request.user.is_superuser:
-        book = Book.objects.all()
+        lote = Lote.objects.all()
     else:
-        book = Book.objects.filter(user=request.user)
+        lote = Lote.objects.filter(user=request.user)
     data = {}
-    data['object_list'] = book
+    data['object_list'] = lote
     return render(request, template_name, data)
 
 @login_required
-def book_create(request, template_name='leilao_fbv_user/book_form.html'):
-    form = BookForm(request.POST or None)
+def lote_create(request, template_name='leilao_fbv_user/lote_form.html'):
+    form = LoteForm(request.POST or None)
     if form.is_valid():
-        book = form.save(commit=False)
-        book.user = request.user
-        book.save()
-        return redirect('leilao_fbv_user:book_list')
+        lote = form.save(commit=False)
+        lote.user = request.user
+        lote.save()
+        return redirect('leilao_fbv_user:lote_list')
     return render(request, template_name, {'form':form})
 
 @login_required
-def book_update(request, pk, template_name='leilao_fbv_user/book_form.html'):
+def lote_update(request, pk, template_name='leilao_fbv_user/lote_form.html'):
     if request.user.is_superuser:
-        book= get_object_or_404(Book, pk=pk)
+        lote= get_object_or_404(Lote, pk=pk)
     else:
-        book= get_object_or_404(Book, pk=pk, user=request.user)
-    form = BookForm(request.POST or None, instance=book)
+        lote= get_object_or_404(Lote, pk=pk, user=request.user)
+    form = LoteForm(request.POST or None, instance=lote)
     if form.is_valid():
         form.save()
-        return redirect('leilao_fbv_user:book_list')
+        return redirect('leilao_fbv_user:lote_list')
     return render(request, template_name, {'form':form})
 
 @login_required
-def book_delete(request, pk, template_name='leilao_fbv_user/book_confirm_delete.html'):
+def lote_delete(request, pk, template_name='leilao_fbv_user/lote_confirm_delete.html'):
     if request.user.is_superuser:
-        book= get_object_or_404(Book, pk=pk)
+        lote= get_object_or_404(Lote, pk=pk)
     else:
-        book= get_object_or_404(Book, pk=pk, user=request.user)
+        lote= get_object_or_404(Lote, pk=pk, user=request.user)
     if request.method=='POST':
-        book.delete()
-        return redirect('leilao_fbv_user:book_list')
-    return render(request, template_name, {'object':book})
+        lote.delete()
+        return redirect('leilao_fbv_user:lote_list')
+    return render(request, template_name, {'object':lote})

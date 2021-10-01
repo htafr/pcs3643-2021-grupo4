@@ -1,37 +1,39 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
-from .models import Book
+from .models import Lote
 
-class BookForm(ModelForm):
+class LoteForm(ModelForm):
     class Meta:
-        model = Book
-        fields = ['name', 'pages']
+        model = Lote
+        fields = ['name', 'summary', 'qty',
+                  'category', 'condition', 'min_value',
+                  'opening_date']
 
-def book_list(request, template_name='leilao_fbv/book_list.html'):
-    book = Book.objects.all()
+def lote_list(request, template_name='leilao_fbv/lote_list.html'):
+    lote = Lote.objects.all()
     data = {}
-    data['object_list'] = book
+    data['object_list'] = lote
     return render(request, template_name, data)
 
-def book_create(request, template_name='leilao_fbv/book_form.html'):
-    form = BookForm(request.POST or None)
+def lote_create(request, template_name='leilao_fbv/lote_form.html'):
+    form = LoteForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect('leilao_fbv:book_list')
+        return redirect('leilao_fbv:lote_list')
     return render(request, template_name, {'form':form})
 
-def book_update(request, pk, template_name='leilao_fbv/book_form.html'):
-    book= get_object_or_404(Book, pk=pk)
-    form = BookForm(request.POST or None, instance=book)
+def lote_update(request, pk, template_name='leilao_fbv/lote_form.html'):
+    lote= get_object_or_404(Lote, pk=pk)
+    form = LoteForm(request.POST or None, instance=lote)
     if form.is_valid():
         form.save()
-        return redirect('leilao_fbv:book_list')
+        return redirect('leilao_fbv:lote_list')
     return render(request, template_name, {'form':form})
 
-def book_delete(request, pk, template_name='leilao_fbv/book_confirm_delete.html'):
-    book= get_object_or_404(Book, pk=pk)    
+def lote_delete(request, pk, template_name='leilao_fbv/lote_confirm_delete.html'):
+    lote= get_object_or_404(Lote, pk=pk)    
     if request.method=='POST':
-        book.delete()
-        return redirect('leilao_fbv:book_list')
-    return render(request, template_name, {'object':book})
+        lote.delete()
+        return redirect('leilao_fbv:lote_list')
+    return render(request, template_name, {'object':lote})

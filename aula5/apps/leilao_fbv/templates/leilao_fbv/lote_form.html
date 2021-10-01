@@ -2,11 +2,11 @@
 
 {% block content %}
 
-<h2><a href="{% url 'books_fbv:book_list' %}">Books FBV</a>: Edit</h2>
+<h2><a href="{% url 'leilao_fbv:lote_list' %}">Lotes FBV</a>: Edit</h2>
 
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Cadastrar" />
 </form>
 
 {% endblock %}
