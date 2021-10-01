@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'theme',
-    'books_fbv',
-    'books_fbv_user',    
+    'leilao_fbv',
+    'leilao_fbv_user',    
 ]
 
 MIDDLEWARE = [
@@ -127,5 +127,5 @@ STATICFILES_DIRS = [
 ]
 #LOGIN_URL = '/accounts/login/'
 
-LOGIN_REDIRECT_URL =  '/books_fbv_user/'
+LOGIN_REDIRECT_URL =  '/leilao_fbv_user/'
 LOGOUT_REDIRECT_URL = '/'
