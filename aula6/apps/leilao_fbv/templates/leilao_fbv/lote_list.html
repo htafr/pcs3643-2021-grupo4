@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2><a href="{% url 'leilao_fbv:lote_list' %}">Lotes disponíveis em leilão</a></h2>
+
+<ul>
+    {% for lote in object_list %}
+    <li>
+        <span>
+            {{ lote.name }}<br>
+            Quantidade de Elementos: {{ lote.qty }}<br>
+            Descrição: {{ lote.summary }}<br>
+            Categoria: {{ lote.category }}<br>
+            Condição: {{ lote.condition }}<br>
+            Valor Mínimo: R${{ lote.min_value }}<br>
+            Data de Abertura: {{ lote.opening_date }}<br> 
+            <!-- Os limitados vão ajustar esse botão para um usuário que ainda não está logado/cadastrado -->
+            <!-- <a href="{% url 'leilao_fbv_user:lote_delete' lote.id %}">Dar Lance</a> -->
+        </span>
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- <a href="{% url 'leilao_fbv:lote_new' %}">New</a> -->
+
+{% endblock %}
