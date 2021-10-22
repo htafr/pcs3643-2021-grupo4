@@ -38,7 +38,7 @@ pip install -r requirements.txt
 
 ## Aula 8 - 22/10/2021
 
-Fez-se os scripts de testes da [classe Lote]() e da [classe Vendedor](). Alteramos a data de abertura da classe Lote para três escolhas do tipo drop down - mês de abertura, dia de abertura e ano de abertura.
+Fez-se os scripts de testes da [classe Lote](https://github.com/offreitas/pcs3643-2021-grupo4/blob/implementacao/leilaoOnline/apps/leilao_fbv_user/tests/test_models.py) e da [classe Vendedor](https://github.com/offreitas/pcs3643-2021-grupo4/blob/implementacao/leilaoOnline/apps/leilao_fbv/tests/test_models.py). Alteramos a data de abertura da classe Lote para três escolhas do tipo drop down - mês de abertura, dia de abertura e ano de abertura.
 
 ---
 
