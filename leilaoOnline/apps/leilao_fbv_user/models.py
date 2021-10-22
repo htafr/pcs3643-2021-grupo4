@@ -36,21 +36,77 @@ BANK_CHOICES = (
     ('Banco Inter S.A.', 'Banco Inter S.A.'),
 )
 
+MONTH_CHOICES = (
+    ('Janeiro', 'Janeiro'),
+    ('Fevereiro', 'Fevereiro'),
+    ('Março', 'Março'),
+    ('Abril', 'Abril'),
+    ('Maio', 'Maio'),
+    ('Junho', 'Junho'),
+    ('Julho', 'Julho'),
+    ('Agosto', 'Agosto'),
+    ('Setembro', 'Setembro'),
+    ('Outubro', 'Outubro'),
+    ('Novembro', 'Novembro'),
+    ('Dezembro', 'Dezembro'),
+)
+DAY_CHOICES = (
+    ('1', '1'),
+    ('2', '2'),
+    ('3', '3'),
+    ('4', '4'),
+    ('5', '5'),
+    ('6', '6'),
+    ('7', '7'),
+    ('8', '8'),
+    ('9', '9'),
+    ('10', '10'),
+    ('11', '11'),
+    ('12', '12'),
+    ('13', '13'),
+    ('14', '14'),
+    ('15', '15'),
+    ('16', '16'),
+    ('17', '17'),
+    ('18', '18'),
+    ('19', '19'),
+    ('20', '20'),
+    ('21', '21'),
+    ('22', '22'),
+    ('23', '23'),
+    ('24', '24'),
+    ('25', '25'),
+    ('26', '26'),
+    ('27', '27'),
+    ('28', '28'),
+    ('29', '29'),
+    ('30', '30'),
+    ('31', '31'),
+)
+
+YEAR_CHOICES = (
+    ('2021', '2021'),
+    ('2022', '2022'),
+)
+
 ####################################################################################
 ### Lote ###########################################################################
 ####################################################################################
 
 class Lote(models.Model):
+    
     name = models.CharField(max_length=200, default='')
     summary = models.CharField(max_length=512, default='')
     qty = models.IntegerField(default=1)
     category = models.CharField(max_length=64, choices=CATEGORY_CHOICES, default='')
     condition = models.CharField(max_length=64, choices=CONDITION_CHOICES, default='')
     min_value = models.DecimalField(default=10.00, decimal_places=2, max_digits=16)
-    opening_date = models.DateField(default=date.today)
+    opening_month = models.CharField(max_length=16, choices=MONTH_CHOICES, default='')
+    opening_day = models.CharField(max_length=2, choices=DAY_CHOICES, default=1)
+    opening_year = models.CharField(max_length=4, choices=YEAR_CHOICES, default=2021)
     # Como atriubiu user sem usar o campo de formulario???????
     user = models.CharField(max_length=256, editable=True, default='')
-
+    
     def __str__(self):
         return self.name
 
@@ -65,7 +121,8 @@ class LoteForm(ModelForm):
         model = Lote
         fields = ['name', 'summary', 'qty',
                   'category', 'condition', 'min_value',
-                  'opening_date', 'user']
+                  'opening_month', 'opening_day', 'opening_year',
+                  'user']
 
 class LoteDAO(models.Model):
     

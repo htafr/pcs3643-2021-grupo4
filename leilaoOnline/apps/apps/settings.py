@@ -93,10 +93,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'leilaoOnline',
-        'USER': 'offreitas',
+        'USER': 'kenji',
         'PASSWORD': 'pcs3643labengsoft',
         'HOST': 'localhost',
         'PORT': '3306',
+        'TEST':{
+            'NAME': 'test_leilaoOnline',
+        },
     }
 }
 

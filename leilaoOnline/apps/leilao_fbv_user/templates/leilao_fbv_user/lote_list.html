@@ -15,7 +15,9 @@
             Categoria: {{ lote.category }}<br>
             Condição: {{ lote.condition }}<br>
             Valor Mínimo: R${{ lote.min_value }}<br>
-            Data de Abertura: {{ lote.opening_date }}<br> 
+            Data de Abertura: {{ lote.opening_day }} de
+                              {{ lote.opening_month }} de
+                              {{ lote.opening_year }}<br> 
             <a href="{% url 'leilao_fbv_user:lote_edit' lote.id %}">Editar</a>
             <a href="{% url 'leilao_fbv_user:lote_delete' lote.id %}">Deletar</a>
             </span>
