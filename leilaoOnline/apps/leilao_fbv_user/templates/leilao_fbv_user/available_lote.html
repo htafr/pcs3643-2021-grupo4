@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+    <ul>
+        {% for lote in object_list %}
+        <li>
+            <span>
+            {{ lote.name }}<br>
+            Quantidade de Elementos: {{ lote.qty }}<br>
+            Descrição: {{ lote.summary }}<br>
+            Categoria: {{ lote.category }}<br>
+            Condição: {{ lote.condition }}<br>
+            Valor Mínimo: R${{ lote.min_value }}<br>
+            Data de Abertura: {{ lote.opening_date }}<br> 
+            </span>
+        </li>
+        <br>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

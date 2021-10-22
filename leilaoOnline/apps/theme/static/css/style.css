@@ -1,0 +1,82 @@
+ body {
+    font-family: Arial, Helvetica, sans-serif;
+    width:800px;
+    margin:auto;
+}
+p,li,label, #tcolor{
+    color: rgb(181, 245, 236);
+}
+a { 
+    color:#FFF;
+    text-decoration:none;
+}
+
+a:hover {  
+    text-decoration:underline;
+}
+
+#intro_fim {
+    /* background-image: url(../images/background_auction.jpg); */
+    color: #000;
+}
+
+#intro_comprador{
+    color: #FFF;
+}
+
+#intro_vendedor{
+    color: #FFF;
+}
+
+#introducao{
+    color: #000;
+}
+
+/* #img_top{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+} */
+
+#user {
+    float:right; 
+    color: rgb(181, 245, 236);
+}
+
+#login {
+    float:right; 
+    color: rgb(181, 245, 236);
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+
+#login_form {
+    margin: 50px;
+    padding-left: 220px;
+}
+
+body {
+    background-color: dimgray;
+    margin: auto;
+}
+
+#home_link {
+    margin: auto;
+    text-align: center;
+}
+
+#cadastro, #user {
+    text-align: right;
+}
+
+#login_slash {
+    color: #FFF;
+    font-size: large;
+}
+
+#user_page {
+    margin:  10px;
+    align-items: center;
+}
