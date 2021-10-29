@@ -22,12 +22,18 @@ urlpatterns = [
 	# path('delete/<int:pk>/', views.delete_lote, name='lote_delete'),
 
 	##############################################################################
+	### Perfil ###################################################################
+	##############################################################################
+
+	path('select/', views.select_perfil, name='select_perfil'),
+
+	##############################################################################
 	### Vendedor #################################################################
 	##############################################################################
 
 	# path('', views.list_vendedor, name='vendedor_list'),
-	path('user_page/', views.redirect_user, name='redirect_user'),
-	path('signup/', views.create_vendedor, name='vendedor_new'),
+	path('vendedor_page/', views.redirect_vendedor, name='redirect_vendedor'),
+	path('signup_vendedor/', views.create_vendedor, name='vendedor_new'),
 	#path('/', views.create_vendedor, name='vendedor_new'),
 	# path('edit/<int:pk>/', views.update_vendedor, name='vendedor_edit'),
 	# path('delete/<int:pk>/', views.delete_vendedor, name='vendedor_delete'),
@@ -37,7 +43,8 @@ urlpatterns = [
 	##############################################################################
 
 	# path('', views.list_comprador, name='comprador_list'),
-	# path('new/', views.create_comprador, name='comprador_new'),
+	path('comprador_page/', views.redirect_comprador, name='redirect_comprador'),
+	path('signup_comprador/', views.create_comprador, name='comprador_new'),
 	# path('edit/<int:pk>/', views.update_comprador, name='comprador_edit'),
 	# path('delete/<int:pk>/', views.delete_comprador, name='comprador_delete'),
 ]

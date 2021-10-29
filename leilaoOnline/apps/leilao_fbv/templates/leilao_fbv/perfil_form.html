@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 id="tcolor">Escolha seu perfil</h2>
+
+<a href="{% url 'leilao_fbv:comprador_new' %}"> Comprador </a><br>
+<a href="{% url 'leilao_fbv:vendedor_new' %}"> Vendedor </a>
+
+{% endblock %}

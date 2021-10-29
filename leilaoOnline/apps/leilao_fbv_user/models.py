@@ -255,20 +255,21 @@ class VendedorDAO(models.Model):
 
 class Comprador(models.Model):
     name = models.CharField(max_length=256)
+    username = models.CharField(max_length=16, default='')
+    email = models.CharField(max_length=256, default='')
+    password = models.CharField(max_length=16, default='')
     address = models.CharField(max_length=256)
     birth_date = models.DateField(default=date.today)
     rg = models.CharField(max_length=9)
     cpf = models.CharField(max_length=11)
-    bank = models.CharField(max_length=64, choices=BANK_CHOICES, default='')
-    agency = models.IntegerField(default=1)
-    account_number = models.CharField(max_length=64)
+    card_number = models.CharField(max_length=16, default='')
     
 class CompradorForm(ModelForm):
     class Meta:
         model = Comprador
-        fields = ['name', 'address', 'birth_date',
-                  'rg', 'cpf', 'bank', 'agency',
-                  'account_number']
+        fields = ['name', 'username', 'email', 'password',
+                  'address', 'birth_date', 'rg',
+                  'cpf', 'card_number']
 
 class CompradorDAO(models.Model):
 
@@ -290,3 +291,20 @@ class CompradorDAO(models.Model):
     def comprador_delete(request, pk, template_name):
         comprador = get_object_or_404(Comprador, pk=pk)
         return comprador
+
+####################################################################################
+### WIP: Relatorio #################################################################
+####################################################################################
+
+# class Relatorio(models.Model):
+#     leilao = models.IntegerField(default=1)
+#     lote = models.CharField(max_length=256)
+#     vendas = models.CharField(max_length=256)
+#     receita = models.CharField(max_length=256)
+#     custos = models.CharField(max_length=256)
+#     lucro = models.CharField(max_length=256)
+#     periodo = models.DateField(default=date.today)
+#     vendedor = models.CharField(max_length=256)
+#     comprador = models.CharField(max_length=256)
+#     lances = models.CharField(max_length=256)
+#     vencedor = models.CharField(max_length=256)
