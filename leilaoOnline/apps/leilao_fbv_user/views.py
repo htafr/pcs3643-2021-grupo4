@@ -19,6 +19,7 @@ def list_available(request, template_name='leilao_fbv_user/available_lote.html')
 def create_lote(request, template_name='leilao_fbv_user/lote_form.html'):
     form = LoteDAO.lote_create(request=request, template_name=template_name)
     if form.is_valid():
+        form.instance.user = request.user
         lote = form.save(commit=False)
         lote.save()
         return redirect('leilao_fbv_user:lote_list')
@@ -44,7 +45,7 @@ def delete_lote(request, pk, template_name='leilao_fbv_user/lote_confirm_delete.
 ### Vendedor #######################################################################
 ####################################################################################
 @login_required
-def redirect_user(request, template_name='leilao_fbv_user/vendedor_page.html'):
+def redirect_vendedor(request, template_name='leilao_fbv_user/vendedor_page.html'):
     return render(request, 'leilao_fbv_user/vendedor_page.html')
 
 def list_vendedor(request, template_name='leilao_fbv/vendedor_list.html'):
@@ -77,7 +78,7 @@ def delete_vendedor(request, pk, template_name='leilao_fbv/vendedor_confirm_dele
 ### Comprador ######################################################################
 ####################################################################################
 @login_required
-def redirect_user(request, template_name='leilao_fbv_user/comprador_page.html'):
+def redirect_comprador(request, template_name='leilao_fbv_user/comprador_page.html'):
     return render(request, 'leilao_fbv_user/comprador_page.html')
 
 # def list_comprador(request, template_name='leilao_fbv/comprador_list.html'):

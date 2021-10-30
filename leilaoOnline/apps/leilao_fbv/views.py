@@ -55,8 +55,8 @@ def create_comprador(request, template_name='leilao_fbv/comprador_form.html'):
         return redirect('/')
     return render(request, template_name, {'form':form})
 
-def redirect_comprador(request, template_name='leilao_fbv_user/comprador_page.html'):
-    pass
+# def redirect_comprador(request, template_name='leilao_fbv_user/comprador_page.html'):
+#     pass
 
 ####################################################################################
 ### Vendedor #######################################################################
@@ -75,8 +75,8 @@ def create_vendedor(request, template_name='leilao_fbv/vendedor_form.html'):
         return redirect('/')
     return render(request, template_name, {'form':form})
 
-def redirect_vendedor(request, template_name='leilao_fbv_user/vendedor_page.html'):
-    pass
+# def redirect_vendedor(request, template_name='leilao_fbv_user/vendedor_page.html'):
+#     pass
 
 # def update_vendedor(request, pk, template_name='leilao_fbv/vendedor_form.html'):
 #     form = VendedorDAO.vendedor_update(request, pk=pk, template_name=template_name)

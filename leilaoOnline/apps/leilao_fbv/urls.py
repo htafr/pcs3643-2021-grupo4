@@ -32,7 +32,7 @@ urlpatterns = [
 	##############################################################################
 
 	# path('', views.list_vendedor, name='vendedor_list'),
-	path('vendedor_page/', views.redirect_vendedor, name='redirect_vendedor'),
+	# path('user_page/', views.redirect_vendedor, name='redirect_vendedor'),
 	path('signup_vendedor/', views.create_vendedor, name='vendedor_new'),
 	#path('/', views.create_vendedor, name='vendedor_new'),
 	# path('edit/<int:pk>/', views.update_vendedor, name='vendedor_edit'),
@@ -43,7 +43,7 @@ urlpatterns = [
 	##############################################################################
 
 	# path('', views.list_comprador, name='comprador_list'),
-	path('comprador_page/', views.redirect_comprador, name='redirect_comprador'),
+	# path('user_page/', views.redirect_comprador, name='redirect_comprador'),
 	path('signup_comprador/', views.create_comprador, name='comprador_new'),
 	# path('edit/<int:pk>/', views.update_comprador, name='comprador_edit'),
 	# path('delete/<int:pk>/', views.delete_comprador, name='comprador_delete'),
