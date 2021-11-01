@@ -18,19 +18,19 @@ p,li,label, #tcolor{
     padding: 0;
 }
 
-.header li {
+li {
     float: left;
 }
 
-.header li a, .drop-btn {
-    display: inline-block;
+/* Dropdown Menu */
+li a, .drop-btn {
+    display: block;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
-/* Dropdown Menu */
 .header li a:hover, .user:hover .drop-btn {
     background-color: tomato;
 }

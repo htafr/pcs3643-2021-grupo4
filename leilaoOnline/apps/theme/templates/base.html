@@ -12,23 +12,23 @@
         <ul>
             <li><a href="/">Leilão Online - BID</a></li>
             {% if user.is_authenticated %}
-            <li>
+            <li style="float: right;">
                 <div id='logout'>
                     <a style="float: right" href="{% url 'logout' %}">Logout</a>
                 </div>
             </li>
-            <li>
+            <li style="float: right;">
                 <div class="user">
-                    <a style="float: right" href="{% url 'leilao_fbv_user:redirect_user' %}" class="drop-btn">Olá, {{ user }}</a>
-                    <div id="dropdown-content">
+                    <a href="{% url 'leilao_fbv_user:redirect_user' %}" class="drop-btn">Olá, {{ user }}</a>
+                    <div class="dropdown-content">
                         <a href="{% url 'leilao_fbv_user:lote_list' %}">Seus lotes</a>
                         <a href="{% url 'leilao_fbv_user:lote_new' %}">Novo lote</a>
                     </div>
                 </div>
             </li>
             {% else %}
-            <li><a style="float: right" href="{% url 'login' %}">Login</a></li>
-            <li><a style="float: right" href="{% url 'leilao_fbv:select_perfil' %}">Cadastrar</a><span id=login_slash></li>
+            <li style="float: right"><a href="{% url 'login' %}">Login</a></li>
+            <li style="float: right"><a href="{% url 'leilao_fbv:select_perfil' %}">Cadastrar</a><span id=login_slash></li>
             {% endif %}
         </ul>
     </div><!-- header -->
