@@ -9,6 +9,7 @@ p,li,label, #tcolor{
     color: rgb(181, 245, 236);
 }
 
+/* Navigation bar */
 .header ul {
     list-style-type: none;
     overflow: hidden;
@@ -30,12 +31,12 @@ p,li,label, #tcolor{
 }
 
 /* Dropdown Menu */
-.user:hover .dropdown-content {
-    display: block;
-}
-
 .header li a:hover, .user:hover .drop-btn {
     background-color: tomato;
+}
+
+.header li.user {
+    display: inline-block;
 }
 
 .dropdown-content {

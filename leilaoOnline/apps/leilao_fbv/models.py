@@ -1,3 +1,4 @@
+from typing import Tuple
 from django.db import models
 from django.urls import reverse
 from apps import settings
@@ -43,16 +44,16 @@ BANK_CHOICES = (
 
 class Vendedor(models.Model):
     name = models.CharField(max_length=256)
-    username = models.CharField(max_length=16, default='')
-    email = models.CharField(max_length=256, default='')
+    username = models.CharField(max_length=16, default='', unique=True)
+    email = models.CharField(max_length=256, default='', unique=True)
     password = models.CharField(max_length=16, default='')
     address = models.CharField(max_length=256)
     birth_date = models.DateField(default=date.today)
-    rg = models.CharField(max_length=9)
-    cpf = models.CharField(max_length=11)
+    rg = models.CharField(max_length=9, unique=True)
+    cpf = models.CharField(max_length=11, unique=True)
     bank = models.CharField(max_length=64, choices=BANK_CHOICES, default='')
     agency = models.IntegerField(default=1)
-    account_number = models.CharField(max_length=64)
+    account_number = models.CharField(max_length=64, unique=True)
     
 class VendedorForm(ModelForm):
     class Meta:
@@ -73,13 +74,13 @@ class VendedorDAO(models.Model):
 
 class Comprador(models.Model):
     name = models.CharField(max_length=256)
-    username = models.CharField(max_length=16, default='')
-    email = models.CharField(max_length=256, default='')
+    username = models.CharField(max_length=16, default='', unique=True)
+    email = models.CharField(max_length=256, default='', unique=True)
     password = models.CharField(max_length=16, default='')
     address = models.CharField(max_length=256)
     birth_date = models.DateField(default=date.today)
-    rg = models.CharField(max_length=9)
-    cpf = models.CharField(max_length=11)
+    rg = models.CharField(max_length=9, unique=True)
+    cpf = models.CharField(max_length=11, unique=True)
     card_number = models.CharField(max_length=16, default='')
     
 class CompradorForm(ModelForm):

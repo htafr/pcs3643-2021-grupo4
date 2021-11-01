@@ -103,7 +103,7 @@ class Lote(models.Model):
     opening_month = models.CharField(max_length=16, choices=MONTH_CHOICES, default='')
     opening_day = models.CharField(max_length=2, choices=DAY_CHOICES, default=1)
     opening_year = models.CharField(max_length=4, choices=YEAR_CHOICES, default=2021)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
     
     def __str__(self):
         return self.name
