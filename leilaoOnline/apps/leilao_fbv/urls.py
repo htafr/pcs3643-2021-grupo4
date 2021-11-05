@@ -47,4 +47,10 @@ urlpatterns = [
 	path('signup_comprador/', views.create_comprador, name='comprador_new'),
 	# path('edit/<int:pk>/', views.update_comprador, name='comprador_edit'),
 	# path('delete/<int:pk>/', views.delete_comprador, name='comprador_delete'),
+
+	##############################################################################
+	### Leiloeiro ################################################################
+	##############################################################################
+
+	path('signup_leiloeiro/', views.create_leiloeiro, name='leiloeiro_new'),
 ]

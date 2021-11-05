@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 
-from .models import Vendedor, VendedorDAO, Comprador, CompradorDAO
+from .models import Vendedor, VendedorDAO, Comprador, CompradorDAO, LeiloeiroDAO
 
 # ####################################################################################
 # ### Lote ###########################################################################
@@ -92,3 +92,16 @@ def create_vendedor(request, template_name='leilao_fbv/vendedor_form.html'):
 #         vendedor.delete()
 #         return redirect('leilao_fbv:vendedor_list')
 #     return render(request, template_name, {'object':vendedor})
+
+####################################################################################
+### Leiloeiro  #####################################################################
+####################################################################################
+
+def create_leiloeiro(request, template_name='leilao_fbv/leiloeiro_form.html'):
+    form = LeiloeiroDAO.leiloeiro_create(request, template_name=template_name)
+    if form.is_valid():
+        form.save()
+        user = User.objects.create_user(form.data['username'], form.data['email'], form.data['password'])
+        user.save()
+        return redirect('/')
+    return render(request, template_name, {'form':form})

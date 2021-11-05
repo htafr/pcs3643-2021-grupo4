@@ -94,4 +94,35 @@ class CompradorDAO(models.Model):
     def comprador_create(request, template_name):
         form = CompradorForm(request.POST or None)
         return form
+
+
+####################################################################################
+### Leiloeiro ######################################################################
+####################################################################################
         
+class Leiloeiro(models.Model):
+    name = models.CharField(max_length=256)
+    username = models.CharField(max_length=16, default='', unique=True)
+    email = models.CharField(max_length=256, default='', unique=True)
+    password = models.CharField(max_length=16, default='')
+    address = models.CharField(max_length=256)
+    birth_date = models.DateField(default=date.today)
+    rg = models.CharField(max_length=9)
+    cpf = models.CharField(max_length=11)
+    bank = models.CharField(max_length=64, choices=BANK_CHOICES, default='')
+    agency = models.IntegerField(default=1)
+    account_number = models.CharField(max_length=64)
+    salary = models.DecimalField(default=10, decimal_places=2, max_digits=8)
+    
+class LeiloeiroForm(ModelForm):
+    class Meta:
+        model = Leiloeiro
+        fields = ['name', 'username','password',
+                  'email','address', 'birth_date',
+                  'rg', 'cpf', 'bank', 'agency',
+                  'account_number', 'salary']
+
+class LeiloeiroDAO(models.Model):
+    def leiloeiro_create(request, template_name):
+        form = LeiloeiroForm(request.POST or None)
+        return form

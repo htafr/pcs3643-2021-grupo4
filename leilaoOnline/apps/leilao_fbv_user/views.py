@@ -5,7 +5,7 @@ from django.forms import ModelForm
 
 from django.contrib.auth.models import User
 
-from .models import Lote, LoteDAO, Vendedor, VendedorDAO, Comprador, CompradorDAO
+from .models import Lote, LoteDAO, Vendedor, VendedorDAO, Comprador, CompradorDAO, LeiloeiroDAO
 
 @login_required
 def list_lote(request, template_name='leilao_fbv_user/lote_list.html'):
@@ -53,6 +53,8 @@ def redirect_user(request):
     #print(current_user)
     bool_vendedor = VendedorDAO.vendedor_filter(request, current_user)
     bool_comprador = CompradorDAO.comprador_filter(request, current_user)
+    bool_leiloeiro = LeiloeiroDAO.leiloeiro_filter(request, current_user)
+
     if (bool_vendedor):
         #return render(request, 'leilao_fbv_user/vendedor_page.html')
         return redirect("leilao_fbv_user:vendedor_page")
@@ -60,6 +62,9 @@ def redirect_user(request):
     elif (bool_comprador):
         #return render(request, 'leilao_fbv_user/comprador_page.html')
         return redirect("leilao_fbv_user:comprador_page")
+    elif (bool_leiloeiro):
+        #return render(request, 'leilao_fbv_user/comprador_page.html')
+        return redirect("leilao_fbv_user:leiloeiro_page")
 
 
 ####################################################################################
@@ -133,3 +138,9 @@ def create_comprador(request, template_name='leilao_fbv/comprador_form.html'):
 #         comprador.delete()
 #         return redirect('leilao_fbv:comprador_list')
 #     return render(request, template_name, {'object':comprador})
+
+####################################################################################
+### Leiloeiro ######################################################################
+####################################################################################
+def redirect_leiloeiro(request, template_name='leilao_fbv_user/leiloeiro_page.html'):
+    return render(request, template_name)

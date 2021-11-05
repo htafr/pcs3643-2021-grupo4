@@ -48,4 +48,10 @@ urlpatterns = [
 	# path('edit/<int:pk>/', views.update_comprador, name='comprador_edit'),
 	##path('comprador_page/', views.redirect_comprador, name='redirect_user')
 	# path('delete/<int:pk>/', views.delete_comprador, name='comprador_delete'),
+
+	##############################################################################
+	### Leiloeiro ################################################################
+	##############################################################################
+
+	path('leiloeiro_page/', views.redirect_leiloeiro, name='leiloeiro_page'),
 ]

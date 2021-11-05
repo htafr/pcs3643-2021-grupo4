@@ -9,6 +9,7 @@ from django.forms import ModelForm
 # import para fazer a comparacao com as tabelas fora de fbv_user (onde estao os cadastros)
 from leilao_fbv.models import Vendedor as Vendedor_fbv
 from leilao_fbv.models import Comprador as Comprador_fbv
+from leilao_fbv.models import Leiloeiro as Leiloeiro_fbv
 
 CATEGORY_CHOICES = (
     ('Automotivos e Peças','Automotivos e Peças'),
@@ -169,6 +170,9 @@ class LoteDAO(models.Model):
 
 class Leiloeiro(models.Model):
     name = models.CharField(max_length=256)
+    username = models.CharField(max_length=16, default='', unique=True)
+    email = models.CharField(max_length=256, default='', unique=True)
+    password = models.CharField(max_length=16, default='')
     address = models.CharField(max_length=256)
     birth_date = models.DateField(default=date.today)
     rg = models.CharField(max_length=9)
@@ -181,7 +185,8 @@ class Leiloeiro(models.Model):
 class LeiloeiroForm(ModelForm):
     class Meta:
         model = Leiloeiro
-        fields = ['name', 'address', 'birth_date',
+        fields = ['name', 'username','password',
+                  'email','address', 'birth_date',
                   'rg', 'cpf', 'bank', 'agency',
                   'account_number', 'salary']
 
@@ -204,6 +209,11 @@ class LeiloeiroDAO(models.Model):
     def leiloeiro_delete(request, pk, template_name):
         leiloeiro = get_object_or_404(Leiloeiro, pk=pk)
         return leiloeiro
+
+    def leiloeiro_filter(request, username):
+        bool_user = Leiloeiro_fbv.objects.filter(username = username).exists()
+        print("Entrou Username Leiloeiro filter", username, bool_user)
+        return bool_user
 
 ####################################################################################
 ### Vendedor #######################################################################
