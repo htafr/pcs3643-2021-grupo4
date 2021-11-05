@@ -9,10 +9,13 @@ A organização das 4 etapas (análise, projeto, implementação e teste) serão
 ---
 
 ## Instruções para execução do projeto em seu computador local.
+
 Para o funcionamento correto do projeto, será necessário fazer a instalação de algumas bibliotecas:
 
 A instalação pode ser realizada de duas formas:
+
 ### **Forma 1**:
+
 - Biblioteca do Framework Django:
 ```
 pip install django
@@ -25,6 +28,7 @@ pip install django_extensions
 ```
 pip install pymysql
 ```
+
 ### **Forma 2**:
 
 Executar a instalação via arquivo *requirements.txt*. Nesse arquivo existem as três bibliotecas necessárias para execução do projeto. Para fazer a instalação execute:
@@ -33,6 +37,7 @@ Executar a instalação via arquivo *requirements.txt*. Nesse arquivo existem as
 pip install -r requirements.txt
 ```
 
+Também é necessário criar um banco de dados ```leilaoOnline``` o qual é acessado com o usuário ```kenji``` e senha ```pcs3643labengsoft``` que está no arquivo ```settings.py```.
 
 ---
 
