@@ -25,7 +25,7 @@ urlpatterns = [
 	### Login Usuario #############################################################
 	##############################################################################
 	path('user_page/', views.redirect_user, name='redirect_user'),
-	
+
 	##############################################################################
 	### Vendedor #################################################################
 	##############################################################################
@@ -43,6 +43,7 @@ urlpatterns = [
 
 	# path('', views.list_comprador, name='comprador_list'),
 	# path('new/', views.create_comprador, name='comprador_new'),
+	path('user_page/', views.redirect_comprador, name='redirect_user'),
 	# path('edit/<int:pk>/', views.update_comprador, name='comprador_edit'),
 	##path('comprador_page/', views.redirect_comprador, name='redirect_user')
 	# path('delete/<int:pk>/', views.delete_comprador, name='comprador_delete'),

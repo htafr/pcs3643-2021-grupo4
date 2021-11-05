@@ -2,7 +2,11 @@
 
 {% block content %}
 
-<h2 id="tcolor">Preencha as informações do lote</h2>
+
+<div class="sub_header">
+    <div><h2 id="tcolor">Preencha as informações do lote</h2></div>
+    <div><h2 id="voltar"><a href="{% url 'leilao_fbv_user:redirect_user' %}">Voltar</a></h2></div>
+</div>
 
 <form method="post">{% csrf_token %}
     {{ form.as_p }}

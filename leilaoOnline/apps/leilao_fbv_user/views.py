@@ -21,6 +21,7 @@ def list_available(request, template_name='leilao_fbv_user/available_lote.html')
 def create_lote(request, template_name='leilao_fbv_user/lote_form.html'):
     form = LoteDAO.lote_create(request=request, template_name=template_name)
     if form.is_valid():
+        form.instance.user = request.user
         lote = form.save(commit=False)
         lote.save()
         return redirect('leilao_fbv_user:lote_list')

@@ -1,8 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
-from django.conf import UserSettingsHolder
-from apps import settings
+from django.conf import UserSettingsHolder, settings
 from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
@@ -109,8 +108,7 @@ class Lote(models.Model):
     opening_month = models.CharField(max_length=16, choices=MONTH_CHOICES, default='')
     opening_day = models.CharField(max_length=2, choices=DAY_CHOICES, default=1)
     opening_year = models.CharField(max_length=4, choices=YEAR_CHOICES, default=2021)
-    # Como atriubiu user sem usar o campo de formulario???????
-    user = models.CharField(max_length=256, editable=True, default='')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
     
     def __str__(self):
         return self.name
@@ -126,8 +124,7 @@ class LoteForm(ModelForm):
         model = Lote
         fields = ['name', 'summary', 'qty',
                   'category', 'condition', 'min_value',
-                  'opening_month', 'opening_day', 'opening_year',
-                  'user']
+                  'opening_month', 'opening_day', 'opening_year']
 
 class LoteDAO(models.Model):
     
