@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.conf import UserSettingsHolder
@@ -5,6 +6,10 @@ from apps import settings
 from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
+
+# import para fazer a comparacao com as tabelas fora de fbv_user (onde estao os cadastros)
+from leilao_fbv.models import Vendedor as Vendedor_fbv
+from leilao_fbv.models import Comprador as Comprador_fbv
 
 CATEGORY_CHOICES = (
     ('Automotivos e Peças','Automotivos e Peças'),
@@ -248,6 +253,11 @@ class VendedorDAO(models.Model):
     def vendedor_delete(request, pk, template_name):
         vendedor = get_object_or_404(Vendedor, pk=pk)
         return vendedor
+    
+    def vendedor_filter(request, username):
+        bool_user = Vendedor_fbv.objects.filter(username = username).exists()
+        print("Entrou Username vendedor filter", username, bool_user)
+        return bool_user
 
 ####################################################################################
 ### Comprador ######################################################################
@@ -291,6 +301,11 @@ class CompradorDAO(models.Model):
     def comprador_delete(request, pk, template_name):
         comprador = get_object_or_404(Comprador, pk=pk)
         return comprador
+
+    def comprador_filter(request, username):
+        bool_user = Comprador_fbv.objects.filter(username = username).exists()
+        print("Entrou Username comprador filter", username, bool_user)
+        return bool_user
 
 ####################################################################################
 ### WIP: Relatorio #################################################################

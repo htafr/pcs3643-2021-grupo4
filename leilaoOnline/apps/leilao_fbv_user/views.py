@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
+from django.contrib.auth.models import User
+
 from .models import Lote, LoteDAO, Vendedor, VendedorDAO, Comprador, CompradorDAO
 
 @login_required
@@ -41,12 +43,25 @@ def delete_lote(request, pk, template_name='leilao_fbv_user/lote_confirm_delete.
     return render(request, template_name, {'object':lote})
     
 ####################################################################################
-### Vendedor #######################################################################
+### Login User #####################################################################
 ####################################################################################
 @login_required
-def redirect_user(request, template_name='leilao_fbv_user/vendedor_page.html'):
-    return render(request, 'leilao_fbv_user/vendedor_page.html')
+def redirect_user(request):
+#def redirect_vendedor(request, template_name='leilao_fbv_user/vendedor_page.html'):
+    current_user = request.user.username
+    #print(current_user)
+    bool_vendedor = VendedorDAO.vendedor_filter(request, current_user)
+    bool_comprador = CompradorDAO.comprador_filter(request, current_user)
+    if (bool_vendedor):
+        return render(request, 'leilao_fbv_user/vendedor_page.html')
+        #return render(request, 'leilao_fbv_user/user_page.html')
+    elif (bool_comprador):
+        return render(request, 'leilao_fbv_user/comprador_page.html')
 
+
+####################################################################################
+### Vendedor #######################################################################
+####################################################################################
 def list_vendedor(request, template_name='leilao_fbv/vendedor_list.html'):
     data = VendedorDAO.vendedor_list(request, template_name=template_name)
     return render(request, template_name, data)
@@ -76,9 +91,10 @@ def delete_vendedor(request, pk, template_name='leilao_fbv/vendedor_confirm_dele
 ####################################################################################
 ### Comprador ######################################################################
 ####################################################################################
-@login_required
-def redirect_user(request, template_name='leilao_fbv_user/comprador_page.html'):
-    return render(request, 'leilao_fbv_user/comprador_page.html')
+#@login_required
+#def redirect_user(request, template_name='leilao_fbv_user/comprador_page.html'):
+#def redirect_comprador(request, template_name='leilao_fbv_user/comprador_page.html'):
+#    return render(request, 'leilao_fbv_user/comprador_page.html')
 
 # def list_comprador(request, template_name='leilao_fbv/comprador_list.html'):
 #     data = CompradorDAO.vendedor_list(request, template_name=template_name)
