@@ -2,9 +2,11 @@
 
 {% block content %}
 
-{% if form.errors %}
-<p>Seu nome de usuário e senha não coincidem. Por favor, tente novamente.</p>
-{% endif %}
+<div id="login_error">
+    {% if form.errors %}
+    <p>Nome de usuário ou senha não coincidem. Por favor, tente novamente.</p>
+    {% endif %}
+</div>
 
 {% if next %}
     {% if user.is_authenticated %}
@@ -18,24 +20,26 @@
         <form id="login_form" method="post" action="{% url 'login' %}">
         {% csrf_token %}
         
-        <table>
-        <tr><!--usuario-->
-            <td id= "tcolor">{{ form.username.label_tag }}</td>
-            <td>{{ form.username }}</td>
-        </tr>
-        <tr><!--senha-->
-            <td id="tcolor">{{ form.password.label_tag }}</td>
-            <td>{{ form.password }}</td>
-        </tr>
+        <table id="login_table">
+            <tr><!--usuario-->
+                <td id= "tcolor">{{ form.username.label_tag }}</td>
+                <td>{{ form.username }}</td>
+            </tr>
+            <tr><!--senha-->
+                <td id="tcolor">{{ form.password.label_tag }}</td>
+                <td>{{ form.password }}</td>
+            </tr>
         </table>
 
-        <input id="login_button" type="submit" value="login">
+        <div id="loginbtn_container">
+            <input id="login_button" type="submit" value="login">
+        </div>
         <input type="hidden" name="next" value="{{ next }}">
         </form>
 
 {# Presume que você configurou a vista password_reset em seu URLconf #}
 <!--<p><a href="{% url 'password_reset' %}">Senha perdida?</a></p>-->
 
-<p><a href="#">Senha perdida?</a></p>
+<p><a id="lost_pass" href="#">Senha perdida?</a></p>
 </div>
 {% endblock %}

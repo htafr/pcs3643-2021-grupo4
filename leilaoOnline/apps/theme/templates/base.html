@@ -1,5 +1,6 @@
 {% load static %}
 <!--This is the base template-->
+
 <html>
 <head>
     <title></title>
@@ -7,21 +8,29 @@
 </head>
 
 <body>
-    <div id="header">
-        {% if user.is_authenticated %}
-        <div id="user">
-            <a href="{% url 'leilao_fbv_user:lote_list' %}">Olá {{ user }}</a>, <a href="{% url 'logout' %}">Logout</a>
-        </div>
-        <h1 id="home_link"><a href="{% url 'leilao_fbv_user:redirect_user' %}">Leilão Online - BID</a></h1>
-        {% else %}
-        <div id="cadastro">
-            <a href="{% url 'leilao_fbv:vendedor_new' %}">Cadastrar</a><span id=login_slash> /</span>
-            <a href="{% url 'login' %}">Login</a>
-        </div>
-        <h1 id="home_link"><a href="/">Leilão Online - BID</a></h1>
-        {% endif %}
-        
-
+    <div class="header">
+        <ul>
+            <li><a href="/">Leilão Online - BID</a></li>
+            {% if user.is_authenticated %}
+            <li style="float: right;">
+                <div id='logout'>
+                    <a style="float: right" href="{% url 'logout' %}">Logout</a>
+                </div>
+            </li>
+            <li style="float: right;">
+                <div class="user">
+                    <a href="{% url 'leilao_fbv_user:redirect_user' %}" class="drop-btn">Olá, {{ user }}</a>
+                    <div class="dropdown-content">
+                        <a href="{% url 'leilao_fbv_user:lote_list' %}">Seus lotes</a>
+                        <a href="{% url 'leilao_fbv_user:lote_new' %}">Novo lote</a>
+                    </div>
+                </div>
+            </li>
+            {% else %}
+            <li style="float: right"><a href="{% url 'login' %}">Login</a></li>
+            <li style="float: right"><a href="{% url 'leilao_fbv:select_perfil' %}">Cadastrar</a><span id=login_slash></li>
+            {% endif %}
+        </ul>
     </div><!-- header -->
 
     <div id="content">

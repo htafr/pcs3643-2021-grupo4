@@ -93,10 +93,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'leilaoOnline',
-        'USER': 'offreitas',
+        'USER': 'kenji',
         'PASSWORD': 'pcs3643labengsoft',
         'HOST': 'localhost',
         'PORT': '3306',
+        'TEST':{
+            'NAME': 'test_leilaoOnline',
+        },
     }
 }
 
@@ -146,4 +149,5 @@ STATICFILES_DIRS = [
 #LOGIN_URL = '/accounts/login/'
 
 LOGIN_REDIRECT_URL =  '/leilao_fbv_user/user_page'
+#LOGIN_REDIRECT_URL =  '/leilao_fbv_user/vendedor_page'
 LOGOUT_REDIRECT_URL = '/'

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db import IntegrityError
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 
-from .models import Vendedor, VendedorDAO
+from .models import Vendedor, VendedorDAO, Comprador, CompradorDAO
 
 # ####################################################################################
 # ### Lote ###########################################################################
@@ -36,6 +37,29 @@ def list_lote(request, template_name='leilao_fbv/lote_list.html'):
 
 
 ####################################################################################
+### Perfil #########################################################################
+####################################################################################
+
+def select_perfil(request, template_name='leilao_fbv/perfil_form.html'):
+    return render(request, template_name)
+
+####################################################################################
+### Comprador  #####################################################################
+####################################################################################
+
+def create_comprador(request, template_name='leilao_fbv/comprador_form.html'):
+    form = CompradorDAO.comprador_create(request, template_name=template_name)
+    if form.is_valid():
+        form.save()
+        user = User.objects.create_user(form.data['username'], form.data['email'], form.data['password'])
+        user.save()
+        return redirect('/')
+    return render(request, template_name, {'form':form})
+
+# def redirect_comprador(request, template_name='leilao_fbv_user/comprador_page.html'):
+#     pass
+
+####################################################################################
 ### Vendedor #######################################################################
 ####################################################################################
 
@@ -52,8 +76,8 @@ def create_vendedor(request, template_name='leilao_fbv/vendedor_form.html'):
         return redirect('/')
     return render(request, template_name, {'form':form})
 
-def redirect_user(request, template_name='leilao_fbv_user/user_page.html'):
-    pass
+# def redirect_vendedor(request, template_name='leilao_fbv_user/vendedor_page.html'):
+#     pass
 
 # def update_vendedor(request, pk, template_name='leilao_fbv/vendedor_form.html'):
 #     form = VendedorDAO.vendedor_update(request, pk=pk, template_name=template_name)
