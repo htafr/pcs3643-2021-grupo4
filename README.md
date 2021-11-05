@@ -9,10 +9,13 @@ A organização das 4 etapas (análise, projeto, implementação e teste) serão
 ---
 
 ## Instruções para execução do projeto em seu computador local.
+
 Para o funcionamento correto do projeto, será necessário fazer a instalação de algumas bibliotecas:
 
 A instalação pode ser realizada de duas formas:
+
 ### **Forma 1**:
+
 - Biblioteca do Framework Django:
 ```
 pip install django
@@ -25,6 +28,7 @@ pip install django_extensions
 ```
 pip install pymysql
 ```
+
 ### **Forma 2**:
 
 Executar a instalação via arquivo *requirements.txt*. Nesse arquivo existem as três bibliotecas necessárias para execução do projeto. Para fazer a instalação execute:
@@ -33,6 +37,7 @@ Executar a instalação via arquivo *requirements.txt*. Nesse arquivo existem as
 pip install -r requirements.txt
 ```
 
+Também é necessário criar um banco de dados ```leilaoOnline``` o qual é acessado com o usuário ```kenji``` e senha ```pcs3643labengsoft``` que está no arquivo ```settings.py```.
 
 ---
 
@@ -42,6 +47,16 @@ Fez-se os scripts de testes da [classe Lote](https://github.com/offreitas/pcs364
 
 ---
 
-## Atividade Pós-Aula 8 (WIP) - dias 28 e 29 de outubro de 2021
+## Atividade Pós-Aula 8 - 29/10/2021
 
-Serão realizadas atividades complementares para o desenvolvimento do projeto, como a criação de novas classes, desenvolvimentos dos outros casos de usos e ajustes do layout da página.
+Foram realizadas atividades complementares para o desenvolvimento do projeto, como a criação de novas classes, desenvolvimentos dos outros casos de usos e ajustes do layout da página.
+
+---
+
+## Aula 9 - 05/11/2021
+
+Os testes que foram feitos durante a aula 8 foram refeitos para adequar-se às alterações realizadas durante no dia 29 de outubro. Também foram feitos testes com *Selenium* para as views de classes que temos, no mínimo, parcialmente implementadas.
+
+### Testes com Selenium
+
+- Rodar primeiro ```test_signup_login```, pois eles criarão os usuários que serão utilizados em ```test_vendedor_views``` e ```test_computador_views```.
