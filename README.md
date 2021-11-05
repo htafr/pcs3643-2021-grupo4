@@ -39,6 +39,7 @@ pip install -r requirements.txt
 
 Também é necessário criar um banco de dados ```leilaoOnline``` o qual é acessado com o usuário ```kenji``` e senha ```pcs3643labengsoft``` que está no arquivo ```settings.py```.
 
+No ponto atual da implementação, a criação de novos usuários, sejam eles compradores, vendedores ou leiloeiros, deve ser feita a cada novo pull do projeto. Você terá a oportunidade de fazer um breve teste em cada classe de usuário final da plataforma. As telas dos três tipos mencionados anteriormente são similares, mas com algumas diferenciações (i.e. comprador não deve criar lote). Variações para cada classe serão implementadas posteriormente.
 ---
 
 ## Aula 8 - 22/10/2021
