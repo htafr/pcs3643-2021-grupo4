@@ -2,11 +2,12 @@
 
 {% block content %}
 
-<div>
-    <!-- <a href="{% url 'leilao_fbv_user:' %}">Participação em leilões</a>  --> <!-- leilões que o comprador está participando-->
-    <br>
-    <a href="{% url 'leilao_fbv_user:available_lote' %}">Leilões Disponíveis</a>
-
+<div class="vendedor_page">
+    <ul>
+        <!-- <li><a href="{% url 'leilao_fbv_user:lote_list' %}">Seus lotes</a></li> -->
+        <!-- <li><a href="{% url 'leilao_fbv_user:lote_new' %}">Novo lote</a></li> -->
+        <li><a href="{% url 'leilao_fbv_user:available_lote' %}">Leilões Disponíveis</a></li>
+    </ul>
 </div>
 
 {% endblock %}

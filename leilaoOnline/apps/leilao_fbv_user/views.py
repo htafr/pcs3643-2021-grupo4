@@ -54,15 +54,22 @@ def redirect_user(request):
     bool_vendedor = VendedorDAO.vendedor_filter(request, current_user)
     bool_comprador = CompradorDAO.comprador_filter(request, current_user)
     if (bool_vendedor):
-        return render(request, 'leilao_fbv_user/vendedor_page.html')
+        #return render(request, 'leilao_fbv_user/vendedor_page.html')
+        return redirect("leilao_fbv_user:vendedor_page")
         #return render(request, 'leilao_fbv_user/user_page.html')
     elif (bool_comprador):
-        return render(request, 'leilao_fbv_user/comprador_page.html')
+        #return render(request, 'leilao_fbv_user/comprador_page.html')
+        return redirect("leilao_fbv_user:comprador_page")
 
 
 ####################################################################################
 ### Vendedor #######################################################################
 ####################################################################################
+
+#@login_required
+def redirect_vendedor(request, template_name='leilao_fbv_user/vendedor_page.html'):
+    return render(request, template_name)
+
 def list_vendedor(request, template_name='leilao_fbv/vendedor_list.html'):
     data = VendedorDAO.vendedor_list(request, template_name=template_name)
     return render(request, template_name, data)
@@ -88,7 +95,7 @@ def delete_vendedor(request, pk, template_name='leilao_fbv/vendedor_confirm_dele
         vendedor.delete()
         return redirect('leilao_fbv:vendedor_list')
     return render(request, template_name, {'object':vendedor})
-    
+
 ####################################################################################
 ### Comprador ######################################################################
 ####################################################################################
@@ -100,6 +107,10 @@ def delete_vendedor(request, pk, template_name='leilao_fbv/vendedor_confirm_dele
 # def list_comprador(request, template_name='leilao_fbv/comprador_list.html'):
 #     data = CompradorDAO.vendedor_list(request, template_name=template_name)
 #     return render(request, template_name, data)
+
+#@login_required
+def redirect_comprador(request, template_name='leilao_fbv_user/comprador_page.html'):
+    return render(request, template_name)
 
 def create_comprador(request, template_name='leilao_fbv/comprador_form.html'):
     form = CompradorDAO.vendedor_create(request, template_name=template_name)
