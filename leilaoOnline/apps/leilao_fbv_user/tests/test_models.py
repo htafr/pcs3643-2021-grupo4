@@ -1,4 +1,5 @@
-from django.test import TestCase
+from django.test import TestCase, Client
+from django.contrib.auth.models import User
 from leilao_fbv_user.models import Lote
 from datetime import date
 
@@ -8,10 +9,14 @@ class LoteModelTest(TestCase):
 	@classmethod
 	def setUpTestData(self):
 		"""Test form is invalid if renewal_date is before today."""
+		user = User.objects.create(username="testuser")
+		user.set_password('pcs-3643')
+		user.save()
+		client = Client()
+		client.login(username='testuser', password='pcs-3643')
 		Lote.objects.create(name='Livros', summary='Um lote de livros', qty='1',
 							category='Livro', condition='Novo', min_value='10.00',
-							opening_month='Novembro', opening_day='28', opening_year='2021',
-							user='otavio')
+							opening_month='Novembro', opening_day='28', opening_year='2021', user=user)
 
 	def test_lote_name(self):
 		lote = Lote.objects.get(id=1)
@@ -57,8 +62,3 @@ class LoteModelTest(TestCase):
 		lote = Lote.objects.get(id=1)
 		field_label = lote._meta.get_field('opening_year').verbose_name
 		self.assertEquals(field_label, 'opening year')
-
-	def test_lote_user(self):
-		lote = Lote.objects.get(id=1)
-		field_label = lote._meta.get_field('user').verbose_name
-		self.assertEquals(field_label, 'user')
