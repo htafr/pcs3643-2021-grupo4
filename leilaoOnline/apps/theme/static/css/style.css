@@ -1,3 +1,6 @@
+/***************************************
+** CSS Base ****************************
+***************************************/
 body {
     font-family: Arial, Helvetica, sans-serif;
     width:100%;
@@ -6,14 +9,16 @@ body {
 }
 
 p,li,label, #tcolor{
-    color: rgb(181, 245, 236);
+    color: tomato;
 }
 
-/* Navigation bar */
+/***************************************
+** Navigation bar **********************
+***************************************/
 .header ul {
     list-style-type: none;
     overflow: hidden;
-    background-color: #98ff98;
+    background-color: tomato;
     margin: 0;
     padding: 0;
 }
@@ -22,17 +27,19 @@ li {
     float: left;
 }
 
-/* Dropdown Menu */
+/***************************************
+** Dropdown Menu ***********************
+***************************************/
 li a, .drop-btn {
     display: block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
 .header li a:hover, .user:hover .drop-btn {
-    background-color: tomato;
+    background-color: #98ff98;
 }
 
 .header li.user {
@@ -42,7 +49,7 @@ li a, .drop-btn {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: tomato;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -64,8 +71,94 @@ li a, .drop-btn {
     display: block;
 }
 
-/* Stylizing ID */
+/***************************************
+** Vendedor Page ***********************
+***************************************/
+.vendedor_page ul {
+    list-style-type: none;
+    align-self: center;
+    margin: 15%;
+    padding: 0;
+    width: 70%;
+    height: 14.5%;
+    border: 1px solid #555;
+}
 
+.vendedor_page li {
+    text-align: center;
+    border-bottom: 1px solid #555;
+    width: 100%;
+}
+
+.vendedor_page li:last-child {
+    border-bottom: none;
+}
+
+.vendedor_page li:hover {
+    background-color: tomato;
+}
+
+.vendedor_page li a {
+    display: block;
+}
+
+/***************************************
+** Sub Header **************************
+***************************************/
+.sub_header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sub_header a {
+    color: tomato;
+    text-decoration: none;
+}
+
+.sub_header a:hover {
+    color: #98ff98;
+}
+
+/***************************************
+** Lote List ***************************
+***************************************/
+#user_page #lote_options {
+    display: flex;
+    justify-content: space-between;
+}
+
+/***************************************
+** Login Page **************************
+***************************************/
+#login { 
+    color: rgb(181, 245, 236);
+    width: 100%;
+    display: block;
+    justify-content: center;
+    margin: 10%;
+}
+
+#login_table {
+    padding-bottom: 1%;
+}
+
+#login_form, #lost_pass {
+    padding-inline: 20%;
+}
+
+#loginbtn_container {
+    display: flex;
+    justify-content: center;
+    padding-right: 55%;
+}
+
+#login_error {
+    padding-inline: 20%;
+}
+
+/***************************************
+** Content Standard ********************
+***************************************/
 #content {
     width: 50%;
     margin: auto;
@@ -91,19 +184,6 @@ li a, .drop-btn {
 #user {
     float:right; 
     color: black;
-}
-
-#login {
-    float:right; 
-    color: rgb(181, 245, 236);
-    width: 100%;
-    display: block;
-    text-align: center;
-}
-
-#login_form {
-    margin: 50px;
-    padding-left: 220px;
 }
 
 #home_link {
