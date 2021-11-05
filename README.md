@@ -42,6 +42,16 @@ Fez-se os scripts de testes da [classe Lote](https://github.com/offreitas/pcs364
 
 ---
 
-## Atividade Pós-Aula 8 (WIP) - dias 28 e 29 de outubro de 2021
+## Atividade Pós-Aula 8 - 29/10/2021
 
-Serão realizadas atividades complementares para o desenvolvimento do projeto, como a criação de novas classes, desenvolvimentos dos outros casos de usos e ajustes do layout da página.
+Foram realizadas atividades complementares para o desenvolvimento do projeto, como a criação de novas classes, desenvolvimentos dos outros casos de usos e ajustes do layout da página.
+
+---
+
+## Aula 9 - 05/11/2021
+
+Os testes que foram feitos durante a aula 8 foram refeitos para adequar-se às alterações realizadas durante no dia 29 de outubro. Também foram feitos testes com *Selenium* para as views de classes que temos, no mínimo, parcialmente implementadas.
+
+### Testes com Selenium
+
+- Rodar primeiro ```test_signup_login```, pois eles criarão os usuários que serão utilizados em ```test_vendedor_views``` e ```test_computador_views```.

@@ -1,0 +1,163 @@
+{
+  "id": "a5461aa6-11d7-47bd-a6cc-fb5da5a2df22",
+  "version": "2.0",
+  "name": "comprador_views",
+  "url": "http://127.0.0.1:8000",
+  "tests": [{
+    "id": "591dbf79-585c-49b4-9391-10c93faf8207",
+    "name": "test_views",
+    "commands": [{
+      "id": "027c435e-0513-4dbd-bfaa-65bd7b2bc24c",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cc579edb-cab5-487b-a135-e81485eaf836",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "968x1020",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b700cab7-c1df-4501-9ba3-fe677dcacfdb",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=li:nth-child(2) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/accounts/login/')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4287dcf2-c531-4107-8ff8-bc04fb32dafe",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_username",
+      "targets": [
+        ["id=id_username", "id"],
+        ["name=username", "name"],
+        ["css=#id_username", "css:finder"],
+        ["xpath=//input[@id='id_username']", "xpath:attributes"],
+        ["xpath=//table[@id='login_table']/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": "otavio"
+    }, {
+      "id": "48a15d18-526f-4cb1-a5cf-f64c78eba8fe",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_password",
+      "targets": [
+        ["id=id_password", "id"],
+        ["name=password", "name"],
+        ["css=#id_password", "css:finder"],
+        ["xpath=//input[@id='id_password']", "xpath:attributes"],
+        ["xpath=//table[@id='login_table']/tbody/tr[2]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": "pcs3643"
+    }, {
+      "id": "f57b6594-9852-4c0e-a9e8-a47f84de9a0f",
+      "comment": "",
+      "command": "click",
+      "target": "id=login_button",
+      "targets": [
+        ["id=login_button", "id"],
+        ["css=#login_button", "css:finder"],
+        ["xpath=//input[@id='login_button']", "xpath:attributes"],
+        ["xpath=//div[@id='loginbtn_container']/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b67e6394-2052-4cd7-9fc8-d8968712672e",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Leilões Disponíveis",
+      "targets": [
+        ["linkText=Leilões Disponíveis", "linkText"],
+        ["css=.vendedor_page a", "css:finder"],
+        ["xpath=//a[contains(text(),'Leilões Disponíveis')]", "xpath:link"],
+        ["xpath=//div[@id='content']/div/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/leilao_fbv_user/alllotes/')]", "xpath:href"],
+        ["xpath=//div[2]/div/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Leilões Disponíveis')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8687733c-33cf-4efb-a24f-c88251917d51",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Leilão Online - BID",
+      "targets": [
+        ["linkText=Leilão Online - BID", "linkText"],
+        ["css=li > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Leilão Online - BID')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Leilão Online - BID')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab7072b4-7ca7-4cb7-b7f4-d7fe79e9a59d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Olá, otavio",
+      "targets": [
+        ["linkText=Olá, otavio", "linkText"],
+        ["css=.drop-btn", "css:finder"],
+        ["xpath=//a[contains(text(),'Olá, otavio')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/leilao_fbv_user/user_page/')]", "xpath:href"],
+        ["xpath=//li[3]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Olá, otavio')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c82031a8-0085-4f1b-9bd3-39e5fd1313a4",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Leilões Disponíveis",
+      "targets": [
+        ["linkText=Leilões Disponíveis", "linkText"],
+        ["css=.vendedor_page a", "css:finder"],
+        ["xpath=//a[contains(text(),'Leilões Disponíveis')]", "xpath:link"],
+        ["xpath=//div[@id='content']/div/ul/li/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/leilao_fbv_user/alllotes/')]", "xpath:href"],
+        ["xpath=//div[2]/div/ul/li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Leilões Disponíveis')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e54d0808-7ffb-45d5-91ba-f56c187385e0",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Logout",
+      "targets": [
+        ["linkText=Logout", "linkText"],
+        ["css=#logout > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Logout')]", "xpath:link"],
+        ["xpath=//div[@id='logout']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/accounts/logout/')]", "xpath:href"],
+        ["xpath=//div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "5e28dae2-2ae9-4da2-9ff5-e46b416cf461",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["591dbf79-585c-49b4-9391-10c93faf8207"]
+  }],
+  "urls": ["http://127.0.0.1:8000/"],
+  "plugins": []
+}
