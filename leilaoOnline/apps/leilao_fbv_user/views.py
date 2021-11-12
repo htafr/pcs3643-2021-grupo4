@@ -62,7 +62,7 @@ def redirect_user(request):
     elif (bool_comprador):
         #return render(request, 'leilao_fbv_user/comprador_page.html')
         return redirect("leilao_fbv_user:comprador_page")
-    elif (bool_leiloeiro):
+    elif (bool_leiloeiro or request.user.is_superuser):
         #return render(request, 'leilao_fbv_user/comprador_page.html')
         return redirect("leilao_fbv_user:leiloeiro_page")
 
