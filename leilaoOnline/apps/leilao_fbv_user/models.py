@@ -12,17 +12,39 @@ from leilao_fbv.models import Comprador as Comprador_fbv
 from leilao_fbv.models import Leiloeiro as Leiloeiro_fbv
 
 CATEGORY_CHOICES = (
-    ('Automotivos e Peças','Automotivos e Peças'),
-    ('Beleza e Cuidados Pessoais', 'Beleza e Cuidados Pessoais'),
-    ('Esporte','Esporte'),
-    ('Brinquedos e Jogos','Brinquedos e Jogos'),
-    ('Cozinha','Cozinha'),
-    ('Eletrônicos', 'Eletrônicos'),
-    ('Games e Consoles', 'Games e Console'),
+    ('Administração, Negócios e Economia','Administração, Negócios e Economia'),
+    ('Arte, Cinema e Fotografia', 'Arte, Cinema e Fotografia'),
+    ('Artesanato, Casa e Estilo de Vida','Artesanato, Casa e Estilo de Vida'),
+    ('Autoajuda','Autoajuda'),
+    ('Biografias e Histórias Reais','Biografias e Histórias Reais'),
+    ('Calendários e Anuários', 'Calendários e Anuários'),
+    ('Ciências', 'Ciências'),
     ('Livro','Livro'),
-    ('Papelaria e Escritório', 'Papelaria e Escritório'),
-    ('Pet Shop','Pet Shop'),
-    ('Roupas Calçados e Acessórios', 'Roupas Calçados e Acessórios'),
+    ('Computação, Informática e Mídias Digitais', 'Computação, Informática e Mídias Digitais'),
+    ('Cristandade','Cristandade'),
+    ('Crônicas, Humor e Entretenimento', 'Crônicas, Humor e Entretenimento'),
+    ('Direito', 'Direito'),
+    ('Educação', 'Educação'),
+    ('Educação dos Filhos e Família', 'Educação dos Filhos e Família'),
+    ('Educação, Referência e Didáticos', 'Educação, Referência e Didáticos'),
+    ('Engenharia e Transporte', 'Engenharia e Transporte'),
+    ('Esportes e Lazer', 'Esportes e Lazer'),
+    ('Fantasia, Horror, e Ficção Científica', 'Fantasia, Horror, e Ficção Científica'),
+    ('Gastronomia e Culinária', 'Gastronomia e Culinária'),
+    ('História', 'História'),
+    ('HQs, Mangás e Graphic Novels', 'HQs, Mangás e Graphic Novels'),
+    ('Infantil', 'Infantil'),
+    ('Jovens e Adolescentes', 'Jovens e Adolescentes'),
+    ('LGBT', 'LGBT'),
+    ('Literatura e Ficção', 'Literatura e Ficção'),
+    ('Medicina', 'Medicina'),
+    ('Policial, Suspense e Mistério', 'Policial, Suspense e Mistério'),
+    ('Política, Filosofia e Ciências Sociais', 'Política, Filosofia e Ciências Sociais'),
+    ('Preparação para Provas', 'Preparação para Provas'),
+    ('Religião e Espiritualidade', 'Religião e Espiritualidade'),
+    ('Romance', 'Romance'),
+    ('Saúde e Família', 'Saúde e Família'),
+    ('Turismo e Guias de Viagem', 'Turismo e Guias de Viagem'),
 )
 
 CONDITION_CHOICES = (
@@ -92,6 +114,11 @@ DAY_CHOICES = (
 YEAR_CHOICES = (
     ('2021', '2021'),
     ('2022', '2022'),
+    ('2023', '2023'),
+    ('2024', '2024'),
+    ('2025', '2025'),
+    ('2026', '2026'),
+    ('2027', '2027'),
 )
 
 ####################################################################################
@@ -100,15 +127,16 @@ YEAR_CHOICES = (
 
 class Lote(models.Model):
     
-    name = models.CharField(max_length=200, default='')
-    summary = models.CharField(max_length=512, default='')
-    qty = models.IntegerField(default=1)
-    category = models.CharField(max_length=64, choices=CATEGORY_CHOICES, default='')
-    condition = models.CharField(max_length=64, choices=CONDITION_CHOICES, default='')
-    min_value = models.DecimalField(default=10.00, decimal_places=2, max_digits=16)
-    opening_month = models.CharField(max_length=16, choices=MONTH_CHOICES, default='')
-    opening_day = models.CharField(max_length=2, choices=DAY_CHOICES, default=1)
-    opening_year = models.CharField(max_length=4, choices=YEAR_CHOICES, default=2021)
+    name = models.CharField(max_length=64, default='', blank=False)
+    summary = models.CharField(max_length=512, default='', blank=False)
+    quantity = models.IntegerField(default=1, blank=False)
+    category = models.CharField(max_length=64, choices=CATEGORY_CHOICES, default='', blank=False)
+    author = models.CharField(max_length=64, default='', blank=False)
+    publisher = models.CharField(max_length=64, default='', blank=False)
+    edition = models.CharField(max_length=64, default='', blank=False)
+    number_of_pages = models.CharField(max_length=64, default='', blank=False)
+    condition = models.CharField(max_length=64, choices=CONDITION_CHOICES, default='', blank=False)
+    reserve_price = models.DecimalField(default=10.00, decimal_places=2, max_digits=16, blank=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
     
     def __str__(self):
@@ -123,9 +151,9 @@ class Lote(models.Model):
 class LoteForm(ModelForm):
     class Meta:
         model = Lote
-        fields = ['name', 'summary', 'qty',
-                  'category', 'condition', 'min_value',
-                  'opening_month', 'opening_day', 'opening_year']
+        fields = ['name', 'summary', 'quantity', 'category',
+                  'author', 'publisher', 'edition', 'number_of_pages',
+                  'condition', 'reserve_price']
 
 class LoteDAO(models.Model):
     

@@ -7,15 +7,17 @@
         {% for lote in object_list %}
         <li>
             <span>
-            {{ lote.name }}<br>
-            Quantidade de Elementos: {{ lote.qty }}<br>
-            Descrição: {{ lote.summary }}<br>
-            Categoria: {{ lote.category }}<br>
-            Condição: {{ lote.condition }}<br>
-            Valor Mínimo: R${{ lote.min_value }}<br>
-            Data de Abertura: {{ lote.opening_day }} de
-                              {{ lote.opening_month }} de
-                              {{ lote.opening_year }}<br> 
+                {{ lote.name }}<br>
+                Quantidade: {{ lote.quantity }}<br>
+                Descrição: {{ lote.summary }}<br>
+                Categoria: {{ lote.category }}<br>
+                Autor: {{ lote.author }}<br>
+                Editora: {{ lote.publisher }}<br>
+                Edição: {{ lote.edition }}<br>
+                Número de Páginas: {{ lote.number_of_pages }}<br>
+                Condição: {{ lote.condition }}<br>
+                Preço Reserva: R${{ lote.reserve_price }}<br>
+                Anunciante: {{ lote.user }}
             </span>
         </li>
         <br>

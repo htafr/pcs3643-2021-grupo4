@@ -74,7 +74,7 @@ li a, .drop-btn {
 /***************************************
 ** Vendedor Page ***********************
 ***************************************/
-.vendedor_page ul {
+.user_menu ul {
     list-style-type: none;
     align-self: center;
     margin: 15%;
@@ -84,21 +84,21 @@ li a, .drop-btn {
     border: 1px solid #555;
 }
 
-.vendedor_page li {
+.user_menu li {
     text-align: center;
     border-bottom: 1px solid #555;
     width: 100%;
 }
 
-.vendedor_page li:last-child {
+.user_menu li:last-child {
     border-bottom: none;
 }
 
-.vendedor_page li:hover {
+.user_menu li:hover {
     background-color: tomato;
 }
 
-.vendedor_page li a {
+.user_menu li a {
     display: block;
 }
 

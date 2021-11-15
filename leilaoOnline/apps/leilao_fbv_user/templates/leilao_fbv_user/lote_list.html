@@ -17,14 +17,16 @@
         <li>
             <span>
                 {{ lote.name }}<br>
-                Quantidade de Elementos: {{ lote.qty }}<br>
+                Quantidade: {{ lote.quantity }}<br>
                 Descrição: {{ lote.summary }}<br>
                 Categoria: {{ lote.category }}<br>
+                Autor: {{ lote.author }}<br>
+                Editora: {{ lote.publisher }}<br>
+                Edição: {{ lote.edition }}<br>
+                Número de Páginas: {{ lote.number_of_pages }}<br>
                 Condição: {{ lote.condition }}<br>
-                Valor Mínimo: R${{ lote.min_value }}<br>
-                Data de Abertura: {{ lote.opening_day }} de
-                                {{ lote.opening_month }} de
-                                {{ lote.opening_year }}<br>
+                Preço Reserva: R${{ lote.reserve_price }}<br>
+                Anunciante: {{ lote.user }}
                 <div id="lote_options">
                     <a id="edit" href="{% url 'leilao_fbv_user:lote_edit' lote.id %}">Editar</a>
                     <a id="delete" href="{% url 'leilao_fbv_user:lote_delete' lote.id %}">Deletar</a>
