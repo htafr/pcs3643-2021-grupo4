@@ -21,7 +21,12 @@
                 <div class="user">
                     <a href="{% url 'leilao_fbv_user:redirect_user' %}" class="drop-btn">Olá, {{ user }}</a>
                     <div class="dropdown-content">
+                        {% if user.is_staff %}
+                        <a href="{% url 'leilao_fbv_user:lote_list' %}">Todos os lotes</a>
+                        <a href="{% url 'leilao_fbv_user:lote_pending_list' %}">Lotes pendentes</a>
+                        {% else %}
                         <a href="{% url 'leilao_fbv_user:lote_list' %}">Seus lotes</a>
+                        {% endif %}
                         <a href="{% url 'leilao_fbv_user:lote_new' %}">Novo lote</a>
                     </div>
                 </div>

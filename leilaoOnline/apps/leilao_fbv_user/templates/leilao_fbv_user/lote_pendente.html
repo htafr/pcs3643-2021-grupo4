@@ -3,15 +3,9 @@
 {% block content %}
 
 <div class="sub_header">
-    {% if user.is_staff %}
     <div>
-        <h2 id="tcolor">Todos os Lotes</h2>
+        <h2 id="tcolor">Lotes Pendentes</h2>
     </div>
-    {% else %}
-    <div>
-        <h2 id="tcolor">Seus Lotes</h2>
-    </div>
-    {% endif %}
     <div>
         <h2 id="voltar"><a href="{% url 'leilao_fbv_user:redirect_user' %}">Voltar</a></h2>
     </div>
@@ -36,13 +30,9 @@
                 Situação: {{ lote.state }}<br>
                 Data de Abertura: {{ lote.opening_day }} de {{ lote.opening.month }}
                                   de {{ lote.opening_year }}<br>
-                
-                {% if user.is_staff %}
                 Anunciante: {{ lote.user }}
-                {% endif %}
-
                 <div id="lote_options">
-                    <a id="edit" href="{% url 'leilao_fbv_user:lote_edit' lote.id %}">Editar</a>
+                    <a id="edit" href="{% url 'leilao_fbv_user:lote_update_pending' lote.id %}">Editar</a>
                     <a id="delete" href="{% url 'leilao_fbv_user:lote_delete' lote.id %}">Deletar</a>
                 </div>
             </span>
