@@ -20,6 +20,8 @@ urlpatterns = [
 	path('new/', views.create_lote, name='lote_new'),
 	path('edit/<int:pk>/', views.update_lote, name='lote_edit'),
 	path('delete/<int:pk>/', views.delete_lote, name='lote_delete'),
+	path('pending/', views.list_pending_lote, name='lote_pending_list'),
+	path('analysis/<int:pk>/', views.update_pending_lote, name='lote_update_pending'),
 
 	##############################################################################
 	### Leilao ###################################################################

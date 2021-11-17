@@ -65,6 +65,7 @@ BANK_CHOICES = (
 )
 
 MONTH_CHOICES = (
+    ('Mês', 'Mês'),
     ('Janeiro', 'Janeiro'),
     ('Fevereiro', 'Fevereiro'),
     ('Março', 'Março'),
@@ -79,6 +80,7 @@ MONTH_CHOICES = (
     ('Dezembro', 'Dezembro'),
 )
 DAY_CHOICES = (
+    ('Dia', 'Dia'),
     ('1', '1'),
     ('2', '2'),
     ('3', '3'),
@@ -113,6 +115,7 @@ DAY_CHOICES = (
 )
 
 YEAR_CHOICES = (
+    ('Ano', 'Ano'),
     ('2021', '2021'),
     ('2022', '2022'),
     ('2023', '2023'),
@@ -128,12 +131,18 @@ LEILAO_CHOICES = (
     ("ESPERA", "Espera")
 )
 
+LOTE_CHOICES = (
+    ('Pendente', 'Pendente'),
+    ('Negado', 'Negado'),
+    ('Aprovado', 'Aprovado'),
+)
+
 ####################################################################################
 ### Lote ###########################################################################
 ####################################################################################
 
 class Lote(models.Model):
-    
+    ### Para o vendedor preencher
     name = models.CharField(max_length=64, default='', blank=False)
     summary = models.CharField(max_length=512, default='', blank=False)
     quantity = models.IntegerField(default=1, blank=False)
@@ -144,6 +153,16 @@ class Lote(models.Model):
     number_of_pages = models.CharField(max_length=64, default='', blank=False)
     condition = models.CharField(max_length=64, choices=CONDITION_CHOICES, default='', blank=False)
     reserve_price = models.DecimalField(default=10.00, decimal_places=2, max_digits=16, blank=False)
+
+    ### Para o leiloeiro preencher
+    start_price = models.DecimalField(default=10.00, decimal_places=2, max_digits=16)
+    minimum_bid = models.DecimalField(default=10.00, decimal_places=2, max_digits=16)
+    state = models.CharField(max_length=16, choices=LOTE_CHOICES, default='Pendente')
+    opening_month = models.CharField(max_length=16, choices=MONTH_CHOICES, default='Mês')
+    opening_day = models.CharField(max_length=3, choices=DAY_CHOICES, default='Dia')
+    opening_year = models.CharField(max_length=4, choices=YEAR_CHOICES, default='Ano')
+
+    ### Preenchido automaticamente
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
     
     def __str__(self):
@@ -162,10 +181,15 @@ class LoteForm(ModelForm):
                   'author', 'publisher', 'edition', 'number_of_pages',
                   'condition', 'reserve_price']
 
+class LotePendingForm(ModelForm):
+    class Meta:
+        model = Lote
+        fields = ['start_price', 'minimum_bid', 'state', 'opening_month',
+                  'opening_day', 'opening_year']
+
 class LoteDAO(models.Model):
-    
     def lote_list(request, template_name):
-        if request.user.is_superuser:
+        if request.user.is_staff:
             lote = Lote.objects.all()
         else:
             lote = Lote.objects.filter(user=request.user)
@@ -173,8 +197,14 @@ class LoteDAO(models.Model):
         data['object_list'] = lote
         return data
 
+    def lote_list_pending(request, template_name):
+        lote = Lote.objects.filter(state='Pendente')
+        data = {}
+        data['object_list'] = lote
+        return data
+
     def available_list(request, template_name):
-        lote = Lote.objects.all()
+        lote = Lote.objects.filter(state='Aprovado')
         data = {}
         data['object_list'] = lote
         return data
@@ -198,6 +228,13 @@ class LoteDAO(models.Model):
         else:
             lote= get_object_or_404(Lote, pk=pk, user=request.user)
         return lote
+
+    def lote_pending(request, pk, template_name):
+        lote = get_object_or_404(Lote, pk=pk)
+        form = LotePendingForm(request.POST or None, instance=lote)
+        return form, lote
+
+        
 
 ####################################################################################
 ### Leilao #########################################################################
@@ -407,6 +444,23 @@ class CompradorDAO(models.Model):
         bool_user = Comprador_fbv.objects.filter(username = username).exists()
         print("Entrou Username comprador filter", username, bool_user)
         return bool_user
+
+####################################################################################
+### Leilao #########################################################################
+####################################################################################
+
+# class Leilao(models.Mode):
+#     name = models.CharField(max_length=64, default='', blank=False)
+#     summary = models.CharField(max_length=512, default='', blank=False)
+#     quantity = models.IntegerField(default=1, blank=False)
+#     category = models.CharField(max_length=64, choices=CATEGORY_CHOICES, default='', blank=False)
+#     author = models.CharField(max_length=64, default='', blank=False)
+#     publisher = models.CharField(max_length=64, default='', blank=False)
+#     edition = models.CharField(max_length=64, default='', blank=False)
+#     number_of_pages = models.CharField(max_length=64, default='', blank=False)
+#     condition = models.CharField(max_length=64, choices=CONDITION_CHOICES, default='', blank=False)
+#     reserve_price = models.DecimalField(default=10.00, decimal_places=2, max_digits=16, blank=False)
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
 
 ####################################################################################
 ### WIP: Relatorio #################################################################

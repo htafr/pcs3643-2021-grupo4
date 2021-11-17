@@ -17,7 +17,12 @@ def list_lote(request, template_name='leilao_fbv_user/lote_list.html'):
 def list_available(request, template_name='leilao_fbv_user/available_lote.html'):
     data = LoteDAO.available_list(request=request, template_name=template_name)
     return render(request, template_name, data)
-    
+
+@login_required
+def list_pending_lote(request, template_name='leilao_fbv_user/lote_pendente.html'):
+    data = LoteDAO.lote_list_pending(request=request, template_name=template_name)
+    return render(request, template_name, data)
+
 @login_required
 def create_lote(request, template_name='leilao_fbv_user/lote_form.html'):
     form = LoteDAO.lote_create(request=request, template_name=template_name)
@@ -35,6 +40,19 @@ def update_lote(request, pk, template_name='leilao_fbv_user/lote_form.html'):
         form.save()
         return redirect('leilao_fbv_user:lote_list')
     return render(request, template_name, {'form':form})
+
+@login_required
+def update_pending_lote(request, pk, template_name='leilao_fbv_user/lote_analise.html'):
+    form, lote = LoteDAO.lote_pending(request=request, pk=pk, template_name=template_name)
+    if form.is_valid():
+        form.save()
+        return redirect('leilao_fbv_user:lote_pending_list')
+
+    context = {
+        'form': form,
+        'lote': lote,
+    }
+    return render(request, template_name, context)
     
 @login_required
 def delete_lote(request, pk, template_name='leilao_fbv_user/lote_confirm_delete.html'):
@@ -156,7 +174,7 @@ def redirect_user(request):
 ### Vendedor #######################################################################
 ####################################################################################
 
-#@login_required
+@login_required
 def redirect_vendedor(request, template_name='leilao_fbv_user/vendedor_page.html'):
     return render(request, template_name)
 
@@ -198,7 +216,7 @@ def delete_vendedor(request, pk, template_name='leilao_fbv/vendedor_confirm_dele
 #     data = CompradorDAO.vendedor_list(request, template_name=template_name)
 #     return render(request, template_name, data)
 
-#@login_required
+@login_required
 def redirect_comprador(request, template_name='leilao_fbv_user/comprador_page.html'):
     return render(request, template_name)
 
