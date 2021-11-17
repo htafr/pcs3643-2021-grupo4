@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import fields
 from django.urls import reverse
 from django.conf import UserSettingsHolder, settings
 from datetime import date
@@ -121,6 +122,12 @@ YEAR_CHOICES = (
     ('2027', '2027'),
 )
 
+LEILAO_CHOICES = (
+    ("ATIVO", "Ativo"),
+    ("FINALIZADO","Finalizado"),
+    ("ESPERA", "Espera")
+)
+
 ####################################################################################
 ### Lote ###########################################################################
 ####################################################################################
@@ -192,6 +199,65 @@ class LoteDAO(models.Model):
             lote= get_object_or_404(Lote, pk=pk, user=request.user)
         return lote
 
+####################################################################################
+### Leilao #########################################################################
+####################################################################################
+
+class Leilao(models.Model):
+    name = models.CharField(max_length=64, default='', blank=False)
+    final_period = models.DateTimeField()
+    status_leilao = models.CharField(max_length=16, choices=LEILAO_CHOICES, blank=False, null=False)
+
+    lote = models.OneToOneField(
+        Lote,
+        on_delete=models.CASCADE,
+    )
+
+class LeilaoForm(ModelForm):
+    class Meta:
+        model = Leilao
+        fields = ['name', 'final_period']
+
+class LeilaoDAO(models.Model):
+    def leilao_create(request, template_name):
+        leilao = Leilao().set_user(request.user)
+        form = LeilaoForm(request.POST or None)
+        return form
+
+    def leilao_delete(request, pk, template_name):
+        if request.user.is_superuser:
+            leilao= get_object_or_404(Lote, pk=pk)
+        else:
+            leilao= get_object_or_404(Lote, pk=pk, user=request.user)
+        return leilao
+
+    def leilao_update(request, pk, template_name):
+        if request.user.is_superuser:
+            leilao= get_object_or_404(Lote, pk=pk)
+        else:
+            leilao= get_object_or_404(Lote, pk=pk, user=request.user)
+        form = LoteForm(request.POST or None, instance=leilao)
+        return form
+
+####################################################################################
+### Lance ##########################################################################
+####################################################################################
+
+class Lance(models.Model):
+    valor = models.FloatField()
+    comprador = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    leilao = models.ForeignKey(Leilao, on_delete=models.CASCADE)
+
+    # Verificar isso depois
+    def __str__(self):
+        return '{0} - R${1}'.format(self.comprador.username, self.valor)
+
+class LanceForm(ModelForm):
+    class Meta:
+        model = Lance
+        fields = ['valor']
+
+        
 ####################################################################################
 ### Leiloeiro ######################################################################
 ####################################################################################
