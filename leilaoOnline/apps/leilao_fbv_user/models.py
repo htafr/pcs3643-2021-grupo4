@@ -159,7 +159,6 @@ class Lote(models.Model):
 
     ### Preenchido automaticamente
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
     
     def __str__(self):
         return self.name
@@ -269,7 +268,7 @@ class Leilao(models.Model):
     ### Atributos Classes
     lote = models.OneToOneField(Lote, on_delete=models.CASCADE)
     lance = models.ForeignKey(Lance, on_delete=models.CASCADE, blank=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
