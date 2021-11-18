@@ -6,7 +6,11 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 
 from leilao_fbv.models import Vendedor, VendedorDAO, Comprador, CompradorDAO, Leiloeiro, LeiloeiroDAO
-from .models import Leilao, LeilaoDAO, Lote, LoteDAO, Lance
+from .models import Leilao, LeilaoDAO, Lote, LoteDAO, Lance, LanceDAO
+
+####################################################################################
+### Lote ###########################################################################
+####################################################################################
 
 @login_required
 def list_lote(request, template_name='leilao_fbv_user/lote_list.html'):
@@ -70,11 +74,28 @@ def delete_lote(request, pk, template_name='leilao_fbv_user/lote_confirm_delete.
 def create_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html'):
     form, lote = LeilaoDAO.leilao_create(request=request, pk=pk, template_name=template_name)
     if form.is_valid():
+        ### Adiciona user no forms
         form.instance.user = request.user
+
+        ### Cria leilao a partir do forms
         leilao = form.save(commit=False)
         leilao.lote_id = pk
         leilao.user_id = request.user.id
+
+        ### Cria lance inicial para preencher o atributo da classe Leilao
+        ### ESSE LANCE INICIAL NÃO DEVE FAZER PARTE DO RELATÓRIO
+        lance = LanceDAO.init_lance(leilao.lote.minimum_bid)
+        lance.user = request.user
+        lance.save()
+
+        ### Passa o id do lance para o leilao
+        leilao.lance_id = lance.id
         leilao.save()
+
+        ### Passa o id do leilao criado para o lance
+        ### dessa forma ele pode ser ligado ao leilao
+        lance.leilao_id = leilao.id
+        lance.save()
         return redirect('leilao_fbv_user:redirect_user')
 
     context = {
@@ -154,18 +175,27 @@ def delete_leilao(request, pk, template_name='leilao_fbv_user/leilao_confirm_del
 ### Lance ##########################################################################
 ####################################################################################
 
-### Por que LanceForm?
+def make_bid(request, pk, template_name='leilao_fbv_user/lance_form.html'):
+    form, leilao = LeilaoDAO.make_bid(request=request, pk=pk, template_name=template_name)
+    if form.is_valid():
+        form.instance.user = request.user
+        lance = form.save(commit=False)
 
-# def realiza_lance(request, id_leilao, template_name='leilao_fbv_user/lance_form.html'):
-#     leilao = get_object_or_404(Leilao, pk=id_leilao)
-#     form = LanceForm(request.POST or None, leilao)
-#     if form.is_valid():
-#         lance = form.save(commit=False)
-#         lance.leilao = leilao
-#         lance.comprador = request.user
-#         lance.save()
-#         return redirect('leilao_fbv_user:show_leilao', pk=id_leilao)
-#     return render(request, template_name, {'form':form})
+        valor = form.cleaned_data.get('valor')
+
+        if valor > (leilao.lance.valor + leilao.lote.minimum_bid):
+            lance.leilao_id = pk
+            lance.save()
+            leilao.lance = lance
+            leilao.save()
+
+        return redirect('leilao_fbv_user:show_leilao', pk=leilao.id)
+
+    context = {
+        'form': form,
+        'leilao': leilao,
+    }
+    return render(request, template_name, context)
 
 ####################################################################################
 ### Login User #####################################################################
