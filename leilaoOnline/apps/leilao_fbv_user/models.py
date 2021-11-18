@@ -158,8 +158,8 @@ class Lote(models.Model):
     state = models.CharField(max_length=16, choices=LOTE_CHOICES, default='Pendente')
 
     ### Preenchido automaticamente
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True, default='')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
     
     def __str__(self):
         return self.name
