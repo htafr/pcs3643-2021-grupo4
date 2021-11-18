@@ -87,10 +87,13 @@ def create_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html')
 def show_leilao(request, pk, template_name='leilao_fbv_user/show_leilao.html'):
     leilao = get_object_or_404(Leilao, pk=pk)
     lances = Lance.objects.all()
-    data = {}
-    data['leilao'] = leilao
-    data['lista_de_lances'] = sorted(lances, key=lambda t: t.valor, reverse=True)
-    return render(request, template_name, data)
+    context = {
+        'leilao': leilao,
+        'lista_de_lances': sorted(lances, key=lambda t: t.valor, reverse=True)
+    }
+    # data['leilao'] = leilao
+    # data['lista_de_lances'] = sorted(lances, key=lambda t: t.valor, reverse=True)
+    return render(request, template_name, context)
 
 @login_required
 def start_leilao(request, pk, template_name='leilao_fbv_user/show_leilao.html'):
@@ -108,17 +111,26 @@ def end_leilao(request, pk, template_name='leilao_fbv_user/show_leilao.html'):
 
 @login_required
 def list_leilao(request, template_name='leilao_fbv_user/leilao_list.html'):
-    leiloes = Leilao.objects.all()
-    leiloes_espera = Leilao.objects.filter(status_leilao='ESPERA')
-    leiloes_ativos = Leilao.objects.filter(status_leilao='ATIVO')
-    leiloes_finalizados = Leilao.objects.filter(status_leilao='FINALIZADO')
-    lances = Lance.objects.all()
+    data = LeilaoDAO.leilao_list_all(request=request, template_name=template_name)
+    # leiloes = Leilao.objects.all()
+    # leiloes_espera = Leilao.objects.filter(status_leilao='ESPERA')
+    # leiloes_ativos = Leilao.objects.filter(status_leilao='ATIVO')
+    # leiloes_finalizados = Leilao.objects.filter(status_leilao='FINALIZADO')
+    # lances = Lance.objects.all()
 
-    data = {}
-    data['lista_leiloes_espera'] = leiloes_espera
-    data['lista_leiloes_ativos'] = leiloes_ativos
-    data['lista_leiloes_finalizados'] = leiloes_finalizados
-    data['lista_lances'] = sorted(lances, key=lambda t: t.valor, reverse=True)
+    # context = {
+    #     'leiloes': leiloes,
+    #     'lista_leiloes_esperta': leiloes_espera,
+    #     'lista_leiloes_ativos': leiloes_ativos,
+    #     'lista_leiloes_finalizados': leiloes_finalizados,
+    #     'lista_lances': sorted(lances, key=lambda t: t.valor, reverse=True),
+    # }
+
+    # data = {}
+    # data['lista_leiloes_espera'] = leiloes_espera
+    # data['lista_leiloes_ativos'] = leiloes_ativos
+    # data['lista_leiloes_finalizados'] = leiloes_finalizados
+    # data['lista_lances'] = sorted(lances, key=lambda t: t.valor, reverse=True)
 
     return render(request, template_name, data)
 

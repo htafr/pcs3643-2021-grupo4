@@ -270,6 +270,12 @@ class LeilaoForm(ModelForm):
                   'close_month', 'close_day', 'close_year', 'status_leilao']
 
 class LeilaoDAO(models.Model):
+    def leilao_list_all(request, template_name):
+        leilao = Leilao.objects.all()
+        data = {}
+        data['object_list'] = leilao
+        return data
+
     def leilao_create(request, pk, template_name):
         ### Encontra o lote com pk
         lote = get_object_or_404(Lote, pk=pk)

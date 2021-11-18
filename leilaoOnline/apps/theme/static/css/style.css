@@ -72,7 +72,7 @@ li a, .drop-btn {
 }
 
 /***************************************
-** Vendedor Page ***********************
+** User Page ***********************
 ***************************************/
 .user_menu ul {
     list-style-type: none;
@@ -80,7 +80,7 @@ li a, .drop-btn {
     margin: 15%;
     padding: 0;
     width: 70%;
-    height: 14.5%;
+    height: 23.2%;
     border: 1px solid #555;
 }
 
@@ -127,6 +127,15 @@ li a, .drop-btn {
     justify-content: space-between;
 }
 
+#lote_list ul {
+    list-style-type: none;
+}
+
+#lote_list li {
+    float: left;
+    clear: left;
+}
+
 /***************************************
 ** Login Page **************************
 ***************************************/
@@ -157,13 +166,18 @@ li a, .drop-btn {
 }
 
 /***************************************
-** Lote List ***************************
+** Leilao List ***************************
 ***************************************/
-#lote_list ul {
+#user_page #leilao_options {
+    display: flex;
+    justify-content: space-between;
+}
+
+#leilao_list ul {
     list-style-type: none;
 }
 
-#lote_list li {
+#leilao_list li {
     float: left;
     clear: left;
 }
