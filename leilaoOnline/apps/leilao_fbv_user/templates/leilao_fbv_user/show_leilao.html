@@ -22,10 +22,16 @@
         <li>Edição: {{ leilao.lote.edition }}</li>
         <li>Número de Páginas: {{ leilao.lote.number_of_pages }}</li>
         <li>Condição: {{ leilao.lote.condition }}</li>
-        <li>Preço Reserva: R${{ leilao.lote.reserve_price }}</li>
         <li>Intervalo Mínimo de Lance: R${{ leilao.lote.minimum_bid }}</li>
         
         <li>Anunciante: {{ leilao.lote.user }}</li>
+
+        {% if leilao.lance.user.is_staff %}
+        <li>Vencedor Atual: </li>
+        {% else %}
+        <li>Vencedor Atual: {{ leilao.lance.user }}</li>
+        {% endif %}
+        <li>Valor atual: {{ leilao.lance.valor }}</li>
 
         <li>
             <div id="leilao_options">

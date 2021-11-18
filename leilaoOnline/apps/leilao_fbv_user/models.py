@@ -7,11 +7,9 @@ from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
-# import para fazer a comparacao com as tabelas fora de fbv_user (onde estao os cadastros)
-from leilao_fbv.models import Vendedor as Vendedor_fbv
-from leilao_fbv.models import Comprador as Comprador_fbv
-from leilao_fbv.models import Leiloeiro as Leiloeiro_fbv
-
+####################################################################################
+### Choices ########################################################################
+####################################################################################
 CATEGORY_CHOICES = (
     ('Administração, Negócios e Economia','Administração, Negócios e Economia'),
     ('Arte, Cinema e Fotografia', 'Arte, Cinema e Fotografia'),
@@ -230,7 +228,32 @@ class LoteDAO(models.Model):
         form = LotePendingForm(request.POST or None, instance=lote)
         return form, lote
 
-        
+####################################################################################
+### Lance ##########################################################################
+####################################################################################
+
+class Lance(models.Model):
+    valor = models.DecimalField(default=10.00, decimal_places=2, max_digits=16, blank=False)
+    leilao_id = models.IntegerField(default=0, blank=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    # Verificar isso depois
+    def __str__(self):
+        return '{0} - R${1}'.format(self.user.username, self.valor)
+    
+    def init(self, valor):
+        self.valor = valor
+        return self
+
+class LanceForm(ModelForm):
+    class Meta:
+        model = Lance
+        fields = ['valor']        
+
+class LanceDAO(models.Model):
+    def init_lance(valor):
+        lance = Lance().init(valor)
+        return lance
 
 ####################################################################################
 ### Leilao #########################################################################
@@ -238,36 +261,22 @@ class LoteDAO(models.Model):
 
 class Leilao(models.Model):
     name = models.CharField(max_length=64, default='', blank=False)
-    opening_month = models.CharField(max_length=16, choices=MONTH_CHOICES, default='Mês')
-    opening_day = models.CharField(max_length=3, choices=DAY_CHOICES, default='Dia')
-    opening_year = models.CharField(max_length=4, choices=YEAR_CHOICES, default='Ano')
-    close_month = models.CharField(max_length=16, choices=MONTH_CHOICES, default='Mês')
-    close_day = models.CharField(max_length=3, choices=DAY_CHOICES, default='Dia')
-    close_year = models.CharField(max_length=4, choices=YEAR_CHOICES, default='Ano')
-
-    ### Vai fazer o quê?
+    opening_date = models.DateField(auto_now=True)
+    close_date = models.DateField(auto_now=True)
     status_leilao = models.CharField(max_length=16, choices=LEILAO_CHOICES, blank=False, null=False)
 
-    ### Preenchido automaticamente
-    lote = models.OneToOneField(
-        Lote,
-        on_delete=models.CASCADE,
-        primary_key=True,
-    )
+    ### Atributos Classes
+    lote = models.OneToOneField(Lote, on_delete=models.CASCADE)
+    lance = models.ForeignKey(Lance, on_delete=models.CASCADE, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
 
     def __str__(self):
         return self.name
 
-    def init(self, lote, user):
-        self.lote = lote
-        self.user = user
-
 class LeilaoForm(ModelForm):
     class Meta:
         model = Leilao
-        fields = ['name', 'opening_month', 'opening_day', 'opening_year',
-                  'close_month', 'close_day', 'close_year', 'status_leilao']
+        fields = ['name', 'status_leilao']
 
 class LeilaoDAO(models.Model):
     def leilao_create(request, pk, template_name):
@@ -302,23 +311,30 @@ class LeilaoDAO(models.Model):
         form = LoteForm(request.POST or None, instance=leilao)
         return form
 
+    def make_bid(request, pk, template_name):
+        leilao = get_object_or_404(Leilao, pk=pk)
+        form = LanceForm(request.POST or None)
+        return form, leilao
+
 ####################################################################################
-### Lance ##########################################################################
+### WIP: Relatorio #################################################################
 ####################################################################################
 
-class Lance(models.Model):
-    valor = models.FloatField()
-    comprador = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    leilao = models.ForeignKey(Leilao, on_delete=models.CASCADE)
+# class Relatorio(models.Model):
+#     leilao = models.IntegerField(default=1)
+#     lote = models.CharField(max_length=256)
+#     vendas = models.CharField(max_length=256)
+#     receita = models.CharField(max_length=256)
+#     custos = models.CharField(max_length=256)
+#     lucro = models.CharField(max_length=256)
+#     periodo = models.DateField(default=date.today)
+#     vendedor = models.CharField(max_length=256)
+#     comprador = models.CharField(max_length=256)
+#     lances = models.CharField(max_length=256)
+#     vencedor = models.CharField(max_length=256)
 
-    # Verificar isso depois
-    def __str__(self):
-        return '{0} - R${1}'.format(self.comprador.username, self.valor)
 
-class LanceForm(ModelForm):
-    class Meta:
-        model = Lance
-        fields = ['valor']
+### No futuro o leiloeiro só podera ser cadastrado por membros da equipe
 
 ####################################################################################
 ### Leiloeiro ######################################################################
@@ -370,20 +386,3 @@ class LanceForm(ModelForm):
 #         bool_user = Leiloeiro_fbv.objects.filter(username = username).exists()
 #         # print("Entrou Username Leiloeiro filter", username, bool_user)
 #         return bool_user
-
-####################################################################################
-### WIP: Relatorio #################################################################
-####################################################################################
-
-# class Relatorio(models.Model):
-#     leilao = models.IntegerField(default=1)
-#     lote = models.CharField(max_length=256)
-#     vendas = models.CharField(max_length=256)
-#     receita = models.CharField(max_length=256)
-#     custos = models.CharField(max_length=256)
-#     lucro = models.CharField(max_length=256)
-#     periodo = models.DateField(default=date.today)
-#     vendedor = models.CharField(max_length=256)
-#     comprador = models.CharField(max_length=256)
-#     lances = models.CharField(max_length=256)
-#     vencedor = models.CharField(max_length=256)
