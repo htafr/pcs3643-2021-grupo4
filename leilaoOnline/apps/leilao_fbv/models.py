@@ -43,11 +43,11 @@ BANK_CHOICES = (
 ####################################################################################
 
 class Vendedor(models.Model):
-    name = models.CharField(max_length=256)
+    name = models.CharField(max_length=255)
     username = models.CharField(max_length=16, default='', unique=True)
-    email = models.CharField(max_length=256, default='', unique=True)
+    email = models.CharField(max_length=255, default='', unique=True)
     password = models.CharField(max_length=16, default='')
-    address = models.CharField(max_length=256)
+    address = models.CharField(max_length=255)
     birth_date = models.DateField(default=date.today)
     rg = models.CharField(max_length=9, unique=True)
     cpf = models.CharField(max_length=11, unique=True)
@@ -96,11 +96,11 @@ class VendedorDAO(models.Model):
 ####################################################################################
 
 class Comprador(models.Model):
-    name = models.CharField(max_length=256)
+    name = models.CharField(max_length=255)
     username = models.CharField(max_length=16, default='', unique=True)
-    email = models.CharField(max_length=256, default='', unique=True)
+    email = models.CharField(max_length=255, default='', unique=True)
     password = models.CharField(max_length=16, default='')
-    address = models.CharField(max_length=256)
+    address = models.CharField(max_length=255)
     birth_date = models.DateField(default=date.today)
     rg = models.CharField(max_length=9, unique=True)
     cpf = models.CharField(max_length=11, unique=True)
@@ -147,11 +147,11 @@ class CompradorDAO(models.Model):
 ####################################################################################
         
 class Leiloeiro(models.Model):
-    name = models.CharField(max_length=256)
+    name = models.CharField(max_length=255)
     username = models.CharField(max_length=16, default='', unique=True)
-    email = models.CharField(max_length=256, default='', unique=True)
+    email = models.CharField(max_length=255, default='', unique=True)
     password = models.CharField(max_length=16, default='')
-    address = models.CharField(max_length=256)
+    address = models.CharField(max_length=255)
     birth_date = models.DateField(default=date.today)
     rg = models.CharField(max_length=9)
     cpf = models.CharField(max_length=11)

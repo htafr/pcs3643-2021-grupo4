@@ -160,7 +160,8 @@ class Lote(models.Model):
     state = models.CharField(max_length=16, choices=LOTE_CHOICES, default='Pendente')
 
     ### Preenchido automaticamente
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True, default='')
     
     def __str__(self):
         return self.name
@@ -254,7 +255,8 @@ class Leilao(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
     )
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True, default='')
 
     def __str__(self):
         return self.name
