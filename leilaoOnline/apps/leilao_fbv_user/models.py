@@ -324,168 +324,52 @@ class LanceForm(ModelForm):
 ### Leiloeiro ######################################################################
 ####################################################################################
 
-class Leiloeiro(models.Model):
-    name = models.CharField(max_length=256)
-    username = models.CharField(max_length=16, default='', unique=True)
-    email = models.CharField(max_length=256, default='', unique=True)
-    password = models.CharField(max_length=16, default='')
-    address = models.CharField(max_length=256)
-    birth_date = models.DateField(default=date.today)
-    rg = models.CharField(max_length=9)
-    cpf = models.CharField(max_length=11)
-    bank = models.CharField(max_length=64, choices=BANK_CHOICES, default='')
-    agency = models.IntegerField(default=1)
-    account_number = models.CharField(max_length=64)
-    salary = models.DecimalField(default=10, decimal_places=2, max_digits=8)
+# class Leiloeiro(models.Model):
+#     name = models.CharField(max_length=256)
+#     username = models.CharField(max_length=16, default='', unique=True)
+#     email = models.CharField(max_length=256, default='', unique=True)
+#     password = models.CharField(max_length=16, default='')
+#     address = models.CharField(max_length=256)
+#     birth_date = models.DateField(default=date.today)
+#     rg = models.CharField(max_length=9)
+#     cpf = models.CharField(max_length=11)
+#     bank = models.CharField(max_length=64, choices=BANK_CHOICES, default='')
+#     agency = models.IntegerField(default=1)
+#     account_number = models.CharField(max_length=64)
+#     salary = models.DecimalField(default=10, decimal_places=2, max_digits=8)
     
-class LeiloeiroForm(ModelForm):
-    class Meta:
-        model = Leiloeiro
-        fields = ['name', 'username','password',
-                  'email','address', 'birth_date',
-                  'rg', 'cpf', 'bank', 'agency',
-                  'account_number', 'salary']
+# class LeiloeiroForm(ModelForm):
+#     class Meta:
+#         model = Leiloeiro
+#         fields = ['name', 'username','password',
+#                   'email','address', 'birth_date',
+#                   'rg', 'cpf', 'bank', 'agency',
+#                   'account_number', 'salary']
 
-class LeiloeiroDAO(models.Model):
-    def leiloeiro_list(request, template_name):
-        lote = Leiloeiro.objects.all()
-        data = {}
-        data['object_list'] = lote
-        return data
+# class LeiloeiroDAO(models.Model):
+#     def leiloeiro_list(request, template_name):
+#         lote = Leiloeiro.objects.all()
+#         data = {}
+#         data['object_list'] = lote
+#         return data
     
-    def leiloeiro_create(request, template_name):
-        form = LeiloeiroForm(request.POST or None)
-        return form
+#     def leiloeiro_create(request, template_name):
+#         form = LeiloeiroForm(request.POST or None)
+#         return form
     
-    def leiloeiro_update(request, pk, template_name):
-        leiloeiro = get_object_or_404(Leiloeiro, pk=pk)
-        form = LoteForm(request.POST or None, instance=leiloeiro)
-        return form
+#     def leiloeiro_update(request, pk, template_name):
+#         leiloeiro = get_object_or_404(Leiloeiro, pk=pk)
+#         form = LoteForm(request.POST or None, instance=leiloeiro)
+#         return form
 
-    def leiloeiro_delete(request, pk, template_name):
-        leiloeiro = get_object_or_404(Leiloeiro, pk=pk)
-        return leiloeiro
+#     def leiloeiro_delete(request, pk, template_name):
+#         leiloeiro = get_object_or_404(Leiloeiro, pk=pk)
+#         return leiloeiro
 
-    def leiloeiro_filter(request, username):
-        bool_user = Leiloeiro_fbv.objects.filter(username = username).exists()
-        # print("Entrou Username Leiloeiro filter", username, bool_user)
-        return bool_user
-
-####################################################################################
-### Vendedor #######################################################################
-####################################################################################
-
-class Vendedor(models.Model):
-    name = models.CharField(max_length=256)
-    username = models.CharField(max_length=16, default='')
-    email = models.CharField(max_length=256, default='')
-    password = models.CharField(max_length=16, default='')
-    address = models.CharField(max_length=256)
-    birth_date = models.DateField(default=date.today)
-    rg = models.CharField(max_length=9)
-    cpf = models.CharField(max_length=11)
-    bank = models.CharField(max_length=64, choices=BANK_CHOICES, default='')
-    agency = models.IntegerField(default=1)
-    account_number = models.CharField(max_length=64)
-    
-class VendedorForm(ModelForm):
-    class Meta:
-        model = Vendedor
-        fields = ['name', 'username', 'email', 'password',
-                  'address', 'birth_date', 'rg',
-                  'cpf', 'bank', 'agency',
-                  'account_number']
-
-class VendedorDAO(models.Model):
-
-    def vendedor_list(request, template_name):
-        vendedor = Vendedor.objects.all()
-        data = {}
-        data['object_list'] = vendedor
-        return data
-
-    def vendedor_create(request, template_name):
-        form = VendedorForm(request.POST or None)
-        return form
-    
-    def vendedor_update(request, pk, template_name):
-        vendedor = get_object_or_404(Vendedor, pk=pk)
-        form = LoteForm(request.POST or None, instance=vendedor)
-        return form
-
-    def vendedor_delete(request, pk, template_name):
-        vendedor = get_object_or_404(Vendedor, pk=pk)
-        return vendedor
-    
-    def vendedor_filter(request, username):
-        bool_user = Vendedor_fbv.objects.filter(username = username).exists()
-        # print("Entrou Username vendedor filter", username, bool_user)
-        return bool_user
-
-####################################################################################
-### Comprador ######################################################################
-####################################################################################
-
-class Comprador(models.Model):
-    name = models.CharField(max_length=256)
-    username = models.CharField(max_length=16, default='')
-    email = models.CharField(max_length=256, default='')
-    password = models.CharField(max_length=16, default='')
-    address = models.CharField(max_length=256)
-    birth_date = models.DateField(default=date.today)
-    rg = models.CharField(max_length=9)
-    cpf = models.CharField(max_length=11)
-    card_number = models.CharField(max_length=16, default='')
-    
-class CompradorForm(ModelForm):
-    class Meta:
-        model = Comprador
-        fields = ['name', 'username', 'email', 'password',
-                  'address', 'birth_date', 'rg',
-                  'cpf', 'card_number']
-
-class CompradorDAO(models.Model):
-
-    def comprador_list(request, template_name):
-        comprador = Comprador.objects.all()
-        data = {}
-        data['object_list'] = comprador
-        return data
-
-    def comprador_create(request, template_name):
-        form = CompradorForm(request.POST or None)
-        return form
-    
-    def comprador_update(request, pk, template_name):
-        comprador = get_object_or_404(Comprador, pk=pk)
-        form = LoteForm(request.POST or None, instance=comprador)
-        return form
-
-    def comprador_delete(request, pk, template_name):
-        comprador = get_object_or_404(Comprador, pk=pk)
-        return comprador
-
-    def comprador_filter(request, username):
-        bool_user = Comprador_fbv.objects.filter(username = username).exists()
-        # print("Entrou Username comprador filter", username, bool_user)
-        return bool_user
-
-####################################################################################
-### Leilao #########################################################################
-####################################################################################
-
-# class Leilao(models.Mode):
-#     name = models.CharField(max_length=64, default='', blank=False)
-#     summary = models.CharField(max_length=512, default='', blank=False)
-#     quantity = models.IntegerField(default=1, blank=False)
-#     category = models.CharField(max_length=64, choices=CATEGORY_CHOICES, default='', blank=False)
-#     author = models.CharField(max_length=64, default='', blank=False)
-#     publisher = models.CharField(max_length=64, default='', blank=False)
-#     edition = models.CharField(max_length=64, default='', blank=False)
-#     number_of_pages = models.CharField(max_length=64, default='', blank=False)
-#     condition = models.CharField(max_length=64, choices=CONDITION_CHOICES, default='', blank=False)
-#     reserve_price = models.DecimalField(default=10.00, decimal_places=2, max_digits=16, blank=False)
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
+#     def leiloeiro_filter(request, username):
+#         bool_user = Leiloeiro_fbv.objects.filter(username = username).exists()
+#         # print("Entrou Username Leiloeiro filter", username, bool_user)
+#         return bool_user
 
 ####################################################################################
 ### WIP: Relatorio #################################################################

@@ -5,8 +5,8 @@ from django.forms import ModelForm
 
 from django.contrib.auth.models import User
 
-from .models import Leilao, LeilaoDAO, Lote, LoteDAO, Vendedor, VendedorDAO, Comprador, CompradorDAO, LeiloeiroDAO
-from .models import Lance
+from leilao_fbv.models import Vendedor, VendedorDAO, Comprador, CompradorDAO, Leiloeiro, LeiloeiroDAO
+from .models import Leilao, LeilaoDAO, Lote, LoteDAO, Lance
 
 @login_required
 def list_lote(request, template_name='leilao_fbv_user/lote_list.html'):

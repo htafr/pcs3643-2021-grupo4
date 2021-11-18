@@ -68,6 +68,29 @@ class VendedorDAO(models.Model):
         form = VendedorForm(request.POST or None)
         return form
 
+    def vendedor_list(request, template_name):
+        vendedor = Vendedor.objects.all()
+        data = {}
+        data['object_list'] = vendedor
+        return data
+
+    def vendedor_create(request, template_name):
+        form = VendedorForm(request.POST or None)
+        return form
+    
+    def vendedor_update(request, pk, template_name):
+        vendedor = get_object_or_404(Vendedor, pk=pk)
+        form = VendedorForm(request.POST or None, instance=vendedor)
+        return form
+
+    def vendedor_delete(request, pk, template_name):
+        vendedor = get_object_or_404(Vendedor, pk=pk)
+        return vendedor
+    
+    def vendedor_filter(request, username):
+        bool_user = Vendedor.objects.filter(username = username).exists()
+        return bool_user
+
 ####################################################################################
 ### Comprador ######################################################################
 ####################################################################################
@@ -94,6 +117,29 @@ class CompradorDAO(models.Model):
     def comprador_create(request, template_name):
         form = CompradorForm(request.POST or None)
         return form
+
+    def comprador_list(request, template_name):
+        comprador = Comprador.objects.all()
+        data = {}
+        data['object_list'] = comprador
+        return data
+
+    def comprador_create(request, template_name):
+        form = CompradorForm(request.POST or None)
+        return form
+    
+    def comprador_update(request, pk, template_name):
+        comprador = get_object_or_404(Comprador, pk=pk)
+        form = CompradorForm(request.POST or None, instance=comprador)
+        return form
+
+    def comprador_delete(request, pk, template_name):
+        comprador = get_object_or_404(Comprador, pk=pk)
+        return comprador
+
+    def comprador_filter(request, username):
+        bool_user = Comprador.objects.filter(username = username).exists()
+        return bool_user
 
 
 ####################################################################################
@@ -126,3 +172,26 @@ class LeiloeiroDAO(models.Model):
     def leiloeiro_create(request, template_name):
         form = LeiloeiroForm(request.POST or None)
         return form
+    
+    def leiloeiro_list(request, template_name):
+        lote = Leiloeiro.objects.all()
+        data = {}
+        data['object_list'] = lote
+        return data
+    
+    def leiloeiro_create(request, template_name):
+        form = LeiloeiroForm(request.POST or None)
+        return form
+    
+    def leiloeiro_update(request, pk, template_name):
+        leiloeiro = get_object_or_404(Leiloeiro, pk=pk)
+        form = LeiloeiroForm(request.POST or None, instance=leiloeiro)
+        return form
+
+    def leiloeiro_delete(request, pk, template_name):
+        leiloeiro = get_object_or_404(Leiloeiro, pk=pk)
+        return leiloeiro
+
+    def leiloeiro_filter(request, username):
+        bool_user = Leiloeiro.objects.filter(username = username).exists()
+        return bool_user

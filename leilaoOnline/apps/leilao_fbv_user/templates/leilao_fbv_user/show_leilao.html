@@ -3,15 +3,9 @@
 {% block content %}
 
 <div class="sub_header">
-    {% if user.is_staff %}
     <div>
-        <h2 id="tcolor">Leilões Disponíveis</h2>
+        <h2 id="tcolor">{{ leilao.name }}: {{ leilao.status_leilao }}</h2>
     </div>
-    {% else %}
-    <div>
-        <h2 id="tcolor">WIP: Leilões Disponíveis</h2>
-    </div>
-    {% endif %}
     <div>
         <h2 id="voltar"><a href="{% url 'leilao_fbv_user:list_leilao' %}">Voltar</a></h2>
     </div>
@@ -28,7 +22,7 @@
         <li>Edição: {{ leilao.lote.edition }}</li>
         <li>Número de Páginas: {{ leilao.lote.number_of_pages }}</li>
         <li>Condição: {{ leilao.lote.condition }}</li>
-        <li>Preço Reserva: R${{ leilao.reserve_price }}</li>
+        <li>Preço Reserva: R${{ leilao.lote.reserve_price }}</li>
         <li>Intervalo Mínimo de Lance: R${{ leilao.lote.minimum_bid }}</li>
         
         <li>Anunciante: {{ leilao.lote.user }}</li>
@@ -37,10 +31,10 @@
             <div id="leilao_options">
                 {% if user.is_staff %}
                 <a id="edit" href="">Editar</a>
+                <a id="delete" href="">Deletar</a>
                 {% else %}
                 <a id="bid" href="">Dar Lance</a>
                 {% endif %}
-                <a id="delete" href="">Deletar</a>
             </div>
         </li>
     </ul>
