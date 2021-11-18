@@ -13,47 +13,37 @@
     </div>
     {% endif %}
     <div>
-        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:redirect_user' %}">Voltar</a></h2>
+        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:list_leilao' %}">Voltar</a></h2>
     </div>
 </div>
 
 <div id="user_page">
-    <ul>
-        {% for leilao in object_list %}
+    <ul id="leilao_list">
+        <li>{{ leilao.lote.name }}</li>
+        <li>Quantidade: {{ leilao.lote.quantity }}</li>
+        <li>Descrição: {{ leilao.lote.summary }}</li>
+        <li>Categoria: {{ leilao.lote.category }}</li>
+        <li>Autor: {{ leilao.lote.author }}</li>
+        <li>Editora: {{ leilao.lote.publisher }}</li>
+        <li>Edição: {{ leilao.lote.edition }}</li>
+        <li>Número de Páginas: {{ leilao.lote.number_of_pages }}</li>
+        <li>Condição: {{ leilao.lote.condition }}</li>
+        <li>Preço Reserva: R${{ leilao.reserve_price }}</li>
+        <li>Intervalo Mínimo de Lance: R${{ leilao.lote.minimum_bid }}</li>
+        
+        <li>Anunciante: {{ leilao.lote.user }}</li>
+
         <li>
-            <span>
-                {{ leilao.lote.name }}<br>
-                Quantidade: {{ leilao.lote.quantity }}<br>
-                Descrição: {{ leilao.lote.summary }}<br>
-                Categoria: {{ leilao.lote.category }}<br>
-                Autor: {{ leilao.lote.author }}<br>
-                Editora: {{ leilao.lote.publisher }}<br>
-                Edição: {{ leilao.lote.edition }}<br>
-                Número de Páginas: {{ leilao.lote.number_of_pages }}<br>
-                Condição: {{ leilao.lote.condition }}<br>
-                Preço Reserva: R${{ leilao.reserve_price }}<br>
-                Intervalo Mínimo de Lance: R${{ leilao.lote.minimum_bid }}<br>
-                
-                Anunciante: {{ leilao.lote.user }}
-
-                <div id="leilao_options">
-                    {% if user.is_staff %}
-                    <a id="edit" href="{% url '' %}">Editar</a>
-                    {% else %}
-                    <a id="edit" href="{% url '' %}">Editar</a>
-                    {% endif %}
-                    <a id="delete" href="{% url '' %}">Deletar</a>
-                </div>
-            </span>
+            <div id="leilao_options">
+                {% if user.is_staff %}
+                <a id="edit" href="">Editar</a>
+                {% else %}
+                <a id="bid" href="">Dar Lance</a>
+                {% endif %}
+                <a id="delete" href="">Deletar</a>
+            </div>
         </li>
-        {% endfor %}
     </ul>
-    
-    <!-- <a href="{% url 'leilao_fbv_user:leilao_new' %}">Novo leilao</a>
-
-    <br>
-
-    <a href="{% url 'leilao_fbv_user:available_leilao' %}">Leilões Disponíveis</a> -->
 </div>
 
 {% endblock %}

@@ -270,18 +270,22 @@ class LeilaoForm(ModelForm):
                   'close_month', 'close_day', 'close_year', 'status_leilao']
 
 class LeilaoDAO(models.Model):
-    def leilao_list_all(request, template_name):
-        leilao = Leilao.objects.all()
-        data = {}
-        data['object_list'] = leilao
-        return data
-
     def leilao_create(request, pk, template_name):
         ### Encontra o lote com pk
         lote = get_object_or_404(Lote, pk=pk)
 
         form = LeilaoForm(request.POST or None)
         return form, lote
+
+    def leilao_list_all(request, template_name):
+        leilao = Leilao.objects.all()
+        data = {}
+        data['object_list'] = leilao
+        return data
+    
+    def get_leilao(request, pk, template_name):
+        leilao = get_object_or_404(Leilao, pk=pk)
+        return leilao
 
     def leilao_delete(request, pk, template_name):
         if request.user.is_superuser:

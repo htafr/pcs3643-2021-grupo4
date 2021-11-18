@@ -85,15 +85,14 @@ def create_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html')
 
 @login_required
 def show_leilao(request, pk, template_name='leilao_fbv_user/show_leilao.html'):
-    leilao = get_object_or_404(Leilao, pk=pk)
-    lances = Lance.objects.all()
-    context = {
-        'leilao': leilao,
-        'lista_de_lances': sorted(lances, key=lambda t: t.valor, reverse=True)
-    }
+    leilao = LeilaoDAO.get_leilao(request=request, pk=pk, template_name=template_name)
+    # context = {
+    #     'data': data,
+    #     'lista_de_lances': sorted(lances, key=lambda t: t.valor, reverse=True)
+    # }
     # data['leilao'] = leilao
     # data['lista_de_lances'] = sorted(lances, key=lambda t: t.valor, reverse=True)
-    return render(request, template_name, context)
+    return render(request, template_name, {'leilao': leilao})
 
 @login_required
 def start_leilao(request, pk, template_name='leilao_fbv_user/show_leilao.html'):
@@ -112,6 +111,8 @@ def end_leilao(request, pk, template_name='leilao_fbv_user/show_leilao.html'):
 @login_required
 def list_leilao(request, template_name='leilao_fbv_user/leilao_list.html'):
     data = LeilaoDAO.leilao_list_all(request=request, template_name=template_name)
+    return render(request, template_name, data)
+
     # leiloes = Leilao.objects.all()
     # leiloes_espera = Leilao.objects.filter(status_leilao='ESPERA')
     # leiloes_ativos = Leilao.objects.filter(status_leilao='ATIVO')
@@ -132,7 +133,6 @@ def list_leilao(request, template_name='leilao_fbv_user/leilao_list.html'):
     # data['lista_leiloes_finalizados'] = leiloes_finalizados
     # data['lista_lances'] = sorted(lances, key=lambda t: t.valor, reverse=True)
 
-    return render(request, template_name, data)
 
 @login_required
 def update_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html'):

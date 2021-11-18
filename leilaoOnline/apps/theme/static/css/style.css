@@ -127,11 +127,8 @@ li a, .drop-btn {
     justify-content: space-between;
 }
 
-#lote_list ul {
-    list-style-type: none;
-}
-
 #lote_list li {
+    list-style-type: none;
     float: left;
     clear: left;
 }
@@ -173,11 +170,8 @@ li a, .drop-btn {
     justify-content: space-between;
 }
 
-#leilao_list ul {
-    list-style-type: none;
-}
-
 #leilao_list li {
+    list-style-type: none;
     float: left;
     clear: left;
 }
