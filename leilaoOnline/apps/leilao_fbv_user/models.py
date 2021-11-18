@@ -266,21 +266,10 @@ class Leilao(models.Model):
     close_date = models.DateField(auto_now=True)
     status_leilao = models.CharField(max_length=16, choices=LEILAO_CHOICES, blank=False, null=False)
 
-<<<<<<< HEAD
-    ### Preenchido automaticamente
-    lote = models.OneToOneField(
-        Lote,
-        on_delete=models.CASCADE,
-        primary_key=True,
-    )
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True, default='')
-=======
     ### Atributos Classes
     lote = models.OneToOneField(Lote, on_delete=models.CASCADE)
     lance = models.ForeignKey(Lance, on_delete=models.CASCADE, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
->>>>>>> 43fc1e7fad2017ec8983854891eae91c8e08d309
 
     def __str__(self):
         return self.name
