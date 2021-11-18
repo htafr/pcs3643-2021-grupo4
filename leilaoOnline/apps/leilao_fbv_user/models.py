@@ -252,34 +252,29 @@ class Leilao(models.Model):
     lote = models.OneToOneField(
         Lote,
         on_delete=models.CASCADE,
+        primary_key=True,
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
 
     def __str__(self):
         return self.name
 
-    def set_lote(self, lote):
+    def init(self, lote, user):
         self.lote = lote
-
-    def set_user(self, user):
         self.user = user
 
 class LeilaoForm(ModelForm):
     class Meta:
         model = Leilao
         fields = ['name', 'opening_month', 'opening_day', 'opening_year',
-                  'close_month', 'close_day', 'close_year']
+                  'close_month', 'close_day', 'close_year', 'status_leilao']
 
 class LeilaoDAO(models.Model):
     def leilao_create(request, pk, template_name):
         ### Encontra o lote com pk
         lote = get_object_or_404(Lote, pk=pk)
 
-        ### Seta atributos do Leilao
-        leilao = Leilao().set_user(request.user)
-        leilao = Leilao().set_lote(lote)
-
-        form = LeilaoForm(request.POST or None, instance=lote)
+        form = LeilaoForm(request.POST or None)
         return form, lote
 
     def leilao_delete(request, pk, template_name):

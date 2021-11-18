@@ -72,6 +72,8 @@ def create_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html')
     if form.is_valid():
         form.instance.user = request.user
         leilao = form.save(commit=False)
+        leilao.lote_id = pk
+        leilao.user_id = request.user.id
         leilao.save()
         return redirect('leilao_fbv_user:redirect_user')
 
