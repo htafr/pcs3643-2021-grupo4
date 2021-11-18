@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from django.forms import ModelForm, LanceForm
+from django.forms import ModelForm
 
 from django.contrib.auth.models import User
 
@@ -67,14 +67,19 @@ def delete_lote(request, pk, template_name='leilao_fbv_user/lote_confirm_delete.
 ####################################################################################
 
 @login_required
-def create_leilao(request, id_lote, template_name='leilao_fbv_user/leilao_form.html'):
-    form = LeilaoDAO.leilao_create(request=request, template_name=template_name)
+def create_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html'):
+    form, lote = LeilaoDAO.leilao_create(request=request, pk=pk, template_name=template_name)
     if form.is_valid():
         form.instance.user = request.user
         leilao = form.save(commit=False)
         leilao.save()
-        return redirect('leilao_fbv_user:leilao_list')
-    return render(request, template_name, {'form':form})
+        return redirect('leilao_fbv_user:redirect_user')
+
+    context = {
+        'form': form,
+        'lote': lote,
+    }
+    return render(request, template_name, context)
 
 @login_required
 def show_leilao(request, pk, template_name='leilao_fbv_user/show_leilao.html'):
@@ -100,7 +105,7 @@ def end_leilao(request, pk, template_name='leilao_fbv_user/show_leilao.html'):
     return redirect('leilao_fbv_user:show_leilao', pk=pk)
 
 @login_required
-def list_leilao(request, template_name='leilao_fbv_user/leilao_list'):
+def list_leilao(request, template_name='leilao_fbv_user/leilao_list.html'):
     leiloes = Leilao.objects.all()
     leiloes_espera = Leilao.objects.filter(status_leilao='ESPERA')
     leiloes_ativos = Leilao.objects.filter(status_leilao='ATIVO')
@@ -135,16 +140,18 @@ def delete_leilao(request, pk, template_name='leilao_fbv_user/leilao_confirm_del
 ### Lance ##########################################################################
 ####################################################################################
 
-def realiza_lance(request, id_leilao, template_name='leilao_fbv_user/lance_form.html'):
-    leilao = get_object_or_404(Leilao, pk=id_leilao)
-    form = LanceForm(request.POST or None, leilao)
-    if form.is_valid():
-        lance = form.save(commit=False)
-        lance.leilao = leilao
-        lance.comprador = request.user
-        lance.save()
-        return redirect('leilao_fbv_user:show_leilao', pk=id_leilao)
-    return render(request, template_name, {'form':form})
+### Por que LanceForm?
+
+# def realiza_lance(request, id_leilao, template_name='leilao_fbv_user/lance_form.html'):
+#     leilao = get_object_or_404(Leilao, pk=id_leilao)
+#     form = LanceForm(request.POST or None, leilao)
+#     if form.is_valid():
+#         lance = form.save(commit=False)
+#         lance.leilao = leilao
+#         lance.comprador = request.user
+#         lance.save()
+#         return redirect('leilao_fbv_user:show_leilao', pk=id_leilao)
+#     return render(request, template_name, {'form':form})
 
 ####################################################################################
 ### Login User #####################################################################

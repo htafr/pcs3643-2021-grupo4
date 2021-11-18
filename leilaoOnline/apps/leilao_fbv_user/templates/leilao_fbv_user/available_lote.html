@@ -18,6 +18,10 @@
                 Condição: {{ lote.condition }}<br>
                 Preço Reserva: R${{ lote.reserve_price }}<br>
                 Anunciante: {{ lote.user }}
+
+                <div>
+                    <a id="criar_leilao" href="{% url 'leilao_fbv_user:create_leilao' lote.id %}">Criar Leilão</a>
+                </div>
             </span>
         </li>
         <br>

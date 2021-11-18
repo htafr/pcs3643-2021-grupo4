@@ -34,7 +34,7 @@
                 Preço Reserva: R${{ lote.reserve_price }}<br>
                 Intervalo Mínimo de Lance: R${{ lote.minimum_bid }}<br>
                 Situação: {{ lote.state }}<br>
-                Data de Abertura: {{ lote.opening_day }} de {{ lote.opening.month }}
+                Data de Abertura: {{ lote.opening_day }} de {{ lote.opening_month }}
                                   de {{ lote.opening_year }}<br>
                 
                 {% if user.is_staff %}
@@ -42,7 +42,11 @@
                 {% endif %}
 
                 <div id="lote_options">
+                    {% if user.is_staff %}
+                    <a id="edit" href="{% url 'leilao_fbv_user:lote_update_pending' lote.id %}">Editar</a>
+                    {% else %}
                     <a id="edit" href="{% url 'leilao_fbv_user:lote_edit' lote.id %}">Editar</a>
+                    {% endif %}
                     <a id="delete" href="{% url 'leilao_fbv_user:lote_delete' lote.id %}">Deletar</a>
                 </div>
             </span>

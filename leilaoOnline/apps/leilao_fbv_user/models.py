@@ -158,9 +158,6 @@ class Lote(models.Model):
     start_price = models.DecimalField(default=10.00, decimal_places=2, max_digits=16)
     minimum_bid = models.DecimalField(default=10.00, decimal_places=2, max_digits=16)
     state = models.CharField(max_length=16, choices=LOTE_CHOICES, default='Pendente')
-    opening_month = models.CharField(max_length=16, choices=MONTH_CHOICES, default='Mês')
-    opening_day = models.CharField(max_length=3, choices=DAY_CHOICES, default='Dia')
-    opening_year = models.CharField(max_length=4, choices=YEAR_CHOICES, default='Ano')
 
     ### Preenchido automaticamente
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
@@ -184,8 +181,7 @@ class LoteForm(ModelForm):
 class LotePendingForm(ModelForm):
     class Meta:
         model = Lote
-        fields = ['start_price', 'minimum_bid', 'state', 'opening_month',
-                  'opening_day', 'opening_year']
+        fields = ['start_price', 'minimum_bid', 'state']
 
 class LoteDAO(models.Model):
     def lote_list(request, template_name):
@@ -242,24 +238,49 @@ class LoteDAO(models.Model):
 
 class Leilao(models.Model):
     name = models.CharField(max_length=64, default='', blank=False)
-    final_period = models.DateTimeField()
+    opening_month = models.CharField(max_length=16, choices=MONTH_CHOICES, default='Mês')
+    opening_day = models.CharField(max_length=3, choices=DAY_CHOICES, default='Dia')
+    opening_year = models.CharField(max_length=4, choices=YEAR_CHOICES, default='Ano')
+    close_month = models.CharField(max_length=16, choices=MONTH_CHOICES, default='Mês')
+    close_day = models.CharField(max_length=3, choices=DAY_CHOICES, default='Dia')
+    close_year = models.CharField(max_length=4, choices=YEAR_CHOICES, default='Ano')
+
+    ### Vai fazer o quê?
     status_leilao = models.CharField(max_length=16, choices=LEILAO_CHOICES, blank=False, null=False)
 
+    ### Preenchido automaticamente
     lote = models.OneToOneField(
         Lote,
         on_delete=models.CASCADE,
     )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    def set_lote(self, lote):
+        self.lote = lote
+
+    def set_user(self, user):
+        self.user = user
 
 class LeilaoForm(ModelForm):
     class Meta:
         model = Leilao
-        fields = ['name', 'final_period']
+        fields = ['name', 'opening_month', 'opening_day', 'opening_year',
+                  'close_month', 'close_day', 'close_year']
 
 class LeilaoDAO(models.Model):
-    def leilao_create(request, template_name):
+    def leilao_create(request, pk, template_name):
+        ### Encontra o lote com pk
+        lote = get_object_or_404(Lote, pk=pk)
+
+        ### Seta atributos do Leilao
         leilao = Leilao().set_user(request.user)
-        form = LeilaoForm(request.POST or None)
-        return form
+        leilao = Leilao().set_lote(lote)
+
+        form = LeilaoForm(request.POST or None, instance=lote)
+        return form, lote
 
     def leilao_delete(request, pk, template_name):
         if request.user.is_superuser:
@@ -294,7 +315,6 @@ class LanceForm(ModelForm):
         model = Lance
         fields = ['valor']
 
-        
 ####################################################################################
 ### Leiloeiro ######################################################################
 ####################################################################################
@@ -343,7 +363,7 @@ class LeiloeiroDAO(models.Model):
 
     def leiloeiro_filter(request, username):
         bool_user = Leiloeiro_fbv.objects.filter(username = username).exists()
-        print("Entrou Username Leiloeiro filter", username, bool_user)
+        # print("Entrou Username Leiloeiro filter", username, bool_user)
         return bool_user
 
 ####################################################################################
@@ -394,7 +414,7 @@ class VendedorDAO(models.Model):
     
     def vendedor_filter(request, username):
         bool_user = Vendedor_fbv.objects.filter(username = username).exists()
-        print("Entrou Username vendedor filter", username, bool_user)
+        # print("Entrou Username vendedor filter", username, bool_user)
         return bool_user
 
 ####################################################################################
@@ -442,7 +462,7 @@ class CompradorDAO(models.Model):
 
     def comprador_filter(request, username):
         bool_user = Comprador_fbv.objects.filter(username = username).exists()
-        print("Entrou Username comprador filter", username, bool_user)
+        # print("Entrou Username comprador filter", username, bool_user)
         return bool_user
 
 ####################################################################################
