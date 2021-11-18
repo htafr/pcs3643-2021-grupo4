@@ -130,8 +130,8 @@ def end_leilao(request, pk, template_name='leilao_fbv_user/show_leilao.html'):
     return redirect('leilao_fbv_user:show_leilao', pk=pk)
 
 @login_required
-def list_leilao(request, template_name='leilao_fbv_user/leilao_list.html'):
-    data = LeilaoDAO.leilao_list_all(request=request, template_name=template_name)
+def list_leilao_avail(request, template_name='leilao_fbv_user/leilao_list_avail.html'):
+    data = LeilaoDAO.leilao_list_avail(request=request, template_name=template_name)
     return render(request, template_name, data)
 
     # leiloes = Leilao.objects.all()

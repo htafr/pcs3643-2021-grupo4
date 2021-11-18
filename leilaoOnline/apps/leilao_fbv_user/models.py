@@ -291,6 +291,12 @@ class LeilaoDAO(models.Model):
         data = {}
         data['object_list'] = leilao
         return data
+
+    def leilao_list_avail(request, template_name):
+        leilao = Leilao.objects.filter(status_leilao='Ativo')
+        data = {}
+        data['object_list'] = leilao
+        return data
     
     def get_leilao(request, pk, template_name):
         leilao = get_object_or_404(Leilao, pk=pk)
