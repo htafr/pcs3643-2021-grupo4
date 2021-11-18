@@ -175,7 +175,7 @@ def delete_leilao(request, pk, template_name='leilao_fbv_user/leilao_confirm_del
 ### Lance ##########################################################################
 ####################################################################################
 
-def realiza_lance(request, pk, template_name='leilao_fbv_user/lance_form.html'):
+def make_bid(request, pk, template_name='leilao_fbv_user/lance_form.html'):
     form, leilao = LeilaoDAO.make_bid(request=request, pk=pk, template_name=template_name)
     if form.is_valid():
         form.instance.user = request.user
@@ -183,12 +183,19 @@ def realiza_lance(request, pk, template_name='leilao_fbv_user/lance_form.html'):
 
         valor = form.cleaned_data.get('valor')
 
-        if valor > (leilao.lance.valor + leilao.minimum_bid):
+        if valor > (leilao.lance.valor + leilao.lote.minimum_bid):
+            lance.leilao_id = pk
             lance.save()
             leilao.lance = lance
+            leilao.save()
 
-        return redirect('leilao_fbv_user:show_leilao')
-    return render(request, template_name, {'form':form})
+        return redirect('leilao_fbv_user:show_leilao', pk=leilao.id)
+
+    context = {
+        'form': form,
+        'leilao': leilao,
+    }
+    return render(request, template_name, context)
 
 ####################################################################################
 ### Login User #####################################################################

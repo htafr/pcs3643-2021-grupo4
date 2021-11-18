@@ -7,7 +7,7 @@
         <h2 id="tcolor">{{ leilao.name }}: {{ leilao.status_leilao }}</h2>
     </div>
     <div>
-        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:list_leilao' %}">Voltar</a></h2>
+        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:show_leilao' leilao.id %}">Voltar</a></h2>
     </div>
 </div>
 
@@ -34,14 +34,10 @@
         <li>Valor atual: {{ leilao.lance.valor }}</li>
 
         <li>
-            <div id="leilao_options">
-                {% if user.is_staff %}
-                <a id="edit" href="">Editar</a>
-                <a id="delete" href="">Deletar</a>
-                {% else %}
-                <a id="bid" href="{% url 'leilao_fbv_user:make_bid' leilao.id %}">Dar Lance</a>
-                {% endif %}
-            </div>
+            <form method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Confirmar" />
+            </form>
         </li>
     </ul>
 </div>
