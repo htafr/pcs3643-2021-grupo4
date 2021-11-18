@@ -56,6 +56,8 @@ urlpatterns = [
 	##############################################################################
 
 	path('comprador_page/', views.redirect_comprador, name='comprador_page'),
+	path('leiloes_participados/', views.show_participating_leilao, name='show_participating_leilao'),
+	path('won_leiloes/', views.show_won_leilao, name='show_won_leilao'),
 	# path('', views.list_comprador, name='comprador_list'),
 	# path('new/', views.create_comprador, name='comprador_new'),
 	#path('user_page/', views.redirect_comprador, name='redirect_user'),

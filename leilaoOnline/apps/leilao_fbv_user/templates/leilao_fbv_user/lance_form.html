@@ -27,7 +27,7 @@
         <li>Anunciante: {{ leilao.lote.user }}</li>
 
         {% if leilao.lance.user.is_staff %}
-        <li>Vencedor Atual: </li>
+        <li>Vencedor Atual: Sem Lances</li>
         {% else %}
         <li>Vencedor Atual: {{ leilao.lance.user }}</li>
         {% endif %}

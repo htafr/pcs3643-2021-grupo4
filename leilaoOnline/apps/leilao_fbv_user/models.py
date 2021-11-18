@@ -255,6 +255,12 @@ class LanceDAO(models.Model):
         lance = Lance().init(valor)
         return lance
 
+    def get_lance(user_id):
+        lance = Lance.objects.filter(user_id=user_id)
+        data = {}
+        data = lance
+        return data
+
 ####################################################################################
 ### Leilao #########################################################################
 ####################################################################################
@@ -297,6 +303,42 @@ class LeilaoDAO(models.Model):
         data = {}
         data['object_list'] = leilao
         return data
+
+    def get_participating_leilao(request, user_id, template_name):
+        lances = LanceDAO.get_lance(user_id=user_id)
+        lances_list = list(lances)
+        participating = []
+
+        if lances_list:
+            for lance in lances_list:
+                try:
+                    leilao = Leilao.objects.get(pk=lance.leilao_id)
+
+                    if leilao not in participating:
+                        participating.append(leilao)
+                except:
+                    leilao = None
+
+        return participating
+
+    def get_won_leilao(request, user_id, template_name):
+        lances = LanceDAO.get_lance(user_id=user_id)
+        lances_list = list(lances)
+
+        finished_leiloes = Leilao.objects.filter(status_leilao='Finalizado')
+
+        won = []
+
+        if lances_list:
+            for lance in lances_list:
+                try:
+                    leilao = finished_leiloes.get(pk=lance.leilao_id)
+                    if leilao not in won:
+                        won.append(leilao)
+                except:
+                    leilao = None
+
+        return won
     
     def get_leilao(request, pk, template_name):
         leilao = get_object_or_404(Leilao, pk=pk)
@@ -304,9 +346,9 @@ class LeilaoDAO(models.Model):
 
     def leilao_delete(request, pk, template_name):
         if request.user.is_staff:
-            leilao= get_object_or_404(Leilao, pk=pk)
+            leilao = get_object_or_404(Leilao, pk=pk)
         else:
-            leilao= get_object_or_404(Leilao, pk=pk, user=request.user)
+            leilao = get_object_or_404(Leilao, pk=pk, user=request.user)
         return leilao
 
     def leilao_update(request, pk, template_name):
