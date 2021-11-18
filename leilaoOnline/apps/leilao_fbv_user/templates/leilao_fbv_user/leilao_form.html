@@ -24,7 +24,6 @@
         <li>
             <form method="post">{% csrf_token %}
                 {{ form.as_p }}
-                <input type="hidden" value="{{ lote.pk }}" name ="lote_id"/>
                 <input type="submit" value="Cadastrar" />
             </form>
         </li>

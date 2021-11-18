@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
@@ -64,7 +65,7 @@ def delete_lote(request, pk, template_name='leilao_fbv_user/lote_confirm_delete.
     if request.method=='POST':
         lote.delete()
         return redirect('leilao_fbv_user:lote_list')
-    return render(request, template_name, {'object':lote})
+    return render(request, template_name, {'lote':lote})
 
 ####################################################################################
 ### Leilao #########################################################################
@@ -107,60 +108,24 @@ def create_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html')
 @login_required
 def show_leilao(request, pk, template_name='leilao_fbv_user/show_leilao.html'):
     leilao = LeilaoDAO.get_leilao(request=request, pk=pk, template_name=template_name)
-    # context = {
-    #     'data': data,
-    #     'lista_de_lances': sorted(lances, key=lambda t: t.valor, reverse=True)
-    # }
-    # data['leilao'] = leilao
-    # data['lista_de_lances'] = sorted(lances, key=lambda t: t.valor, reverse=True)
     return render(request, template_name, {'leilao': leilao})
 
 @login_required
-def start_leilao(request, pk, template_name='leilao_fbv_user/show_leilao.html'):
-    leilao = get_object_or_404(Leilao, pk=pk)
-    leilao.status_leilao = 'ATIVO'
-    leilao.save()
-    return redirect('leilao_fbv_user:show_leilao', pk=pk)
-
-@login_required
-def end_leilao(request, pk, template_name='leilao_fbv_user/show_leilao.html'):
-    leilao = get_object_or_404(Leilao, pk=pk)
-    leilao.status_leilao = 'FINALIZADO'
-    leilao.save()
-    return redirect('leilao_fbv_user:show_leilao', pk=pk)
+def list_leilao_all(request, template_name='leilao_fbv_user/leilao_list_all.html'):
+    data = LeilaoDAO.leilao_list_all(request=request, template_name=template_name)
+    return render(request, template_name, data)
 
 @login_required
 def list_leilao_avail(request, template_name='leilao_fbv_user/leilao_list_avail.html'):
     data = LeilaoDAO.leilao_list_avail(request=request, template_name=template_name)
     return render(request, template_name, data)
 
-    # leiloes = Leilao.objects.all()
-    # leiloes_espera = Leilao.objects.filter(status_leilao='ESPERA')
-    # leiloes_ativos = Leilao.objects.filter(status_leilao='ATIVO')
-    # leiloes_finalizados = Leilao.objects.filter(status_leilao='FINALIZADO')
-    # lances = Lance.objects.all()
-
-    # context = {
-    #     'leiloes': leiloes,
-    #     'lista_leiloes_esperta': leiloes_espera,
-    #     'lista_leiloes_ativos': leiloes_ativos,
-    #     'lista_leiloes_finalizados': leiloes_finalizados,
-    #     'lista_lances': sorted(lances, key=lambda t: t.valor, reverse=True),
-    # }
-
-    # data = {}
-    # data['lista_leiloes_espera'] = leiloes_espera
-    # data['lista_leiloes_ativos'] = leiloes_ativos
-    # data['lista_leiloes_finalizados'] = leiloes_finalizados
-    # data['lista_lances'] = sorted(lances, key=lambda t: t.valor, reverse=True)
-
-
 @login_required
 def update_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html'):
     form = LeilaoDAO.leilao_update(request=request, pk=pk, template_name=template_name)
     if form.is_valid():
         form.save()
-        return redirect('leilao_fbv_user:leilao_list')
+        return redirect('leilao_fbv_user:list_leilao_avail')
     return render(request, template_name, {'form':form})
 
 @login_required
@@ -168,8 +133,8 @@ def delete_leilao(request, pk, template_name='leilao_fbv_user/leilao_confirm_del
     leilao = LeilaoDAO.leilao_delete(request=request, pk=pk, template_name=template_name)
     if request.method=='POST':
         leilao.delete()
-        return redirect('leilao_fbv_user:leilao_list')
-    return render(request, template_name, {'object':leilao})
+        return redirect('leilao_fbv_user:list_leilao_all')
+    return render(request, template_name, {'leilao':leilao})
 
 ####################################################################################
 ### Lance ##########################################################################
@@ -200,6 +165,7 @@ def make_bid(request, pk, template_name='leilao_fbv_user/lance_form.html'):
 ####################################################################################
 ### Login User #####################################################################
 ####################################################################################
+
 @login_required
 def redirect_user(request):
 #def redirect_vendedor(request, template_name='leilao_fbv_user/vendedor_page.html'):
@@ -258,14 +224,6 @@ def delete_vendedor(request, pk, template_name='leilao_fbv/vendedor_confirm_dele
 ####################################################################################
 ### Comprador ######################################################################
 ####################################################################################
-#@login_required
-#def redirect_user(request, template_name='leilao_fbv_user/comprador_page.html'):
-#def redirect_comprador(request, template_name='leilao_fbv_user/comprador_page.html'):
-#    return render(request, 'leilao_fbv_user/comprador_page.html')
-
-# def list_comprador(request, template_name='leilao_fbv/comprador_list.html'):
-#     data = CompradorDAO.vendedor_list(request, template_name=template_name)
-#     return render(request, template_name, data)
 
 @login_required
 def redirect_comprador(request, template_name='leilao_fbv_user/comprador_page.html'):
@@ -279,26 +237,12 @@ def create_comprador(request, template_name='leilao_fbv/comprador_form.html'):
         return redirect('leilao_fbv:lote_list')
     return render(request, template_name, {'form':form})
 
-# def update_comprador(request, pk, template_name='leilao_fbv/comprador_form.html'):
-#     form = CompradorDAO.vendedor_update(request, pk=pk, template_name=template_name)
-#     if form.is_valid():
-#         form.save()
-#         return redirect('leilao_fbv:comprador_list')
-#     return render(request, template_name, {'form':form})
-
-# def delete_comprador(request, pk, template_name='leilao_fbv/comprador_confirm_delete.html'):
-#     comprador = CompradorDAO.vendedor_delete(request, pk=pk, template_name=template_name)
-#     if request.method=='POST':
-#         comprador.delete()
-#         return redirect('leilao_fbv:comprador_list')
-#     return render(request, template_name, {'object':comprador})
-
 ####################################################################################
 ### Leiloeiro ######################################################################
 ####################################################################################
+
 def redirect_leiloeiro(request, template_name='leilao_fbv_user/leiloeiro_page.html'):
     return render(request, template_name)
-
 
 ####################################################################################
 ### Relatorio ######################################################################

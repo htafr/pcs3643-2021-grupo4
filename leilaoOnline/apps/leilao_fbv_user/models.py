@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models import fields
 from django.urls import reverse
 from django.conf import UserSettingsHolder, settings
-from datetime import date
+from datetime import date, datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
@@ -209,7 +209,7 @@ class LoteDAO(models.Model):
         return form
 
     def lote_update(request, pk, template_name):
-        if request.user.is_superuser:
+        if request.user.is_staff:
             lote= get_object_or_404(Lote, pk=pk)
         else:
             lote= get_object_or_404(Lote, pk=pk, user=request.user)
@@ -217,7 +217,7 @@ class LoteDAO(models.Model):
         return form
 
     def lote_delete(request, pk, template_name):
-        if request.user.is_superuser:
+        if request.user.is_staff:
             lote= get_object_or_404(Lote, pk=pk)
         else:
             lote= get_object_or_404(Lote, pk=pk, user=request.user)
@@ -303,18 +303,19 @@ class LeilaoDAO(models.Model):
         return leilao
 
     def leilao_delete(request, pk, template_name):
-        if request.user.is_superuser:
-            leilao= get_object_or_404(Lote, pk=pk)
+        if request.user.is_staff:
+            leilao= get_object_or_404(Leilao, pk=pk)
         else:
-            leilao= get_object_or_404(Lote, pk=pk, user=request.user)
+            leilao= get_object_or_404(Leilao, pk=pk, user=request.user)
         return leilao
 
     def leilao_update(request, pk, template_name):
-        if request.user.is_superuser:
-            leilao= get_object_or_404(Lote, pk=pk)
+        if request.user.is_staff:
+            leilao = get_object_or_404(Leilao, pk=pk)
         else:
-            leilao= get_object_or_404(Lote, pk=pk, user=request.user)
-        form = LoteForm(request.POST or None, instance=leilao)
+            leilao = get_object_or_404(Leilao, pk=pk, user=request.user)
+        leilao.close_date = date.today()
+        form = LeilaoForm(request.POST or None, instance=leilao)
         return form
 
     def make_bid(request, pk, template_name):

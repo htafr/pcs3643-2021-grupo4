@@ -28,7 +28,10 @@ urlpatterns = [
 	##############################################################################
 
 	path('list_leilao_avail/', views.list_leilao_avail, name='list_leilao_avail'),
+	path('list_leilao_all/', views.list_leilao_all, name='list_leilao_all'),
 	path('create_leilao/<int:pk>/', views.create_leilao, name='create_leilao'),
+	path('leilao_update/<int:pk>/', views.update_leilao, name='update_leilao'),
+	path('leilao_delete/<int:pk>/', views.delete_leilao, name='delete_leilao'),
 	path('show_leilao/<int:pk>/', views.show_leilao, name='show_leilao'),
 	path('make_bid/<int:pk>/', views.make_bid, name='make_bid'),
 

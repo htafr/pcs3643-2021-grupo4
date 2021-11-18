@@ -3,15 +3,9 @@
 {% block content %}
 
 <div class="sub_header">
-    {% if user.is_staff %}
     <div>
-        <h2 id="tcolor">Leilões Disponíveis</h2>
+        <h2 id="tcolor">Todos Os Leilões</h2>
     </div>
-    {% else %}
-    <div>
-        <h2 id="tcolor">Leilões Disponíveis</h2>
-    </div>
-    {% endif %}
     <div>
         <h2 id="voltar"><a href="{% url 'leilao_fbv_user:redirect_user' %}">Voltar</a></h2>
     </div>
@@ -34,10 +28,26 @@
                 Edição: {{ leilao.lote.edition }}<br>
                 Número de Páginas: {{ leilao.lote.number_of_pages }}<br>
                 Condição: {{ leilao.lote.condition }}<br>
-                Preço Atual: R${{ leilao.lance.valor }}<br>
-                Intervalo Mínimo de Lance: R${{ leilao.lote.minimum_bid }}<br>
-                
-                Anunciante: {{ leilao.lote.user }}
+                Anunciante: {{ leilao.lote.user }}<br>
+
+                {% if leilao.status_leilao == "FINALIZADO" %}
+
+                    Preço Arrematado: R${{ leilao.lance.valor }}<br>
+                    Vencedor: {{ leilao.lance.user }}<br>
+
+                {% else %}
+
+                    Preço Atual: R${{ leilao.lance.valor }}<br>
+
+                    {% if leilao.lance.user.is_staff %}
+                        Vencedor Atual: Sem Lances<br>
+                    {% else %}
+                        Vencedor Atual: {{ leilao.lance.user }}<br>
+                    {% endif %}
+
+                    Intervalo Mínimo de Lance: R${{ leilao.lote.minimum_bid }}<br>
+
+                {% endif %}
 
                 <div id="leilao_options">
                     {% if user.is_staff %}

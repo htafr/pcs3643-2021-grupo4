@@ -7,7 +7,7 @@
         <h2 id="tcolor">{{ leilao.name }}: {{ leilao.status_leilao }}</h2>
     </div>
     <div>
-        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:list_leilao' %}">Voltar</a></h2>
+        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:list_leilao_avail' %}">Voltar</a></h2>
     </div>
 </div>
 
@@ -27,17 +27,17 @@
         <li>Anunciante: {{ leilao.lote.user }}</li>
 
         {% if leilao.lance.user.is_staff %}
-        <li>Vencedor Atual: </li>
+            <li>Vencedor Atual: Sem Lances</li>
         {% else %}
-        <li>Vencedor Atual: {{ leilao.lance.user }}</li>
+            <li>Vencedor Atual: {{ leilao.lance.user }}</li>
         {% endif %}
         <li>Valor atual: R${{ leilao.lance.valor }}</li>
 
         <li>
             <div id="leilao_options">
                 {% if user.is_staff %}
-                <a id="edit" href="">Editar</a>
-                <a id="delete" href="">Deletar</a>
+                <a id="edit" href="{% url 'leilao_fbv_user:update_leilao' leilao.id %}">Editar</a>
+                <a id="delete" href="{% url 'leilao_fbv_user:delete_leilao' leilao.id %}">Deletar</a>
                 {% else %}
                 <a id="bid" href="{% url 'leilao_fbv_user:make_bid' leilao.id %}">Dar Lance</a>
                 {% endif %}
