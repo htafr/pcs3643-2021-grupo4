@@ -44,10 +44,16 @@
                 <div id="lote_options">
                     {% if user.is_staff %}
                     <a id="edit" href="{% url 'leilao_fbv_user:lote_update_pending' lote.id %}">Editar</a>
+                        {% if not lote.has_leilao %}
+                            <a id="edit" href="{% url 'leilao_fbv_user:lote_edit' lote.id %}">Editar</a>
+                            <a id="delete" href="{% url 'leilao_fbv_user:lote_delete' lote.id %}">Deletar</a>
+                        {% endif %}
                     {% else %}
-                    <a id="edit" href="{% url 'leilao_fbv_user:lote_edit' lote.id %}">Editar</a>
+                    {% if not lote.has_leilao %}
+                        <a id="edit" href="{% url 'leilao_fbv_user:lote_edit' lote.id %}">Editar</a>
+                        <a id="delete" href="{% url 'leilao_fbv_user:lote_delete' lote.id %}">Deletar</a>
                     {% endif %}
-                    <a id="delete" href="{% url 'leilao_fbv_user:lote_delete' lote.id %}">Deletar</a>
+                    {% endif %}
                 </div>
             </span>
         </li>
