@@ -161,6 +161,7 @@ class Lote(models.Model):
     #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
     #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True, default='')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
+    has_leilao = models.BooleanField(default=False)
     
     def __str__(self):
         return self.name
@@ -200,9 +201,10 @@ class LoteDAO(models.Model):
         return data
 
     def available_list(request, template_name):
-        lote = Lote.objects.filter(state='Aprovado')
+        lotes = Lote.objects.filter(state='Aprovado')
+        avail_lotes = lotes.filter(has_leilao=False)
         data = {}
-        data['object_list'] = lote
+        data['object_list'] = avail_lotes
         return data
 
     def lote_create(request, template_name):
@@ -216,7 +218,7 @@ class LoteDAO(models.Model):
         else:
             lote= get_object_or_404(Lote, pk=pk, user=request.user)
         form = LoteForm(request.POST or None, instance=lote)
-        return form
+        return form, lote
 
     def lote_delete(request, pk, template_name):
         if request.user.is_staff:
@@ -341,7 +343,7 @@ class LeilaoDAO(models.Model):
         lances = LanceDAO.get_lance(user_id=user_id)
         lances_list = list(lances)
 
-        finished_leiloes = Leilao.objects.filter(status_leilao='Finalizado')
+        finished_leiloes = Leilao.objects.filter(status_leilao='FINALIZADO')
 
         won = []
 
@@ -360,12 +362,44 @@ class LeilaoDAO(models.Model):
         leilao = get_object_or_404(Leilao, pk=pk)
         return leilao
 
+    def get_my_leiloes(request, user_id, template_name):
+        lotes = Lote.objects.filter(user_id=user_id)
+        my_leiloes = []
+
+        for lote in lotes:
+            try:
+                leilao = Leilao.objects.get(lote_id=lote.id)
+
+                if leilao not in my_leiloes:
+                    my_leiloes.append(leilao)
+            except:
+                leilao = None
+
+        return my_leiloes
+
+    def get_my_avail_leilao(request, user_id, template_name):
+        lotes = Lote.objects.filter(user_id=user_id)
+        my_leiloes = []
+
+        for lote in lotes:
+            try:
+                leiloes = Leilao.objects.get(lote_id=lote.id)
+
+                if leiloes.status_leilao == "ATIVO":
+                    if leiloes not in my_leiloes:
+                        my_leiloes.append(leiloes)
+            except:
+                leiloes = None
+
+        return my_leiloes
+
     def leilao_delete(request, pk, template_name):
         if request.user.is_staff:
             leilao = get_object_or_404(Leilao, pk=pk)
         else:
             leilao = get_object_or_404(Leilao, pk=pk, user=request.user)
-        return leilao
+        lote = Lote.objects.get(pk=leilao.lote_id)
+        return leilao, lote
 
     def leilao_update(request, pk, template_name):
         if request.user.is_staff:
