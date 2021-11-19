@@ -68,4 +68,15 @@ urlpatterns = [
 	##############################################################################
 
 	path('leiloeiro_page/', views.redirect_leiloeiro, name='leiloeiro_page'),
+
+	##############################################################################
+	### Relatorio ################################################################
+	##############################################################################
+
+	path('leiloeiro_page/relatorio',views.create_relatorio, name='relatorio_page'),
+	# path('leiloeiro_page/relatorio/desempenho/', views.create_relatorio_desempenho, name='relatorio_desempenho_page'),
+	# path('leiloeiro_page/relatorio/faturamento/', views.create_relatorio_faturamento, name='relatorio_faturamento_page'),
+	path('leiloeiro_page/relatorio/desempenho/', views.list_relatorio_desempenho, name='relatorio_desempenho_page'),
+	path('leiloeiro_page/relatorio/faturamento/', views.list_relatorio_faturamento, name='relatorio_faturamento_page'),
+	
 ]

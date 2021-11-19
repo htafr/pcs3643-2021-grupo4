@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="sub_header">
+    <div>
+        <h2 id="tcolor">Escolha o Tipo de Relatório</h2>
+    </div>
+    <div>
+        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:redirect_user' %}">Voltar</a></h2>
+    </div>
+</div>
+
+<a href="{% url 'leilao_fbv_user:relatorio_desempenho_page' %}"><p class="button">Gera relatório de desempenho</p></a>
+
+<a href="{% url 'leilao_fbv_user:relatorio_faturamento_page' %}"><p class="button">Gera relatório de faturamento</p></a>
+
+{% endblock %}

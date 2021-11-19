@@ -32,8 +32,17 @@
 
                 {% if leilao.status_leilao == "FINALIZADO" %}
 
-                    Preço Arrematado: R${{ leilao.lance.valor }}<br>
-                    Vencedor: {{ leilao.lance.user }}<br>
+                    {% if leilao.lance.valor >= leilao.lote.reserve_price %}
+
+                        Preço Arrematado: R${{ leilao.lance.valor }}<br>
+                        Vencedor: {{ leilao.lance.user }}<br>
+
+                    {% else %}
+
+                        Preço Final: R${{ leilao.lance.valor }} - Não Arrematado<br>
+                        Vencedor: Sem Vencedor<br>
+                    
+                    {% endif %}
 
                 {% else %}
 

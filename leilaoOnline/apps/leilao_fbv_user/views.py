@@ -136,10 +136,32 @@ def delete_leilao(request, pk, template_name='leilao_fbv_user/leilao_confirm_del
         return redirect('leilao_fbv_user:list_leilao_all')
     return render(request, template_name, {'leilao':leilao})
 
+def determina_comissoes(valor):
+    if valor <= 1000:
+        taxa_vendedor = 1
+        taxa_comprador = 3
+    elif valor <= 10000:
+        taxa_vendedor = 2
+        taxa_comprador = 4
+    elif valor <= 50000:
+        taxa_vendedor = 3
+        taxa_comprador = 5
+    elif valor <= 100000:
+        taxa_vendedor = 4
+        taxa_comprador = 6
+    
+    comissao_vendedor = valor * taxa_vendedor
+    comissao_comprador = valor * taxa_comprador
+
+    return taxa_vendedor, taxa_comprador, comissao_vendedor, comissao_comprador
+
+
+
 ####################################################################################
 ### Lance ##########################################################################
 ####################################################################################
 
+@login_required
 def make_bid(request, pk, template_name='leilao_fbv_user/lance_form.html'):
     form, leilao = LeilaoDAO.make_bid(request=request, pk=pk, template_name=template_name)
     if form.is_valid():
@@ -148,10 +170,13 @@ def make_bid(request, pk, template_name='leilao_fbv_user/lance_form.html'):
 
         valor = form.cleaned_data.get('valor')
 
-        if valor > (leilao.lance.valor + leilao.lote.minimum_bid):
+        if valor >= (leilao.lance.valor + leilao.lote.minimum_bid):
             lance.leilao_id = pk
             lance.save()
             leilao.lance = lance
+            leilao.num_lances += 1
+            if leilao.lance_inicial == '':
+                leilao.lance_inicial = valor
             leilao.save()
 
         return redirect('leilao_fbv_user:show_leilao', pk=leilao.id)
@@ -249,26 +274,26 @@ def redirect_leiloeiro(request, template_name='leilao_fbv_user/leiloeiro_page.ht
 ####################################################################################
 
 @login_required
-def create_relatorio(request, id_leilao, template_name='leilao_fbv_user/create_relatorio.html'):
+def create_relatorio(request, template_name='leilao_fbv_user/relatorio_page.html'):
     data = {}
-    data['leilao_id'] = id_leilao
+    #data['leilao_id'] = id_leilao
     return render(request, template_name, data)
 
 @login_required
-def create_relatorio_faturamento(request, id_leilao, template_name='leilao_fbv_user/create_relatorio_desempenho.html'):
-    leilao = get_object_or_404(Leilao, pk=id_leilao)
+def create_relatorio_faturamento(request, pk, template_name='leilao_fbv_user/relatorio_faturamento_page.html'):
+    leilao = get_object_or_404(Leilao, pk=pk)
     data = {}
     data['leilao'] = leilao
-    data['lance_vencedor'] = sorted(list(Lance.objects.filter(pk=id_leilao)), key=lambda t: t.valor, reverse=True)[0]
+    data['lance_vencedor'] = sorted(list(Lance.objects.filter(pk=pk)), key=lambda t: t.valor, reverse=True)[0]
     data['comissao_vendedor'] = leilao.lote.valor_reserva * leilao.taxa_comissao_vendedor
     data['comissao_comprador'] = data['lance_vencedor'].valor * leilao.taxa_comissao_comprador
     return render(request, template_name, data)
 
 
 @login_required
-def create_relatorio_desempenho(request, id_leilao, template_name='leilao_fbv_user/create_relatorio_desempenho.html'):
-    leilao = get_object_or_404(Leilao, pk=id_leilao)
-    lista_lances = list(Lance.objects.filter(pk=id_leilao)) # verificar
+def create_relatorio_desempenho(request, pk, template_name='leilao_fbv_user/relatorio_desempenho_page.html'):
+    leilao = get_object_or_404(Leilao, pk=pk)
+    lista_lances = list(Lance.objects.filter(pk=pk)) # verificar
 
     data = {}
     data['leilao'] = leilao
@@ -278,5 +303,19 @@ def create_relatorio_desempenho(request, id_leilao, template_name='leilao_fbv_us
     data['lance_vencedor'] = sorted(lista_lances, key=lambda t: t.valor, reverse=True)[0]
     return render(request, template_name, data)
 
+@login_required
+def list_relatorio_desempenho(request, template_name='leilao_fbv_user/relatorio_desempenho_page.html'):
+    data = LeilaoDAO.leilao_list_all(request=request, template_name=template_name)
+    lances = Lance.objects.all()
+    #print(data.count())
+    #print(len(data))
+    #for i in range(len(lances)):
+    #teste = lances.filter(leilao_id=1)
+    #print(teste)
+    #return render(request, template_name, {'data':data, 'lances':lances})
+    return render(request, template_name, data)
 
-
+@login_required
+def list_relatorio_faturamento(request, template_name='leilao_fbv_user/relatorio_faturamento_page.html'):
+    data = LeilaoDAO.leilao_list_all(request=request, template_name=template_name)
+    return render(request, template_name, data)

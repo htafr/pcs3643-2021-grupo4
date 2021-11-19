@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="sub_header">
+    <div>
+        <h2 id="tcolor">Relatório de Desempenho</h2>
+    </div>
+    <div>
+        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:relatorio_page' %}">Voltar</a></h2>
+    </div>
+</div>
+
+<div id="user_page">
+    <ul>
+        {% for leilao in object_list %}
+        <li>
+            {% if leilao.status_leilao == "FINALIZADO" %}
+                ---------------------------------------------------------------------------------------------------------------------<br>
+                ---------------------------------------------------------------------------------------------------------------------<br>
+                {% if leilao.lance.valor >= leilao.lote.reserve_price %}
+                    STATUS: ARREMATADO<br>
+                {% else %}
+                    STATUS: NÃO ARREMATADO<br>
+                {% endif %}
+                ---------------------------------------------------------------------------------------------------------------------<br>
+                ID Leilão: {{ leilao.lote.id }}<br>
+                Nome Leilão: {{ leilao.name }}<br>
+                Nome Lote: {{leilao.lote.name}}<br>
+                Valor de Abertura de Leilão: R$ {{ leilao.lote.start_price }}<br>
+                Valor Mínimo de Reserva: R$ {{ leilao.lote.reserve_price }}<br>
+                ______________________________________________________________________
+            <span>
+                
+                    <!-- Parte que mostra lances -->
+                    Total de Lances: {{ leilao.num_lances }}<br>
+                    Lance Inicial: {{ leilao.lance_inicial }}<br>
+                    {% if leilao.lance.valor >= leilao.lote.reserve_price %}
+                        Lance Vencedor: R${{ leilao.lance.valor }}<br>
+                    {% else %}
+                        Lance Vencedor: (R${{ leilao.lance.valor }}) - NÃO ARREMATADO<br>
+                    {% endif %}
+
+                    Taxa de Comissão Comprador: {{ leilao.lote.taxa_de_comissao_comprador}}%<br>
+                    Taxa de Comissão Vendedor: {{ leilao.lote.taxa_de_comissao_Vendedor}}%<br>
+                    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>
+                
+                
+            </span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+{% endblock %}

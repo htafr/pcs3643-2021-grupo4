@@ -151,3 +151,5 @@ STATICFILES_DIRS = [
 LOGIN_REDIRECT_URL =  '/leilao_fbv_user/user_page'
 #LOGIN_REDIRECT_URL =  '/leilao_fbv_user/vendedor_page'
 LOGOUT_REDIRECT_URL = '/'
+
+

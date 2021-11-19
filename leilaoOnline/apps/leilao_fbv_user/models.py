@@ -158,7 +158,9 @@ class Lote(models.Model):
     state = models.CharField(max_length=16, choices=LOTE_CHOICES, default='Pendente')
 
     ### Preenchido automaticamente
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True, default='')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
     
     def __str__(self):
         return self.name
@@ -265,10 +267,24 @@ class Leilao(models.Model):
     close_date = models.DateField(auto_now=True)
     status_leilao = models.CharField(max_length=16, choices=LEILAO_CHOICES, blank=False, null=False)
 
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True, default='')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
     ### Atributos Classes
-    lote = models.OneToOneField(Lote, on_delete=models.CASCADE)
-    lance = models.ForeignKey(Lance, on_delete=models.CASCADE, blank=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    lote = models.ForeignKey(Lote, on_delete=models.CASCADE)
+    lance = models.ForeignKey(Lance, on_delete=models.CASCADE, blank=True, default='')
+
+    # Infos Leilao
+    num_lances = models.IntegerField(default=0)
+    lance_inicial = models.CharField(max_length=64, default='', blank=False)
+    
+    # Taxas
+    taxa_comissao_comprador = models.IntegerField(default=0)
+    taxa_comissao_vendedor = models.IntegerField(default=0)
+
+    # Comissoes
+    valor_comissao_comprador = models.CharField(max_length=64, default='', blank=False)
+    valor_comissao_vendedor = models.CharField(max_length=64, default='', blank=False)
 
     def __str__(self):
         return self.name
