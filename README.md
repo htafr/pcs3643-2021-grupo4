@@ -71,6 +71,18 @@ Para executar o projeto, o comando a seguir deve ser executado:
 python3 manage.py runserver
 ```
 
+### **Funcionalidades**
+
+No estado atual do projeto é possível realizar a criação de 3 tipos de usuários:
+
+- Comprador - pode participar de leilões fazendo lances e competindo em um leilão
+- Vendedor - Pode vender objetos anunciando lotes no sistema
+- Leiloeiro - Gerencia o sistema e avalia os lotes criados por vendedores
+
+A funcionalidade de cada usuário é exclusiva de sua classe, ou seja, o comprador não pode criar lotes - o vendedor e o leiloeiro não podem dar lances.
+
+Para teste das funcionalidades do sistema, crie ao menos um usuário de cada tipo.
+
 ---
 
 ## Aula 8 - 22/10/2021
