@@ -39,7 +39,6 @@
                 
                 Anunciante: {{ leilao.lote.user }}<br>
 
-                Preço Atual: R${{ leilao.lance.valor }}<br>
 
                 {% if leilao.lance.user.is_staff %}
                     Vencedor Atual: Sem Lances<br>
@@ -47,12 +46,11 @@
                     Vencedor Atual: {{ leilao.lance.user }}<br>
                 {% endif %}
 
-                Intervalo Mínimo de Lance: R${{ leilao.lote.minimum_bid }}<br>
 
                 <div id="leilao_options">
                     {% if user.is_staff %}
                     <a id="edit" href="{% url 'leilao_fbv_user:update_leilao' leilao.id %}">Editar</a>
-                    <a id="delete" href="{% url 'leilao_fbv_user:delete_leilao' leilao.id %}">Deletar</a>
+                    <a id="delete" href="{% url 'leilao_fbv_user:delete_leilao' leilao.id %}">Cancelar</a>
                     {% endif %}
                     <a id="entrar" href="{% url 'leilao_fbv_user:show_leilao' leilao.id %}">Entrar</a>
                 </div>

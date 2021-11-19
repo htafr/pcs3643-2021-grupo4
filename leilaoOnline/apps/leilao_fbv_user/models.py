@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import fields
+from django.forms.widgets import Textarea
 from django.urls import reverse
 from django.conf import UserSettingsHolder, settings
 from datetime import date, datetime
@@ -126,7 +127,7 @@ YEAR_CHOICES = (
 LEILAO_CHOICES = (
     ("ATIVO", "Ativo"),
     ("FINALIZADO","Finalizado"),
-    ("ESPERA", "Espera")
+    #("ESPERA", "Espera")
 )
 
 LOTE_CHOICES = (
@@ -176,6 +177,8 @@ class LoteForm(ModelForm):
         fields = ['name', 'summary', 'quantity', 'category',
                   'author', 'publisher', 'edition', 'number_of_pages',
                   'condition', 'reserve_price']
+        
+        widgets = { 'summary': Textarea(attrs={'rows': 5, 'cols': 60})}
 
 class LotePendingForm(ModelForm):
     class Meta:
