@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="sub_header">
+    <div>
+        <h2 id="tcolor">Seus Leilões Disponíveis</h2>
+    </div>
+    <div>
+        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:redirect_user' %}">Voltar</a></h2>
+    </div>
+</div>
+
+<div id="user_page">
+    <ul>
+        {% for leilao in leiloes %}
+        <li>
+            <span>
+                {{ leilao.name }}:<br>
+                {{ leilao.status_leilao }}<br>
+                <br>
+                Lote: {{ leilao.lote.name }}<br>
+                Quantidade: {{ leilao.lote.quantity }}<br>
+                Descrição: {{ leilao.lote.summary }}<br>
+                Categoria: {{ leilao.lote.category }}<br>
+                Autor: {{ leilao.lote.author }}<br>
+                Editora: {{ leilao.lote.publisher }}<br>
+                Edição: {{ leilao.lote.edition }}<br>
+                Número de Páginas: {{ leilao.lote.number_of_pages }}<br>
+                Condição: {{ leilao.lote.condition }}<br>
+                Anunciante: {{ leilao.lote.user }}<br>
+                Preço Atual: R${{ leilao.lance.valor }}<br>
+                Vencedor Atual: {{ leilao.lance.user }}<br>
+            </span>
+        </li><br>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

@@ -40,9 +40,11 @@ def create_lote(request, template_name='leilao_fbv_user/lote_form.html'):
     
 @login_required
 def update_lote(request, pk, template_name='leilao_fbv_user/lote_form.html'):
-    form = LoteDAO.lote_update(request=request, pk=pk, template_name=template_name)
+    form, lote = LoteDAO.lote_update(request=request, pk=pk, template_name=template_name)
     if form.is_valid():
         form.save()
+        lote.state = 'Pendente'
+        lote.save()
         return redirect('leilao_fbv_user:lote_list')
     return render(request, template_name, {'form':form})
 
@@ -97,6 +99,9 @@ def create_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html')
         ### dessa forma ele pode ser ligado ao leilao
         lance.leilao_id = leilao.id
         lance.save()
+
+        lote.has_leilao = True
+        lote.save()
         return redirect('leilao_fbv_user:redirect_user')
 
     context = {
@@ -181,8 +186,10 @@ def update_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html')
 
 @login_required
 def delete_leilao(request, pk, template_name='leilao_fbv_user/leilao_confirm_delete.html'):
-    leilao = LeilaoDAO.leilao_delete(request=request, pk=pk, template_name=template_name)
+    leilao, lote = LeilaoDAO.leilao_delete(request=request, pk=pk, template_name=template_name)
     if request.method=='POST':
+        lote.has_leilao = False
+        lote.save()
         leilao.delete()
         return redirect('leilao_fbv_user:list_leilao_all')
     return render(request, template_name, {'leilao':leilao})
@@ -300,6 +307,18 @@ def delete_vendedor(request, pk, template_name='leilao_fbv/vendedor_confirm_dele
         vendedor.delete()
         return redirect('leilao_fbv:vendedor_list')
     return render(request, template_name, {'object':vendedor})
+
+@login_required
+def show_my_leiloes(request, template_name='leilao_fbv_user/my_leiloes.html'):
+    vendedor_id = request.user.id
+    my_leiloes = LeilaoDAO.get_my_leiloes(request=request, user_id=vendedor_id, template_name=template_name)
+    return render(request, template_name, {'leiloes': my_leiloes})
+
+@login_required
+def show_my_avail_leiloes(request, template_name='leilao_fbv_user/my_avail_leiloes.html'):
+    vendedor_id = request.user.id
+    avail_leilao = LeilaoDAO.get_my_avail_leilao(request=request, user_id=vendedor_id, template_name=template_name)
+    return render(request, template_name, {'leiloes': avail_leilao})
 
 ####################################################################################
 ### Comprador ######################################################################

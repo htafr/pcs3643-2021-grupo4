@@ -48,6 +48,8 @@ urlpatterns = [
 	path('new/', views.create_vendedor, name='vendedor_new'),
 	
 	path('vendedor_page/', views.redirect_vendedor, name='vendedor_page'),
+	path('my_leiloes/', views.show_my_leiloes, name='my_leiloes'),
+	path('my_avail_leiloes/', views.show_my_avail_leiloes, name='my_avail_leiloes'),
 	# path('edit/<int:pk>/', views.update_vendedor, name='vendedor_edit'),
 	# path('delete/<int:pk>/', views.delete_vendedor, name='vendedor_delete'),
 
