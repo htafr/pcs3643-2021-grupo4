@@ -121,6 +121,18 @@ def list_leilao_avail(request, template_name='leilao_fbv_user/leilao_list_avail.
     return render(request, template_name, data)
 
 @login_required
+def show_participating_leilao(request, template_name="leilao_fbv_user/show_participating_leilao.html"):
+    user_id = request.user.id
+    leiloes = LeilaoDAO.get_participating_leilao(request=request, user_id=user_id, template_name=template_name)
+    return render(request, template_name, {'leiloes': leiloes})
+
+@login_required
+def show_won_leilao(request, template_name="leilao_fbv_user/show_won_leilao.html"):
+    user_id = request.user.id
+    leiloes = LeilaoDAO.get_won_leilao(request=request, user_id=user_id, template_name=template_name)
+    return render(request, template_name, {'leiloes': leiloes})
+
+@login_required
 def update_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html'):
     form = LeilaoDAO.leilao_update(request=request, pk=pk, template_name=template_name)
     if form.is_valid():
