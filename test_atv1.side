@@ -1,0 +1,792 @@
+{
+  "id": "9fddb4f2-d5e3-4d19-bd61-462e2b9a7ef9",
+  "version": "2.0",
+  "name": "criarLote",
+  "url": "http://localhost:8000/leilao_fbv_user/vendedor_page/",
+  "tests": [{
+    "id": "956679b5-2b00-4927-9d7d-0a9fe8847f2a",
+    "name": "add_lote",
+    "commands": [{
+      "id": "b829ea00-053f-4833-88b3-d3e40b57476e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8000/leilao_fbv_user/vendedor_page/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3c0182f6-3baa-44fa-b6ee-1300d505345e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1ae3b565-f70f-4108-a144-cc0c0c23200d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Novo lote",
+      "targets": [
+        ["linkText=Novo lote", "linkText"],
+        ["css=li:nth-child(2) > a", "css:finder"],
+        ["xpath=(//a[contains(text(),'Novo lote')])[2]", "xpath:link"],
+        ["xpath=//div[@id='content']/div/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '/leilao_fbv_user/new/')])[2]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9aa4f9ee-8a84-4bea-9567-bd139bd6dc2d",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_name",
+      "targets": [
+        ["id=id_name", "id"],
+        ["name=name", "name"],
+        ["css=#id_name", "css:finder"],
+        ["xpath=//input[@id='id_name']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p/input", "xpath:idRelative"],
+        ["xpath=//p/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "07e99dff-8ffb-4297-8d41-7d642150263a",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_name",
+      "targets": [
+        ["id=id_name", "id"],
+        ["name=name", "name"],
+        ["css=#id_name", "css:finder"],
+        ["xpath=//input[@id='id_name']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p/input", "xpath:idRelative"],
+        ["xpath=//p/input", "xpath:position"]
+      ],
+      "value": "A fundação"
+    }, {
+      "id": "0ceba529-9f19-4f65-9905-1d6175a1cd52",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_summary",
+      "targets": [
+        ["id=id_summary", "id"],
+        ["name=summary", "name"],
+        ["css=#id_summary", "css:finder"],
+        ["xpath=//input[@id='id_summary']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[2]/input", "xpath:idRelative"],
+        ["xpath=//p[2]/input", "xpath:position"]
+      ],
+      "value": "Livro de isaac asimov"
+    }, {
+      "id": "50250d82-3791-4dab-90bd-401a7b045cfd",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_condition",
+      "targets": [
+        ["id=id_condition", "id"],
+        ["name=condition", "name"],
+        ["css=#id_condition", "css:finder"],
+        ["xpath=//select[@id='id_condition']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[5]/select", "xpath:idRelative"],
+        ["xpath=//p[5]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1607bd39-1bf4-4b0b-9f7f-de94dc7a79ee",
+      "comment": "",
+      "command": "select",
+      "target": "id=id_condition",
+      "targets": [],
+      "value": "label=Usado"
+    }, {
+      "id": "2bda281f-ca04-4ce5-8002-0c3fadcb0e72",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_min_value",
+      "targets": [
+        ["id=id_min_value", "id"],
+        ["name=min_value", "name"],
+        ["css=#id_min_value", "css:finder"],
+        ["xpath=//input[@id='id_min_value']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[6]/input", "xpath:idRelative"],
+        ["xpath=//p[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d6f23fad-3f0d-4d87-81c9-95a440545669",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_min_value",
+      "targets": [
+        ["id=id_min_value", "id"],
+        ["name=min_value", "name"],
+        ["css=#id_min_value", "css:finder"],
+        ["xpath=//input[@id='id_min_value']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[6]/input", "xpath:idRelative"],
+        ["xpath=//p[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "14279b43-950a-4bf4-8a32-16653b708e10",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_min_value",
+      "targets": [
+        ["id=id_min_value", "id"],
+        ["name=min_value", "name"],
+        ["css=#id_min_value", "css:finder"],
+        ["xpath=//input[@id='id_min_value']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[6]/input", "xpath:idRelative"],
+        ["xpath=//p[6]/input", "xpath:position"]
+      ],
+      "value": "120.0"
+    }, {
+      "id": "c04f7926-bf85-4259-9df2-a2624e12e038",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_opening_month",
+      "targets": [
+        ["id=id_opening_month", "id"],
+        ["name=opening_month", "name"],
+        ["css=#id_opening_month", "css:finder"],
+        ["xpath=//select[@id='id_opening_month']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[7]/select", "xpath:idRelative"],
+        ["xpath=//p[7]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "663fe1dc-3741-4eac-8c99-2e5095ec82da",
+      "comment": "",
+      "command": "select",
+      "target": "id=id_opening_month",
+      "targets": [],
+      "value": "label=Fevereiro"
+    }, {
+      "id": "dbd63619-bd4d-4856-af4c-e9076aa903c2",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_opening_day",
+      "targets": [
+        ["id=id_opening_day", "id"],
+        ["name=opening_day", "name"],
+        ["css=#id_opening_day", "css:finder"],
+        ["xpath=//select[@id='id_opening_day']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[8]/select", "xpath:idRelative"],
+        ["xpath=//p[8]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fcf6e716-d92a-4cfd-8def-ee6790f66023",
+      "comment": "",
+      "command": "select",
+      "target": "id=id_opening_day",
+      "targets": [],
+      "value": "label=4"
+    }, {
+      "id": "55b5a76f-bfcf-4d7a-b5fc-0761082a18f3",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_opening_year",
+      "targets": [
+        ["id=id_opening_year", "id"],
+        ["name=opening_year", "name"],
+        ["css=#id_opening_year", "css:finder"],
+        ["xpath=//select[@id='id_opening_year']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[9]/select", "xpath:idRelative"],
+        ["xpath=//p[9]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7fd4452-c002-4e60-9c55-4c1c8ce71bf2",
+      "comment": "",
+      "command": "select",
+      "target": "id=id_opening_year",
+      "targets": [],
+      "value": "label=2022"
+    }, {
+      "id": "7233a072-9638-41ce-b4dd-bdf3150c7fcc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.vsc-initialized",
+      "targets": [
+        ["css=.vsc-initialized", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d3e1f59f-abf5-4ccd-b0ba-52e5ebb27dc1",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_category",
+      "targets": [
+        ["id=id_category", "id"],
+        ["name=category", "name"],
+        ["css=#id_category", "css:finder"],
+        ["xpath=//select[@id='id_category']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[4]/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "07271647-c812-4557-bf14-3ac50ca35610",
+      "comment": "",
+      "command": "select",
+      "target": "id=id_category",
+      "targets": [],
+      "value": "label=Livro"
+    }, {
+      "id": "e9fcfeea-51dc-4b8d-85e0-92f0b9d63aad",
+      "comment": "",
+      "command": "click",
+      "target": "css=.vsc-initialized",
+      "targets": [
+        ["css=.vsc-initialized", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "019ffa01-5566-4810-96e6-6941c5cc3c21",
+      "comment": "",
+      "command": "click",
+      "target": "css=input:nth-child(11)",
+      "targets": [
+        ["css=input:nth-child(11)", "css:finder"],
+        ["xpath=//input[@value='Cadastrar']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "e1a821e9-2316-4e87-b887-b75dc3ae4c46",
+    "name": "edit_lote",
+    "commands": [{
+      "id": "e3d067f0-fe8f-40a5-8437-90b7c8dcb66e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8000/leilao_fbv_user/vendedor_page/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b5020efc-2afc-4dbb-862a-a4f1009d5847",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "979fc254-e966-47c0-8624-4d640942a6af",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Seus lotes",
+      "targets": [
+        ["linkText=Seus lotes", "linkText"],
+        ["css=.user_menu li:nth-child(1) > a", "css:finder"],
+        ["xpath=(//a[contains(text(),'Seus lotes')])[2]", "xpath:link"],
+        ["xpath=//div[@id='content']/div/ul/li/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '/leilao_fbv_user/user_lotes/')])[2]", "xpath:href"],
+        ["xpath=//div[2]/div/ul/li/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "954a0de2-8cd7-4838-af88-70f53218d52f",
+      "comment": "",
+      "command": "click",
+      "target": "id=edit",
+      "targets": [
+        ["id=edit", "id"],
+        ["linkText=Editar", "linkText"],
+        ["css=#edit", "css:finder"],
+        ["xpath=//a[contains(text(),'Editar')]", "xpath:link"],
+        ["xpath=//a[@id='edit']", "xpath:attributes"],
+        ["xpath=//div[@id='lote_options']/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/leilao_fbv_user/edit/5/')]", "xpath:href"],
+        ["xpath=//span/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Editar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1c055306-d350-4940-b088-38edef545b31",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_min_value",
+      "targets": [
+        ["id=id_min_value", "id"],
+        ["name=min_value", "name"],
+        ["css=#id_min_value", "css:finder"],
+        ["xpath=//input[@id='id_min_value']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[6]/input", "xpath:idRelative"],
+        ["xpath=//p[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "95c22773-7014-4da7-8b0d-ebc4b5409df5",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_min_value",
+      "targets": [
+        ["id=id_min_value", "id"],
+        ["name=min_value", "name"],
+        ["css=#id_min_value", "css:finder"],
+        ["xpath=//input[@id='id_min_value']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[6]/input", "xpath:idRelative"],
+        ["xpath=//p[6]/input", "xpath:position"]
+      ],
+      "value": "150.00"
+    }, {
+      "id": "788b79f7-0eb2-4644-ac7d-fb157061d7b0",
+      "comment": "",
+      "command": "click",
+      "target": "css=input:nth-child(11)",
+      "targets": [
+        ["css=input:nth-child(11)", "css:finder"],
+        ["xpath=//input[@value='Cadastrar']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "5a213630-594f-420a-a624-d61ca2382a48",
+    "name": "show_lote",
+    "commands": [{
+      "id": "d4b75a58-f83f-486a-9862-d68e55224ef0",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8000/leilao_fbv_user/vendedor_page/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a5231251-66f8-4e4b-8683-1691f74112c3",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a1aad140-4d7a-401e-9a67-e532f70fdb08",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Seus lotes",
+      "targets": [
+        ["linkText=Seus lotes", "linkText"],
+        ["css=.user_menu li:nth-child(1) > a", "css:finder"],
+        ["xpath=(//a[contains(text(),'Seus lotes')])[2]", "xpath:link"],
+        ["xpath=//div[@id='content']/div/ul/li/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '/leilao_fbv_user/user_lotes/')])[2]", "xpath:href"],
+        ["xpath=//div[2]/div/ul/li/a", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "2a90a0b7-c2a2-444e-a449-033e1bb4e2be",
+    "name": "show_available_lote",
+    "commands": [{
+      "id": "435861ca-d7a7-4541-bc47-a239310746b5",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8000/leilao_fbv_user/vendedor_page/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d1f01db7-78b6-4505-b77e-eee178755aea",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1a69359a-8a45-4f0b-8b70-68cfcbc71d3b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Leilões Disponíveis",
+      "targets": [
+        ["linkText=Leilões Disponíveis", "linkText"],
+        ["css=li:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Leilões Disponíveis')]", "xpath:link"],
+        ["xpath=//div[@id='content']/div/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/leilao_fbv_user/alllotes/')]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Leilões Disponíveis')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "0072d899-d1a5-4a3b-b190-945e27794ab6",
+    "name": "create_vendedor",
+    "commands": [{
+      "id": "c56639b9-fa7c-47ae-a05e-053d908a453b",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8000/leilao_fbv_user/vendedor_page/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3dc81047-f920-421e-8b0c-4340a7606418",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "776x432",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a83371d6-3490-4f86-94ab-343a4100ca19",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.header li:nth-child(2) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/accounts/login/')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ef437c93-7b37-4fcf-87c9-5ff75ba619f2",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Cadastrar",
+      "targets": [
+        ["linkText=Cadastrar", "linkText"],
+        ["css=li:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Cadastrar')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/leilao_fbv/select/')]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Cadastrar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b75bf49f-33bf-4cbf-af91-539c61b424ff",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Vendedor",
+      "targets": [
+        ["linkText=Vendedor", "linkText"],
+        ["css=a:nth-child(4)", "css:finder"],
+        ["xpath=//a[contains(text(),'Vendedor')]", "xpath:link"],
+        ["xpath=//div[@id='content']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/leilao_fbv/signup_vendedor/')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Vendedor')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "200e5e96-33c8-462f-a1b8-af127c91de13",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_name",
+      "targets": [
+        ["id=id_name", "id"],
+        ["name=name", "name"],
+        ["css=#id_name", "css:finder"],
+        ["xpath=//input[@id='id_name']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p/input", "xpath:idRelative"],
+        ["xpath=//p/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "50e8bea7-ec1b-4dd4-93cd-305a348d5f61",
+      "comment": "",
+      "command": "click",
+      "target": "css=.vsc-initialized",
+      "targets": [
+        ["css=.vsc-initialized", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1e64dad0-03db-4f99-a096-bb2e37edd08d",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_name",
+      "targets": [
+        ["id=id_name", "id"],
+        ["name=name", "name"],
+        ["css=#id_name", "css:finder"],
+        ["xpath=//input[@id='id_name']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p/input", "xpath:idRelative"],
+        ["xpath=//p/input", "xpath:position"]
+      ],
+      "value": "João Augusto"
+    }, {
+      "id": "183f99e5-f262-43f5-9438-52abb6cef3f8",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_username",
+      "targets": [
+        ["id=id_username", "id"],
+        ["name=username", "name"],
+        ["css=#id_username", "css:finder"],
+        ["xpath=//input[@id='id_username']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[2]/input", "xpath:idRelative"],
+        ["xpath=//p[2]/input", "xpath:position"]
+      ],
+      "value": "joaoaugusto"
+    }, {
+      "id": "db365c35-1053-46f4-bac5-a191fff18243",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_email",
+      "targets": [
+        ["id=id_email", "id"],
+        ["name=email", "name"],
+        ["css=#id_email", "css:finder"],
+        ["xpath=//input[@id='id_email']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[3]/input", "xpath:idRelative"],
+        ["xpath=//p[3]/input", "xpath:position"]
+      ],
+      "value": "joao@usp.br"
+    }, {
+      "id": "e4d9576a-3cc8-4e48-9718-b891ad4e32cb",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_password",
+      "targets": [
+        ["id=id_password", "id"],
+        ["name=password", "name"],
+        ["css=#id_password", "css:finder"],
+        ["xpath=//input[@id='id_password']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[4]/input", "xpath:idRelative"],
+        ["xpath=//p[4]/input", "xpath:position"]
+      ],
+      "value": "pcs-3643"
+    }, {
+      "id": "4795eb25-94cc-4d2a-ba78-1d65939709d3",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_address",
+      "targets": [
+        ["id=id_address", "id"],
+        ["name=address", "name"],
+        ["css=#id_address", "css:finder"],
+        ["xpath=//input[@id='id_address']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[5]/input", "xpath:idRelative"],
+        ["xpath=//p[5]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7eaa1975-a46b-4891-9d12-603fb3cfbee6",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_address",
+      "targets": [
+        ["id=id_address", "id"],
+        ["name=address", "name"],
+        ["css=#id_address", "css:finder"],
+        ["xpath=//input[@id='id_address']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[5]/input", "xpath:idRelative"],
+        ["xpath=//p[5]/input", "xpath:position"]
+      ],
+      "value": "Rua da Alvorada, 1111"
+    }, {
+      "id": "02ae68ee-cdb2-4658-acf1-fcaab6a7fdb0",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_rg",
+      "targets": [
+        ["id=id_rg", "id"],
+        ["name=rg", "name"],
+        ["css=#id_rg", "css:finder"],
+        ["xpath=//input[@id='id_rg']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[7]/input", "xpath:idRelative"],
+        ["xpath=//p[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5525a713-9c0e-483b-a5d8-a7578e1aae82",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_rg",
+      "targets": [
+        ["id=id_rg", "id"],
+        ["name=rg", "name"],
+        ["css=#id_rg", "css:finder"],
+        ["xpath=//input[@id='id_rg']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[7]/input", "xpath:idRelative"],
+        ["xpath=//p[7]/input", "xpath:position"]
+      ],
+      "value": "123456789"
+    }, {
+      "id": "1f36c487-dcf4-47c0-9ecf-49e4ff2fa93d",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_cpf",
+      "targets": [
+        ["id=id_cpf", "id"],
+        ["name=cpf", "name"],
+        ["css=#id_cpf", "css:finder"],
+        ["xpath=//input[@id='id_cpf']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[8]/input", "xpath:idRelative"],
+        ["xpath=//p[8]/input", "xpath:position"]
+      ],
+      "value": "98765432156"
+    }, {
+      "id": "774ac038-cf6d-499e-a0d8-4cffe708bc22",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_bank",
+      "targets": [
+        ["id=id_bank", "id"],
+        ["name=bank", "name"],
+        ["css=#id_bank", "css:finder"],
+        ["xpath=//select[@id='id_bank']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[9]/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "52f9c2d0-3d21-4a78-b5c1-9f6e49b21f39",
+      "comment": "",
+      "command": "select",
+      "target": "id=id_bank",
+      "targets": [],
+      "value": "label=Banco do Brasil S.A."
+    }, {
+      "id": "22aaef80-b542-44ee-874a-24e4070e68e1",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_agency",
+      "targets": [
+        ["id=id_agency", "id"],
+        ["name=agency", "name"],
+        ["css=#id_agency", "css:finder"],
+        ["xpath=//input[@id='id_agency']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[10]/input", "xpath:idRelative"],
+        ["xpath=//p[10]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b8b98402-6d8b-414a-a28a-5dbe0550bd14",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_agency",
+      "targets": [
+        ["id=id_agency", "id"],
+        ["name=agency", "name"],
+        ["css=#id_agency", "css:finder"],
+        ["xpath=//input[@id='id_agency']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[10]/input", "xpath:idRelative"],
+        ["xpath=//p[10]/input", "xpath:position"]
+      ],
+      "value": "1615"
+    }, {
+      "id": "671f2c42-01e7-497b-b4c9-cc7ade1991e3",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_account_number",
+      "targets": [
+        ["id=id_account_number", "id"],
+        ["name=account_number", "name"],
+        ["css=#id_account_number", "css:finder"],
+        ["xpath=//input[@id='id_account_number']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[11]/input", "xpath:idRelative"],
+        ["xpath=//p[11]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "beb2fa40-e30a-4303-9df2-1bd87dbfdf0b",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_account_number",
+      "targets": [
+        ["id=id_account_number", "id"],
+        ["name=account_number", "name"],
+        ["css=#id_account_number", "css:finder"],
+        ["xpath=//input[@id='id_account_number']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/p[11]/input", "xpath:idRelative"],
+        ["xpath=//p[11]/input", "xpath:position"]
+      ],
+      "value": "465888"
+    }, {
+      "id": "82848164-4500-4171-81b4-5eb1891b5b63",
+      "comment": "",
+      "command": "click",
+      "target": "css=input:nth-child(13)",
+      "targets": [
+        ["css=input:nth-child(13)", "css:finder"],
+        ["xpath=//input[@value='Cadastrar']", "xpath:attributes"],
+        ["xpath=//div[@id='content']/form/input[2]", "xpath:idRelative"],
+        ["xpath=//form/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ee42e67d-987b-4ee8-a6bd-2291e5d7af28",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=li:nth-child(2) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/accounts/login/')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5be8e916-2870-422a-a6cf-1664b552803a",
+      "comment": "",
+      "command": "click",
+      "target": "id=login_form",
+      "targets": [
+        ["id=login_form", "id"],
+        ["css=#login_form", "css:finder"],
+        ["xpath=//form[@id='login_form']", "xpath:attributes"],
+        ["xpath=//div[@id='login']/form", "xpath:idRelative"],
+        ["xpath=//form", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e4332981-48e7-4511-82af-629e16d44e35",
+      "comment": "",
+      "command": "type",
+      "target": "id=id_username",
+      "targets": [
+        ["id=id_username", "id"],
+        ["name=username", "name"],
+        ["css=#id_username", "css:finder"],
+        ["xpath=//input[@id='id_username']", "xpath:attributes"],
+        ["xpath=//table[@id='login_table']/tbody/tr/td[2]/input", "xpath:idRelative"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": "joaoaugusto"
+    }, {
+      "id": "00478db7-9c16-4adc-86e9-3fc29d011291",
+      "comment": "",
+      "command": "click",
+      "target": "id=id_password",
+      "targets": [
+        ["id=id_password", "id"],
+        ["name=password", "name"],
+        ["css=#id_password", "css:finder"],
+        ["xpath=//input[@id='id_password']", "xpath:attributes"],
+        ["xpath=//table[@id='login_table']/tbody/tr[2]/td[2]/input", "xpath:idRelative"],
+        ["xpath=//tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5284ba49-bd07-4939-9d9c-c5c7858130ec",
+      "comment": "",
+      "command": "click",
+      "target": "id=login_button",
+      "targets": [
+        ["id=login_button", "id"],
+        ["css=#login_button", "css:finder"],
+        ["xpath=//input[@id='login_button']", "xpath:attributes"],
+        ["xpath=//div[@id='loginbtn_container']/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "184c6728-1be4-4160-a150-7efd957a96dc",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:8000/", "http://localhost:8000/leilao_fbv_user/vendedor_page/"],
+  "plugins": []
+}
