@@ -1,4 +1,4 @@
-# PCS3643
+Companhia das Letras# PCS3643
 
 ## Baseline
 
@@ -37,11 +37,25 @@ Executar a instalação via arquivo *requirements.txt*. Nesse arquivo existem as
 pip install -r requirements.txt
 ```
 
-Também é necessário criar um banco de dados ```leilaoOnline``` o qual é acessado com o usuário ```kenji``` e senha ```pcs3643labengsoft``` que está no arquivo ```settings.py```.
+### **Banco de Dados:**
+
+O projeto utiliza  sistema de gerenciamento de Banco de dados do MySQL. Você pode utilizar o software de interface de sua preferência. O grupo utiliza a extensão ```DataBase``` do ```VSCode``` no desenvolvimento do projeto.
+
+#### **Configuração do Banco de Dados:**
+
+Para o funcionamento correto, realize a criação do banco de dados com o comando a seguir:
+
+```
+CREATE DATABASE leilaoOnline;
+```
+
+Também é necessário criar um usuário e senha. Utilize usuário - ```kenji``` - e senha - ```pcs3643labengsoft``` - que também está disponível no arquivo ```settings.py```.
+
+No atual estágio do projeto não é necessário a criação de superusuários.
 
 ### **Set up do Projeto**
 
-Antes de executar o projeto, deve-se migrar os aplicativos criados. Portanto deve-se executar os seguintes comandos:
+Antes de executar o projeto, deve-se migrar os aplicativos criados. Portanto execute os seguintes comandos:
 
 ```
 python3 manage.py makemigrations leilao_fbv
