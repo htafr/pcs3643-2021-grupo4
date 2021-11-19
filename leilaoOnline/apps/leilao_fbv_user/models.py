@@ -158,8 +158,6 @@ class Lote(models.Model):
     state = models.CharField(max_length=16, choices=LOTE_CHOICES, default='Pendente')
 
     ### Preenchido automaticamente
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True, default='')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
     has_leilao = models.BooleanField(default=False)
     
@@ -275,37 +273,19 @@ class Leilao(models.Model):
     close_date = models.DateField(auto_now=True)
     status_leilao = models.CharField(max_length=16, choices=LEILAO_CHOICES, blank=False, null=False)
 
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True, default='')
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
     ### Atributos Classes
     lote = models.ForeignKey(Lote, on_delete=models.CASCADE)
     lance = models.ForeignKey(Lance, on_delete=models.CASCADE, blank=True, default='')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
 
     # Infos Leilao
     num_lances = models.IntegerField(default=0)
     #lance_inicial = models.CharField(max_length=64, default='', blank=False)
     lance_inicial = models.DecimalField(default = 0,decimal_places=2, max_digits=16)
-    
-    # # Taxas
-    # taxa_comissao_comprador = models.IntegerField(default=0)
-    # taxa_comissao_vendedor = models.IntegerField(default=0)
-
-    # # Comissoes
-    # valor_comissao_comprador = models.CharField(max_length=64, default='', blank=False)
-    # valor_comissao_vendedor = models.CharField(max_length=64, default='', blank=False)
-
-    # Taxas
-    #taxa_comissao_comprador = models.DecimalField(default = 0,decimal_places=2, max_digits=16)
-    #taxa_comissao_vendedor = models.DecimalField(default = 0,decimal_places=2, max_digits=16)
 
     # Taxas
     taxa_comissao_comprador = models.FloatField(default=0,blank=False)
     taxa_comissao_vendedor = models.FloatField(default=0,blank=False)
-
-    # Comissoes
-    #valor_comissao_comprador = models.DecimalField(default = 0,decimal_places=2, max_digits=16)
-    #valor_comissao_vendedor = models.DecimalField(default = 0,decimal_places=2, max_digits=16)
 
     # Comissoes
     valor_comissao_comprador = models.FloatField(default=0,blank=False)
@@ -331,10 +311,6 @@ class LeilaoDAO(models.Model):
         leilao = Leilao.objects.all()
         data = {}
         data['object_list'] = leilao
-        #print(leilao[0])
-        #teste = Leilao.objects.get(name=leilao[0])
-        #teste = Leilao.objects.filter(status_leilao="FINALIZADO")
-        #print(teste)
         return data
 
     def leilao_list_avail(request, template_name):
