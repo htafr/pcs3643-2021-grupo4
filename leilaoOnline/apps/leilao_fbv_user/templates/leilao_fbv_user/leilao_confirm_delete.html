@@ -12,8 +12,14 @@
 </div>
 
 <form method="post"  id = "tcolor">{% csrf_token %}
-    Tem certeza de que deseja deletar "{{ leilao }}"?<br/>
-    <input type="submit" value="Delete" />
+    {% if leilao.status_leilao == "ATIVO" %}
+        Tem certeza de que quer cancelar  "{{ leilao }}"?<br/>
+        <input type="submit" value="Cancelar" />
+    {% else %}
+        Tem certeza de que quer deletar "{{ leilao }}"?<br/>
+            <input type="submit" value="Deletar" />
+    {% endif %}
+    
 </form>
 
 {% endblock %}

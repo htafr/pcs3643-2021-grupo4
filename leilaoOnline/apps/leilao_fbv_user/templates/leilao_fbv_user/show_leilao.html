@@ -37,7 +37,13 @@
             <div id="leilao_options">
                 {% if user.is_staff %}
                 <a id="edit" href="{% url 'leilao_fbv_user:update_leilao' leilao.id %}">Editar</a>
-                <a id="delete" href="{% url 'leilao_fbv_user:delete_leilao' leilao.id %}">Deletar</a>
+
+                {% if leilao.status_leilao == "ATIVO" %}
+                    <a id="delete" href="{% url 'leilao_fbv_user:delete_leilao' leilao.id %}">Cancelar</a>
+                {% else %}
+                    <a id="delete" href="{% url 'leilao_fbv_user:delete_leilao' leilao.id %}">Deletar</a>
+                {% endif %}
+                
                 {% else %}
                 <a id="bid" href="{% url 'leilao_fbv_user:make_bid' leilao.id %}">Dar Lance</a>
                 {% endif %}
