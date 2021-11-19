@@ -1,28 +1,49 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import fields
 from django.urls import reverse
 from django.conf import UserSettingsHolder, settings
-from datetime import date
+from datetime import date, datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
 
-# import para fazer a comparacao com as tabelas fora de fbv_user (onde estao os cadastros)
-from leilao_fbv.models import Vendedor as Vendedor_fbv
-from leilao_fbv.models import Comprador as Comprador_fbv
-from leilao_fbv.models import Leiloeiro as Leiloeiro_fbv
-
+####################################################################################
+### Choices ########################################################################
+####################################################################################
 CATEGORY_CHOICES = (
-    ('Automotivos e Peças','Automotivos e Peças'),
-    ('Beleza e Cuidados Pessoais', 'Beleza e Cuidados Pessoais'),
-    ('Esporte','Esporte'),
-    ('Brinquedos e Jogos','Brinquedos e Jogos'),
-    ('Cozinha','Cozinha'),
-    ('Eletrônicos', 'Eletrônicos'),
-    ('Games e Consoles', 'Games e Console'),
+    ('Administração, Negócios e Economia','Administração, Negócios e Economia'),
+    ('Arte, Cinema e Fotografia', 'Arte, Cinema e Fotografia'),
+    ('Artesanato, Casa e Estilo de Vida','Artesanato, Casa e Estilo de Vida'),
+    ('Autoajuda','Autoajuda'),
+    ('Biografias e Histórias Reais','Biografias e Histórias Reais'),
+    ('Calendários e Anuários', 'Calendários e Anuários'),
+    ('Ciências', 'Ciências'),
     ('Livro','Livro'),
-    ('Papelaria e Escritório', 'Papelaria e Escritório'),
-    ('Pet Shop','Pet Shop'),
-    ('Roupas Calçados e Acessórios', 'Roupas Calçados e Acessórios'),
+    ('Computação, Informática e Mídias Digitais', 'Computação, Informática e Mídias Digitais'),
+    ('Cristandade','Cristandade'),
+    ('Crônicas, Humor e Entretenimento', 'Crônicas, Humor e Entretenimento'),
+    ('Direito', 'Direito'),
+    ('Educação', 'Educação'),
+    ('Educação dos Filhos e Família', 'Educação dos Filhos e Família'),
+    ('Educação, Referência e Didáticos', 'Educação, Referência e Didáticos'),
+    ('Engenharia e Transporte', 'Engenharia e Transporte'),
+    ('Esportes e Lazer', 'Esportes e Lazer'),
+    ('Fantasia, Horror, e Ficção Científica', 'Fantasia, Horror, e Ficção Científica'),
+    ('Gastronomia e Culinária', 'Gastronomia e Culinária'),
+    ('História', 'História'),
+    ('HQs, Mangás e Graphic Novels', 'HQs, Mangás e Graphic Novels'),
+    ('Infantil', 'Infantil'),
+    ('Jovens e Adolescentes', 'Jovens e Adolescentes'),
+    ('LGBT', 'LGBT'),
+    ('Literatura e Ficção', 'Literatura e Ficção'),
+    ('Medicina', 'Medicina'),
+    ('Policial, Suspense e Mistério', 'Policial, Suspense e Mistério'),
+    ('Política, Filosofia e Ciências Sociais', 'Política, Filosofia e Ciências Sociais'),
+    ('Preparação para Provas', 'Preparação para Provas'),
+    ('Religião e Espiritualidade', 'Religião e Espiritualidade'),
+    ('Romance', 'Romance'),
+    ('Saúde e Família', 'Saúde e Família'),
+    ('Turismo e Guias de Viagem', 'Turismo e Guias de Viagem'),
 )
 
 CONDITION_CHOICES = (
@@ -42,6 +63,7 @@ BANK_CHOICES = (
 )
 
 MONTH_CHOICES = (
+    ('Mês', 'Mês'),
     ('Janeiro', 'Janeiro'),
     ('Fevereiro', 'Fevereiro'),
     ('Março', 'Março'),
@@ -56,6 +78,7 @@ MONTH_CHOICES = (
     ('Dezembro', 'Dezembro'),
 )
 DAY_CHOICES = (
+    ('Dia', 'Dia'),
     ('1', '1'),
     ('2', '2'),
     ('3', '3'),
@@ -90,8 +113,26 @@ DAY_CHOICES = (
 )
 
 YEAR_CHOICES = (
+    ('Ano', 'Ano'),
     ('2021', '2021'),
     ('2022', '2022'),
+    ('2023', '2023'),
+    ('2024', '2024'),
+    ('2025', '2025'),
+    ('2026', '2026'),
+    ('2027', '2027'),
+)
+
+LEILAO_CHOICES = (
+    ("ATIVO", "Ativo"),
+    ("FINALIZADO","Finalizado"),
+    ("ESPERA", "Espera")
+)
+
+LOTE_CHOICES = (
+    ('Pendente', 'Pendente'),
+    ('Negado', 'Negado'),
+    ('Aprovado', 'Aprovado'),
 )
 
 ####################################################################################
@@ -99,17 +140,26 @@ YEAR_CHOICES = (
 ####################################################################################
 
 class Lote(models.Model):
-    
-    name = models.CharField(max_length=200, default='')
-    summary = models.CharField(max_length=512, default='')
-    qty = models.IntegerField(default=1)
-    category = models.CharField(max_length=64, choices=CATEGORY_CHOICES, default='')
-    condition = models.CharField(max_length=64, choices=CONDITION_CHOICES, default='')
-    min_value = models.DecimalField(default=10.00, decimal_places=2, max_digits=16)
-    opening_month = models.CharField(max_length=16, choices=MONTH_CHOICES, default='')
-    opening_day = models.CharField(max_length=2, choices=DAY_CHOICES, default=1)
-    opening_year = models.CharField(max_length=4, choices=YEAR_CHOICES, default=2021)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, unique=True)
+    ### Para o vendedor preencher
+    name = models.CharField(max_length=64, default='', blank=False)
+    summary = models.CharField(max_length=512, default='', blank=False)
+    quantity = models.IntegerField(default=1, blank=False)
+    category = models.CharField(max_length=64, choices=CATEGORY_CHOICES, default='', blank=False)
+    author = models.CharField(max_length=64, default='', blank=False)
+    publisher = models.CharField(max_length=64, default='', blank=False)
+    edition = models.CharField(max_length=64, default='', blank=False)
+    number_of_pages = models.CharField(max_length=64, default='', blank=False)
+    condition = models.CharField(max_length=64, choices=CONDITION_CHOICES, default='', blank=False)
+    reserve_price = models.DecimalField(default=10.00, decimal_places=2, max_digits=16, blank=False)
+
+    ### Para o leiloeiro preencher
+    start_price = models.DecimalField(default=10.00, decimal_places=2, max_digits=16)
+    minimum_bid = models.DecimalField(default=10.00, decimal_places=2, max_digits=16)
+    state = models.CharField(max_length=16, choices=LOTE_CHOICES, default='Pendente')
+
+    ### Preenchido automaticamente
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
+    has_leilao = models.BooleanField(default=False)
     
     def __str__(self):
         return self.name
@@ -123,14 +173,18 @@ class Lote(models.Model):
 class LoteForm(ModelForm):
     class Meta:
         model = Lote
-        fields = ['name', 'summary', 'qty',
-                  'category', 'condition', 'min_value',
-                  'opening_month', 'opening_day', 'opening_year']
+        fields = ['name', 'summary', 'quantity', 'category',
+                  'author', 'publisher', 'edition', 'number_of_pages',
+                  'condition', 'reserve_price']
+
+class LotePendingForm(ModelForm):
+    class Meta:
+        model = Lote
+        fields = ['start_price', 'minimum_bid', 'state']
 
 class LoteDAO(models.Model):
-    
     def lote_list(request, template_name):
-        if request.user.is_superuser:
+        if request.user.is_staff:
             lote = Lote.objects.all()
         else:
             lote = Lote.objects.filter(user=request.user)
@@ -138,10 +192,17 @@ class LoteDAO(models.Model):
         data['object_list'] = lote
         return data
 
-    def available_list(request, template_name):
-        lote = Lote.objects.all()
+    def lote_list_pending(request, template_name):
+        lote = Lote.objects.filter(state='Pendente')
         data = {}
         data['object_list'] = lote
+        return data
+
+    def available_list(request, template_name):
+        lotes = Lote.objects.filter(state='Aprovado')
+        avail_lotes = lotes.filter(has_leilao=False)
+        data = {}
+        data['object_list'] = avail_lotes
         return data
 
     def lote_create(request, template_name):
@@ -150,173 +211,218 @@ class LoteDAO(models.Model):
         return form
 
     def lote_update(request, pk, template_name):
-        if request.user.is_superuser:
+        if request.user.is_staff:
             lote= get_object_or_404(Lote, pk=pk)
         else:
             lote= get_object_or_404(Lote, pk=pk, user=request.user)
         form = LoteForm(request.POST or None, instance=lote)
-        return form
+        return form, lote
 
     def lote_delete(request, pk, template_name):
-        if request.user.is_superuser:
+        if request.user.is_staff:
             lote= get_object_or_404(Lote, pk=pk)
         else:
             lote= get_object_or_404(Lote, pk=pk, user=request.user)
         return lote
 
+    def lote_pending(request, pk, template_name):
+        lote = get_object_or_404(Lote, pk=pk)
+        form = LotePendingForm(request.POST or None, instance=lote)
+        return form, lote
+
 ####################################################################################
-### Leiloeiro ######################################################################
+### Lance ##########################################################################
 ####################################################################################
 
-class Leiloeiro(models.Model):
-    name = models.CharField(max_length=256)
-    username = models.CharField(max_length=16, default='', unique=True)
-    email = models.CharField(max_length=256, default='', unique=True)
-    password = models.CharField(max_length=16, default='')
-    address = models.CharField(max_length=256)
-    birth_date = models.DateField(default=date.today)
-    rg = models.CharField(max_length=9)
-    cpf = models.CharField(max_length=11)
-    bank = models.CharField(max_length=64, choices=BANK_CHOICES, default='')
-    agency = models.IntegerField(default=1)
-    account_number = models.CharField(max_length=64)
-    salary = models.DecimalField(default=10, decimal_places=2, max_digits=8)
+class Lance(models.Model):
+    valor = models.DecimalField(default=10.00, decimal_places=2, max_digits=16, blank=False)
+    leilao_id = models.IntegerField(default=0, blank=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    # Verificar isso depois
+    def __str__(self):
+        return '{0} - R${1}'.format(self.user.username, self.valor)
     
-class LeiloeiroForm(ModelForm):
+    def init(self, valor):
+        self.valor = valor
+        return self
+
+class LanceForm(ModelForm):
     class Meta:
-        model = Leiloeiro
-        fields = ['name', 'username','password',
-                  'email','address', 'birth_date',
-                  'rg', 'cpf', 'bank', 'agency',
-                  'account_number', 'salary']
+        model = Lance
+        fields = ['valor']        
 
-class LeiloeiroDAO(models.Model):
-    def leiloeiro_list(request, template_name):
-        lote = Leiloeiro.objects.all()
+class LanceDAO(models.Model):
+    def init_lance(valor):
+        lance = Lance().init(valor)
+        return lance
+
+    def get_lance(user_id):
+        lance = Lance.objects.filter(user_id=user_id)
         data = {}
-        data['object_list'] = lote
-        return data
-    
-    def leiloeiro_create(request, template_name):
-        form = LeiloeiroForm(request.POST or None)
-        return form
-    
-    def leiloeiro_update(request, pk, template_name):
-        leiloeiro = get_object_or_404(Leiloeiro, pk=pk)
-        form = LoteForm(request.POST or None, instance=leiloeiro)
-        return form
-
-    def leiloeiro_delete(request, pk, template_name):
-        leiloeiro = get_object_or_404(Leiloeiro, pk=pk)
-        return leiloeiro
-
-    def leiloeiro_filter(request, username):
-        bool_user = Leiloeiro_fbv.objects.filter(username = username).exists()
-        print("Entrou Username Leiloeiro filter", username, bool_user)
-        return bool_user
-
-####################################################################################
-### Vendedor #######################################################################
-####################################################################################
-
-class Vendedor(models.Model):
-    name = models.CharField(max_length=256)
-    username = models.CharField(max_length=16, default='')
-    email = models.CharField(max_length=256, default='')
-    password = models.CharField(max_length=16, default='')
-    address = models.CharField(max_length=256)
-    birth_date = models.DateField(default=date.today)
-    rg = models.CharField(max_length=9)
-    cpf = models.CharField(max_length=11)
-    bank = models.CharField(max_length=64, choices=BANK_CHOICES, default='')
-    agency = models.IntegerField(default=1)
-    account_number = models.CharField(max_length=64)
-    
-class VendedorForm(ModelForm):
-    class Meta:
-        model = Vendedor
-        fields = ['name', 'username', 'email', 'password',
-                  'address', 'birth_date', 'rg',
-                  'cpf', 'bank', 'agency',
-                  'account_number']
-
-class VendedorDAO(models.Model):
-
-    def vendedor_list(request, template_name):
-        vendedor = Vendedor.objects.all()
-        data = {}
-        data['object_list'] = vendedor
+        data = lance
         return data
 
-    def vendedor_create(request, template_name):
-        form = VendedorForm(request.POST or None)
-        return form
-    
-    def vendedor_update(request, pk, template_name):
-        vendedor = get_object_or_404(Vendedor, pk=pk)
-        form = LoteForm(request.POST or None, instance=vendedor)
-        return form
-
-    def vendedor_delete(request, pk, template_name):
-        vendedor = get_object_or_404(Vendedor, pk=pk)
-        return vendedor
-    
-    def vendedor_filter(request, username):
-        bool_user = Vendedor_fbv.objects.filter(username = username).exists()
-        print("Entrou Username vendedor filter", username, bool_user)
-        return bool_user
-
 ####################################################################################
-### Comprador ######################################################################
+### Leilao #########################################################################
 ####################################################################################
 
-class Comprador(models.Model):
-    name = models.CharField(max_length=256)
-    username = models.CharField(max_length=16, default='')
-    email = models.CharField(max_length=256, default='')
-    password = models.CharField(max_length=16, default='')
-    address = models.CharField(max_length=256)
-    birth_date = models.DateField(default=date.today)
-    rg = models.CharField(max_length=9)
-    cpf = models.CharField(max_length=11)
-    card_number = models.CharField(max_length=16, default='')
-    
-class CompradorForm(ModelForm):
+class Leilao(models.Model):
+    name = models.CharField(max_length=64, default='', blank=False)
+    opening_date = models.DateField(auto_now=True)
+    close_date = models.DateField(auto_now=True)
+    status_leilao = models.CharField(max_length=16, choices=LEILAO_CHOICES, blank=False, null=False)
+    arrematado = models.BooleanField(default=False)
+
+    ### Atributos Classes
+    lote = models.ForeignKey(Lote, on_delete=models.CASCADE)
+    lance = models.ForeignKey(Lance, on_delete=models.CASCADE, blank=True, default='')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
+
+    # Infos Leilao
+    num_lances = models.IntegerField(default=0)
+    #lance_inicial = models.CharField(max_length=64, default='', blank=False)
+    lance_inicial = models.DecimalField(default = 0,decimal_places=2, max_digits=16)
+
+    # Taxas
+    taxa_comissao_comprador = models.FloatField(default=0,blank=False)
+    taxa_comissao_vendedor = models.FloatField(default=0,blank=False)
+
+    # Comissoes
+    valor_comissao_comprador = models.FloatField(default=0,blank=False)
+    valor_comissao_vendedor = models.FloatField(default=0,blank=False)
+
+    def __str__(self):
+        return self.name
+
+class LeilaoForm(ModelForm):
     class Meta:
-        model = Comprador
-        fields = ['name', 'username', 'email', 'password',
-                  'address', 'birth_date', 'rg',
-                  'cpf', 'card_number']
+        model = Leilao
+        fields = ['name', 'status_leilao']
 
-class CompradorDAO(models.Model):
+class LeilaoDAO(models.Model):
+    def leilao_create(request, pk, template_name):
+        ### Encontra o lote com pk
+        lote = get_object_or_404(Lote, pk=pk)
 
-    def comprador_list(request, template_name):
-        comprador = Comprador.objects.all()
+        form = LeilaoForm(request.POST or None)
+        return form, lote
+
+    def leilao_list_all(request, template_name):
+        leilao = Leilao.objects.all()
         data = {}
-        data['object_list'] = comprador
+        data['object_list'] = leilao
         return data
 
-    def comprador_create(request, template_name):
-        form = CompradorForm(request.POST or None)
-        return form
+    def leilao_list_avail(request, template_name):
+        leilao = Leilao.objects.filter(status_leilao='Ativo')
+        data = {}
+        data['object_list'] = leilao
+        return data
+
+    def get_participating_leilao(request, user_id, template_name):
+        lances = LanceDAO.get_lance(user_id=user_id)
+        lances_list = list(lances)
+        participating = []
+
+        if lances_list:
+            for lance in lances_list:
+                try:
+                    leilao = Leilao.objects.get(pk=lance.leilao_id)
+
+                    if leilao not in participating:
+                        participating.append(leilao)
+                except:
+                    leilao = None
+
+        return participating
+
+    def get_won_leilao(request, user_id, template_name):
+        lances = Lance.objects.filter(user_id=user_id)
+        leiloes = Leilao.objects.filter(arrematado=True)
+
+        leiloes_list = list(leiloes)
+        lances_list = list(lances)
+
+        won = []
+
+        for leilao in leiloes_list:
+            for lance in lances_list:
+                if leilao.lance_id == lance.id:
+                    won.append(leilao)
+
+        return won
     
-    def comprador_update(request, pk, template_name):
-        comprador = get_object_or_404(Comprador, pk=pk)
-        form = LoteForm(request.POST or None, instance=comprador)
+    def get_leilao(request, pk, template_name):
+        leilao = get_object_or_404(Leilao, pk=pk)
+        return leilao
+
+    def get_my_leiloes(request, user_id, template_name):
+        lotes = Lote.objects.filter(user_id=user_id)
+        my_leiloes = []
+
+        for lote in lotes:
+            try:
+                leilao = Leilao.objects.get(lote_id=lote.id)
+
+                if leilao not in my_leiloes:
+                    my_leiloes.append(leilao)
+            except:
+                leilao = None
+
+        return my_leiloes
+
+    def get_my_avail_leilao(request, user_id, template_name):
+        lotes = Lote.objects.filter(user_id=user_id)
+        my_leiloes = []
+
+        for lote in lotes:
+            try:
+                leiloes = Leilao.objects.get(lote_id=lote.id)
+
+                if leiloes.status_leilao == "ATIVO":
+                    if leiloes not in my_leiloes:
+                        my_leiloes.append(leiloes)
+            except:
+                leiloes = None
+
+        return my_leiloes
+
+    def leilao_delete(request, pk, template_name):
+        if request.user.is_staff:
+            leilao = get_object_or_404(Leilao, pk=pk)
+        else:
+            leilao = get_object_or_404(Leilao, pk=pk, user=request.user)
+        lote = Lote.objects.get(pk=leilao.lote_id)
+        return leilao, lote
+
+    def leilao_update(request, pk, template_name):
+        if request.user.is_staff:
+            leilao = get_object_or_404(Leilao, pk=pk)
+        else:
+            leilao = get_object_or_404(Leilao, pk=pk, user=request.user)
+        leilao.close_date = date.today()
+        form = LeilaoForm(request.POST or None, instance=leilao)
         return form
 
-    def comprador_delete(request, pk, template_name):
-        comprador = get_object_or_404(Comprador, pk=pk)
-        return comprador
+    def make_bid(request, pk, template_name):
+        leilao = get_object_or_404(Leilao, pk=pk)
+        form = LanceForm(request.POST or None)
+        return form, leilao
 
-    def comprador_filter(request, username):
-        bool_user = Comprador_fbv.objects.filter(username = username).exists()
-        print("Entrou Username comprador filter", username, bool_user)
-        return bool_user
+
+class LotePendingForm(ModelForm):
+    class Meta:
+        model = Lote
+        fields = ['start_price', 'minimum_bid', 'state']
 
 ####################################################################################
 ### WIP: Relatorio #################################################################
 ####################################################################################
+
+class GetWeekNumbers(ModelForm):
+    class Meta:
+        fields = ['num_weeks']
 
 # class Relatorio(models.Model):
 #     leilao = models.IntegerField(default=1)
@@ -330,3 +436,57 @@ class CompradorDAO(models.Model):
 #     comprador = models.CharField(max_length=256)
 #     lances = models.CharField(max_length=256)
 #     vencedor = models.CharField(max_length=256)
+
+
+### No futuro o leiloeiro só podera ser cadastrado por membros da equipe
+
+####################################################################################
+### Leiloeiro ######################################################################
+####################################################################################
+
+# class Leiloeiro(models.Model):
+#     name = models.CharField(max_length=256)
+#     username = models.CharField(max_length=16, default='', unique=True)
+#     email = models.CharField(max_length=256, default='', unique=True)
+#     password = models.CharField(max_length=16, default='')
+#     address = models.CharField(max_length=256)
+#     birth_date = models.DateField(default=date.today)
+#     rg = models.CharField(max_length=9)
+#     cpf = models.CharField(max_length=11)
+#     bank = models.CharField(max_length=64, choices=BANK_CHOICES, default='')
+#     agency = models.IntegerField(default=1)
+#     account_number = models.CharField(max_length=64)
+#     salary = models.DecimalField(default=10, decimal_places=2, max_digits=8)
+    
+# class LeiloeiroForm(ModelForm):
+#     class Meta:
+#         model = Leiloeiro
+#         fields = ['name', 'username','password',
+#                   'email','address', 'birth_date',
+#                   'rg', 'cpf', 'bank', 'agency',
+#                   'account_number', 'salary']
+
+# class LeiloeiroDAO(models.Model):
+#     def leiloeiro_list(request, template_name):
+#         lote = Leiloeiro.objects.all()
+#         data = {}
+#         data['object_list'] = lote
+#         return data
+    
+#     def leiloeiro_create(request, template_name):
+#         form = LeiloeiroForm(request.POST or None)
+#         return form
+    
+#     def leiloeiro_update(request, pk, template_name):
+#         leiloeiro = get_object_or_404(Leiloeiro, pk=pk)
+#         form = LoteForm(request.POST or None, instance=leiloeiro)
+#         return form
+
+#     def leiloeiro_delete(request, pk, template_name):
+#         leiloeiro = get_object_or_404(Leiloeiro, pk=pk)
+#         return leiloeiro
+
+#     def leiloeiro_filter(request, username):
+#         bool_user = Leiloeiro_fbv.objects.filter(username = username).exists()
+#         # print("Entrou Username Leiloeiro filter", username, bool_user)
+#         return bool_user

@@ -3,11 +3,15 @@
 {% block content %}
 
 <div class="sub_header">
-    <div><h2 id="tcolor">Lotes disponíveis</h2></div>
-    <div><h2 id="voltar"><a href="{% url 'leilao_fbv_user:redirect_user' %}">Voltar</a></h2></div>
+    <div>
+        <h2 id="tcolor">Lotes Pendentes</h2>
+    </div>
+    <div>
+        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:redirect_user' %}">Voltar</a></h2>
+    </div>
 </div>
 
-<div>
+<div id="user_page">
     <ul>
         {% for lote in object_list %}
         <li>
@@ -22,16 +26,15 @@
                 Número de Páginas: {{ lote.number_of_pages }}<br>
                 Condição: {{ lote.condition }}<br>
                 Preço Reserva: R${{ lote.reserve_price }}<br>
+                Intervalo Mínimo de Lance: R${{ lote.minimum_bid }}<br>
+                Situação: {{ lote.state }}<br>
                 Anunciante: {{ lote.user }}
-
-                {% if user.is_staff %}
-                <div>
-                    <a id="criar_leilao" href="{% url 'leilao_fbv_user:create_leilao' lote.id %}">Criar Leilão</a>
+                <div id="lote_options">
+                    <a id="edit" href="{% url 'leilao_fbv_user:lote_update_pending' lote.id %}">Editar</a>
+                    <a id="delete" href="{% url 'leilao_fbv_user:lote_delete' lote.id %}">Deletar</a>
                 </div>
-                {% endif %}
             </span>
         </li>
-        <br>
         {% endfor %}
     </ul>
 </div>

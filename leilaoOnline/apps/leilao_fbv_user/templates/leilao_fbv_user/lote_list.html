@@ -3,9 +3,15 @@
 {% block content %}
 
 <div class="sub_header">
+    {% if user.is_staff %}
+    <div>
+        <h2 id="tcolor">Todos os Lotes</h2>
+    </div>
+    {% else %}
     <div>
         <h2 id="tcolor">Seus Lotes</h2>
     </div>
+    {% endif %}
     <div>
         <h2 id="voltar"><a href="{% url 'leilao_fbv_user:redirect_user' %}">Voltar</a></h2>
     </div>
@@ -17,17 +23,37 @@
         <li>
             <span>
                 {{ lote.name }}<br>
-                Quantidade de Elementos: {{ lote.qty }}<br>
+                Quantidade: {{ lote.quantity }}<br>
                 Descrição: {{ lote.summary }}<br>
                 Categoria: {{ lote.category }}<br>
+                Autor: {{ lote.author }}<br>
+                Editora: {{ lote.publisher }}<br>
+                Edição: {{ lote.edition }}<br>
+                Número de Páginas: {{ lote.number_of_pages }}<br>
                 Condição: {{ lote.condition }}<br>
-                Valor Mínimo: R${{ lote.min_value }}<br>
-                Data de Abertura: {{ lote.opening_day }} de
-                                {{ lote.opening_month }} de
-                                {{ lote.opening_year }}<br>
+                Preço Reserva: R${{ lote.reserve_price }}<br>
+                Intervalo Mínimo de Lance: R${{ lote.minimum_bid }}<br>
+                Situação: {{ lote.state }}<br>
+                <!-- Data de Abertura: {{ lote.opening_day }} de {{ lote.opening_month }}
+                                  de {{ lote.opening_year }}<br> -->
+                
+                {% if user.is_staff %}
+                Anunciante: {{ lote.user }}
+                {% endif %}
+
                 <div id="lote_options">
-                    <a id="edit" href="{% url 'leilao_fbv_user:lote_edit' lote.id %}">Editar</a>
-                    <a id="delete" href="{% url 'leilao_fbv_user:lote_delete' lote.id %}">Deletar</a>
+                    {% if user.is_staff %}
+                    <a id="edit" href="{% url 'leilao_fbv_user:lote_update_pending' lote.id %}">Editar</a>
+                        {% if not lote.has_leilao %}
+                            <a id="edit" href="{% url 'leilao_fbv_user:lote_edit' lote.id %}">Editar</a>
+                            <a id="delete" href="{% url 'leilao_fbv_user:lote_delete' lote.id %}">Deletar</a>
+                        {% endif %}
+                    {% else %}
+                    {% if not lote.has_leilao %}
+                        <a id="edit" href="{% url 'leilao_fbv_user:lote_edit' lote.id %}">Editar</a>
+                        <a id="delete" href="{% url 'leilao_fbv_user:lote_delete' lote.id %}">Deletar</a>
+                    {% endif %}
+                    {% endif %}
                 </div>
             </span>
         </li>

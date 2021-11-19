@@ -101,7 +101,7 @@ def create_leiloeiro(request, template_name='leilao_fbv/leiloeiro_form.html'):
     form = LeiloeiroDAO.leiloeiro_create(request, template_name=template_name)
     if form.is_valid():
         form.save()
-        user = User.objects.create_user(form.data['username'], form.data['email'], form.data['password'])
+        user = User.objects.create_user(form.data['username'], form.data['email'], form.data['password'], is_staff=True)
         user.save()
         return redirect('/')
     return render(request, template_name, {'form':form})

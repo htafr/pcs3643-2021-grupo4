@@ -72,33 +72,33 @@ li a, .drop-btn {
 }
 
 /***************************************
-** Vendedor Page ***********************
+** User Page ***********************
 ***************************************/
-.vendedor_page ul {
+.user_menu ul {
     list-style-type: none;
     align-self: center;
     margin: 15%;
     padding: 0;
     width: 70%;
-    height: 14.5%;
+    height: 27.8%;
     border: 1px solid #555;
 }
 
-.vendedor_page li {
+.user_menu li {
     text-align: center;
     border-bottom: 1px solid #555;
     width: 100%;
 }
 
-.vendedor_page li:last-child {
+.user_menu li:last-child {
     border-bottom: none;
 }
 
-.vendedor_page li:hover {
+.user_menu li:hover {
     background-color: tomato;
 }
 
-.vendedor_page li a {
+.user_menu li a {
     display: block;
 }
 
@@ -125,6 +125,12 @@ li a, .drop-btn {
 #user_page #lote_options {
     display: flex;
     justify-content: space-between;
+}
+
+#lote_list li {
+    list-style-type: none;
+    float: left;
+    clear: left;
 }
 
 /***************************************
@@ -154,6 +160,20 @@ li a, .drop-btn {
 
 #login_error {
     padding-inline: 20%;
+}
+
+/***************************************
+** Leilao List ***************************
+***************************************/
+#user_page #leilao_options {
+    display: flex;
+    justify-content: space-between;
+}
+
+#leilao_list li {
+    list-style-type: none;
+    float: left;
+    clear: left;
 }
 
 /***************************************

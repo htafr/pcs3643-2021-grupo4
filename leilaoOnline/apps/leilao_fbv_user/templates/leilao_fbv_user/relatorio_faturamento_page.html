@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="sub_header">
+    <div>
+        <h2 id="tcolor">Relatório de Faturamento</h2>
+    </div>
+    <div>
+        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:relatorio_page' %}">Voltar</a></h2>
+    </div>
+</div>
+
+<div id="user_page">
+    <ul>
+        {% for leilao in object_list %}
+        <li>
+            {% if leilao.status_leilao == "FINALIZADO" %}
+                <b>---------------------------------------------------------------------------------------------------------------------</b><br>
+                <b>---------------------------------------------------------------------------------------------------------------------</b><br>
+                {% if leilao.lance.valor >= leilao.lote.reserve_price %}
+                    <b>STATUS: ARREMATADO</b><br>
+                {% else %}
+                    <b>STATUS: NÃO ARREMATADO</b><br>
+                {% endif %}
+                ---------------------------------------------------------------------------------------------------------------------<br>
+                <b>ID Leilão:</b> {{ leilao.lote.id }}<br>
+                <b>Nome Leilão:</b> {{ leilao.name }}<br>
+                <b>Nome Lote:</b> {{leilao.lote.name}}<br>
+                <b>Valor de Abertura de Leilão:</b> R$ {{ leilao.lote.start_price }}<br>
+                <b>Valor Mínimo de Reserva: </b>R$ {{ leilao.lote.reserve_price }}<br>
+                ______________________________________________________________________<br>
+            <span>
+                
+                    <!-- Parte que mostra lances -->
+                    <b>Total de Lances:</b> {{ leilao.num_lances }}<br>
+                    <b>Lance Inicial:</b> R$ {{ leilao.lance_inicial }}<br>
+                    {% if leilao.lance.valor >= leilao.lote.reserve_price %}
+                        <b>Lance Vencedor:</b> R$ {{ leilao.lance.valor }}<br>
+                    {% else %}
+                        <b>Lance Vencedor:</b> (R$ {{ leilao.lance.valor }}) - NÃO ARREMATADO<br>
+                    {% endif %}
+
+                    <!-- <b>Valor de comissão do comprador:</b> R${{ comissao_comprador }}<br>
+                    <b>Valor de comissão do vendedor:</b> R${{ comissao_vendedor }}<br> -->
+
+                    <b>Valor de comissão do comprador:</b> R$ {{ leilao.valor_comissao_comprador }}<br>
+                    <b>Valor de comissão do vendedor:</b> R$ {{ leilao.valor_comissao_vendedor }}<br>
+                    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>
+                
+                
+            </span>
+            {% endif %}
+        </li>
+        {% empty %}
+            <b>Nenhum leilão a ser disponibilizado - Confira a lista de Leilões.</b><br>
+        {% endfor %}
+    </ul>
+
+</div>
+
+{% endblock %}
+

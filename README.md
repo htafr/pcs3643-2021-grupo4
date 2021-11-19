@@ -12,7 +12,7 @@ A organização das 4 etapas (análise, projeto, implementação e teste) serão
 
 Para o funcionamento correto do projeto, será necessário fazer a instalação de algumas bibliotecas:
 
-A instalação pode ser realizada de duas formas:
+As instalações necessárias podem ser realizadas de duas formas:
 
 ### **Forma 1**:
 
@@ -39,7 +39,23 @@ pip install -r requirements.txt
 
 Também é necessário criar um banco de dados ```leilaoOnline``` o qual é acessado com o usuário ```kenji``` e senha ```pcs3643labengsoft``` que está no arquivo ```settings.py```.
 
-No ponto atual da implementação, a criação de novos usuários, sejam eles compradores, vendedores ou leiloeiros, deve ser feita a cada novo pull do projeto. Você terá a oportunidade de fazer um breve teste em cada classe de usuário final da plataforma. As telas dos três tipos mencionados anteriormente são similares, mas com algumas diferenciações (i.e. comprador não deve criar lote). Variações para cada classe serão implementadas posteriormente.
+### **Set up do Projeto**
+
+Antes de executar o projeto, deve-se migrar os aplicativos criados. Portanto deve-se executar os seguintes comandos:
+
+```
+python3 manage.py makemigrations leilao_fbv
+python3 manage.py makemigrations leilao_fbv_user
+python3 manage.py migrate
+```
+
+### **Execução do Projeto**
+
+Para executar o projeto, o comando a seguir deve ser executado:
+
+```
+python3 manage.py runserver
+```
 
 ---
 
@@ -62,3 +78,9 @@ Os testes que foram feitos durante a aula 8 foram refeitos para adequar-se às a
 ### Testes com Selenium
 
 - Rodar primeiro ```test_signup_login```, pois eles criarão os usuários que serão utilizados em ```test_vendedor_views``` e ```test_computador_views```.
+
+---
+
+## Aulas 10 e 11  - 12/10/2021 e 19/10/2021
+
+Completou-se os 3 casos de usos presentes no projeto: *Cadastrar Lote*, *Realizar Leilão* e *Gerar Relatório*. Os arquivos de testes para os casos de uso utilizando o *Selenium IDE* estão disponibilizados na pasta raiz deste repositório - arquivos ```.side```. As maiores alterações encontram-se em [models.py](https://github.com/offreitas/pcs3643-2021-grupo4/blob/main/leilaoOnline/apps/leilao_fbv_user/models.py), [views.py](https://github.com/offreitas/pcs3643-2021-grupo4/blob/main/leilaoOnline/apps/leilao_fbv_user/models.py) e [urls.py](https://github.com/offreitas/pcs3643-2021-grupo4/blob/main/leilaoOnline/apps/leilao_fbv_user/urls.py), além das alterações nos templates.

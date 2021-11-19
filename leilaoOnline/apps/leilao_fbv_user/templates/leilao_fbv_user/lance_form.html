@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="sub_header">
+    <div>
+        <h2 id="tcolor">{{ leilao.name }}: {{ leilao.status_leilao }}</h2>
+    </div>
+    <div>
+        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:show_leilao' leilao.id %}">Voltar</a></h2>
+    </div>
+</div>
+
+<div id="user_page">
+    <ul id="leilao_list">
+        <li>{{ leilao.lote.name }}</li>
+        <li>Quantidade: {{ leilao.lote.quantity }}</li>
+        <li>Descrição: {{ leilao.lote.summary }}</li>
+        <li>Categoria: {{ leilao.lote.category }}</li>
+        <li>Autor: {{ leilao.lote.author }}</li>
+        <li>Editora: {{ leilao.lote.publisher }}</li>
+        <li>Edição: {{ leilao.lote.edition }}</li>
+        <li>Número de Páginas: {{ leilao.lote.number_of_pages }}</li>
+        <li>Condição: {{ leilao.lote.condition }}</li>
+        <li>Intervalo Mínimo de Lance: R${{ leilao.lote.minimum_bid }}</li>
+        
+        <li>Anunciante: {{ leilao.lote.user }}</li>
+
+        {% if leilao.lance.user.is_staff %}
+        <li>Vencedor Atual: Sem Lances</li>
+        {% else %}
+        <li>Vencedor Atual: {{ leilao.lance.user }}</li>
+        {% endif %}
+        <li>Valor atual: R${{ leilao.lance.valor }}</li>
+
+        <li>
+            <form method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Confirmar" />
+            </form>
+        </li>
+    </ul>
+</div>
+
+{% endblock %}
