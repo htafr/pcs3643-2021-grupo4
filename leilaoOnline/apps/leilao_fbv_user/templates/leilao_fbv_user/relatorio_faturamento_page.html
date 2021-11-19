@@ -16,32 +16,33 @@
         {% for leilao in object_list %}
         <li>
             {% if leilao.status_leilao == "FINALIZADO" %}
-                ---------------------------------------------------------------------------------------------------------------------<br>
-                ---------------------------------------------------------------------------------------------------------------------<br>
+                <b>---------------------------------------------------------------------------------------------------------------------</b><br>
+                <b>---------------------------------------------------------------------------------------------------------------------</b><br>
                 {% if leilao.lance.valor >= leilao.lote.reserve_price %}
-                    STATUS: ARREMATADO
+                    <b>STATUS: ARREMATADO</b><br>
                 {% else %}
-                    STATUS: NÃO ARREMATADO
+                    <b>STATUS: NÃO ARREMATADO</b><br>
                 {% endif %}
-                ID Leilão: {{ leilao.lote.id }}<br>
-                Nome Leilão: {{ leilao.name }}<br>
-                Nome Lote: {{leilao.lote.name}}<br>
-                Valor de Abertura de Leilão: R$ {{ leilao.lote.start_price }}<br>
-                Valor Mínimo de Reserva: R$ {{ leilao.lote.reserve_price }}<br>
+                ---------------------------------------------------------------------------------------------------------------------<br>
+                <b>ID Leilão:</b> {{ leilao.lote.id }}<br>
+                <b>Nome Leilão:</b> {{ leilao.name }}<br>
+                <b>Nome Lote:</b> {{leilao.lote.name}}<br>
+                <b>Valor de Abertura de Leilão:</b> R$ {{ leilao.lote.start_price }}<br>
+                <b>Valor Mínimo de Reserva: R$</b> {{ leilao.lote.reserve_price }}<br>
                 ______________________________________________________________________
             <span>
                 
                     <!-- Parte que mostra lances -->
-                    Total de Lances: {{ leilao.num_lances }}<br>
-                    Lance Inicial: {{ leilao.lance_inicial }}<br>
+                    <b>Total de Lances:</b> {{ leilao.num_lances }}<br>
+                    <b>Lance Inicial:</b> {{ leilao.lance_inicial }}<br>
                     {% if leilao.lance.valor >= leilao.lote.reserve_price %}
-                        Lance Vencedor: R${{ leilao.lance.valor }}<br>
+                        <b>Lance Vencedor:</b> R${{ leilao.lance.valor }}<br>
                     {% else %}
-                        Lance Vencedor: (R${{ leilao.lance.valor }}) - NÃO ARREMATADO<br>
+                        <b>Lance Vencedor:</b> (R${{ leilao.lance.valor }}) - NÃO ARREMATADO<br>
                     {% endif %}
 
-                    Valor de comissão do comprador: R${{ comissao_comprador }}<br>
-                    Valor de comissão do vendedor: R${{ comissao_vendedor }}<br>
+                    <b>Valor de comissão do comprador:</b> R${{ comissao_comprador }}<br>
+                    <b>Valor de comissão do vendedor:</b> R${{ comissao_vendedor }}<br>
                     ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>
                 
                 
