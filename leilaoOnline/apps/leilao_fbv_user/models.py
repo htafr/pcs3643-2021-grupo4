@@ -338,22 +338,18 @@ class LeilaoDAO(models.Model):
         return participating
 
     def get_won_leilao(request, user_id, template_name):
-        lances = LanceDAO.get_lance(user_id=user_id)
-        lances_list = list(lances)
+        lances = Lance.objects.filter(user_id=user_id)
+        leiloes = Leilao.objects.filter(arrematado=True)
 
-        finished_leiloes = Leilao.objects.filter(status_leilao='FINALIZADO')
-        finished_leiloes = finished_leiloes.filter(arrematado=True)
+        leiloes_list = list(leiloes)
+        lances_list = list(lances)
 
         won = []
 
-        if lances_list:
+        for leilao in leiloes_list:
             for lance in lances_list:
-                try:
-                    leilao = finished_leiloes.get(pk=lance.leilao_id)
-                    if leilao not in won:
-                        won.append(leilao)
-                except:
-                    leilao = None
+                if leilao.lance_id == lance.id:
+                    won.append(leilao)
 
         return won
     
