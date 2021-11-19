@@ -28,27 +28,32 @@
                 <b>Nome Leilão:</b> {{ leilao.name }}<br>
                 <b>Nome Lote:</b> {{leilao.lote.name}}<br>
                 <b>Valor de Abertura de Leilão:</b> R$ {{ leilao.lote.start_price }}<br>
-                <b>Valor Mínimo de Reserva: R$</b> {{ leilao.lote.reserve_price }}<br>
-                ______________________________________________________________________
+                <b>Valor Mínimo de Reserva: </b>R$ {{ leilao.lote.reserve_price }}<br>
+                ______________________________________________________________________<br>
             <span>
                 
                     <!-- Parte que mostra lances -->
                     <b>Total de Lances:</b> {{ leilao.num_lances }}<br>
-                    <b>Lance Inicial:</b> {{ leilao.lance_inicial }}<br>
+                    <b>Lance Inicial:</b> R$ {{ leilao.lance_inicial }}<br>
                     {% if leilao.lance.valor >= leilao.lote.reserve_price %}
-                        <b>Lance Vencedor:</b> R${{ leilao.lance.valor }}<br>
+                        <b>Lance Vencedor:</b> R$ {{ leilao.lance.valor }}<br>
                     {% else %}
-                        <b>Lance Vencedor:</b> (R${{ leilao.lance.valor }}) - NÃO ARREMATADO<br>
+                        <b>Lance Vencedor:</b> (R$ {{ leilao.lance.valor }}) - NÃO ARREMATADO<br>
                     {% endif %}
 
-                    <b>Valor de comissão do comprador:</b> R${{ comissao_comprador }}<br>
-                    <b>Valor de comissão do vendedor:</b> R${{ comissao_vendedor }}<br>
+                    <!-- <b>Valor de comissão do comprador:</b> R${{ comissao_comprador }}<br>
+                    <b>Valor de comissão do vendedor:</b> R${{ comissao_vendedor }}<br> -->
+
+                    <b>Valor de comissão do comprador:</b> R$ {{ leilao.valor_comissao_comprador }}<br>
+                    <b>Valor de comissão do vendedor:</b> R$ {{ leilao.valor_comissao_vendedor }}<br>
                     ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>
                 
                 
             </span>
             {% endif %}
         </li>
+        {% empty %}
+            <b>Nenhum leilão a ser disponibilizado - Confira a lista de Leilões.</b><br>
         {% endfor %}
     </ul>
 

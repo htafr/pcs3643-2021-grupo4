@@ -85,7 +85,7 @@ def create_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html')
 
         ### Cria lance inicial para preencher o atributo da classe Leilao
         ### ESSE LANCE INICIAL NÃO DEVE FAZER PARTE DO RELATÓRIO
-        lance = LanceDAO.init_lance(leilao.lote.minimum_bid)
+        lance = LanceDAO.init_lance(leilao.lote.start_price)
         lance.user = request.user
         lance.save()
 
@@ -136,6 +136,45 @@ def show_won_leilao(request, template_name="leilao_fbv_user/show_won_leilao.html
 def update_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html'):
     form = LeilaoDAO.leilao_update(request=request, pk=pk, template_name=template_name)
     if form.is_valid():
+
+        status_leilao = form.cleaned_data.get('status_leilao')
+        #print(status_leilao)
+        if status_leilao == 'FINALIZADO':
+            #lote = Lote.objects.get(pk=pk)
+            leilao = Leilao.objects.get(pk=pk)
+            print(leilao)
+            leilao_id = leilao.id
+            #print(leilao_id)
+            lances = Lance.objects.filter(leilao_id=leilao_id)
+            #print(lances)
+            lances = list(lances)
+            print(lances)
+            primeiro = lances[0]
+            #ultimo_valor = lances.reverse()[0]
+             
+            ultimo_valor = lances[-1]
+            #print("AAAA",ultimo_valor)
+            ultimo_valor = ultimo_valor.valor
+            print(ultimo_valor)
+
+            taxa_vendedor, taxa_comprador = determina_comissoes(ultimo_valor)
+
+            comissao_vendedor = (taxa_vendedor / 100) * float(ultimo_valor)
+            comissao_comprador = (taxa_comprador / 100) * float(ultimo_valor)
+
+            print(taxa_vendedor,taxa_comprador,comissao_vendedor,comissao_comprador)
+    
+            print(leilao.taxa_comissao_comprador)
+
+            leilao.taxa_comissao_comprador = taxa_comprador
+            leilao.taxa_comissao_vendedor = taxa_vendedor
+            leilao.valor_comissao_comprador = comissao_comprador
+            leilao.valor_comissao_vendedor = comissao_vendedor
+
+            print(leilao.taxa_comissao_comprador)
+
+            leilao.save()            
+
         form.save()
         return redirect('leilao_fbv_user:list_leilao_avail')
     return render(request, template_name, {'form':form})
@@ -161,11 +200,15 @@ def determina_comissoes(valor):
     elif valor <= 100000:
         taxa_vendedor = 4
         taxa_comprador = 6
+    else:
+        taxa_vendedor = 4
+        taxa_comprador = 6
     
-    comissao_vendedor = valor * taxa_vendedor
-    comissao_comprador = valor * taxa_comprador
+    #comissao_vendedor = valor * taxa_vendedor
+    #comissao_comprador = valor * taxa_comprador
 
-    return taxa_vendedor, taxa_comprador, comissao_vendedor, comissao_comprador
+    #return taxa_vendedor, taxa_comprador, comissao_vendedor, comissao_comprador
+    return taxa_vendedor, taxa_comprador
 
 
 
@@ -187,7 +230,7 @@ def make_bid(request, pk, template_name='leilao_fbv_user/lance_form.html'):
             lance.save()
             leilao.lance = lance
             leilao.num_lances += 1
-            if leilao.lance_inicial == '':
+            if leilao.lance_inicial == 0:
                 leilao.lance_inicial = valor
             leilao.save()
 
@@ -297,8 +340,21 @@ def create_relatorio_faturamento(request, pk, template_name='leilao_fbv_user/rel
     data = {}
     data['leilao'] = leilao
     data['lance_vencedor'] = sorted(list(Lance.objects.filter(pk=pk)), key=lambda t: t.valor, reverse=True)[0]
-    data['comissao_vendedor'] = leilao.lote.valor_reserva * leilao.taxa_comissao_vendedor
+    #data['comissao_vendedor'] = leilao.lote.valor_reserva * leilao.taxa_comissao_vendedor
+
+    taxa_vendedor, taxa_comprador = determina_comissoes (data['lance_vencedor'].valor)
+
+    leilao.taxa_comissao_vendedor = taxa_vendedor
+    leilao.taxa_comissao_comprador = taxa_comprador
+
+    data['comissao_vendedor'] = data['lance_vencedor'].valor * leilao.taxa_comissao_vendedor
     data['comissao_comprador'] = data['lance_vencedor'].valor * leilao.taxa_comissao_comprador
+
+    leilao.valor_comissao_vendedor = data['comissao_vendedor']
+    leilao.valor_comissao_comprador = data['comissao_comprador']
+
+    leilao.save()
+
     return render(request, template_name, data)
 
 

@@ -282,15 +282,32 @@ class Leilao(models.Model):
 
     # Infos Leilao
     num_lances = models.IntegerField(default=0)
-    lance_inicial = models.CharField(max_length=64, default='', blank=False)
+    #lance_inicial = models.CharField(max_length=64, default='', blank=False)
+    lance_inicial = models.DecimalField(default = 0,decimal_places=2, max_digits=16)
     
+    # # Taxas
+    # taxa_comissao_comprador = models.IntegerField(default=0)
+    # taxa_comissao_vendedor = models.IntegerField(default=0)
+
+    # # Comissoes
+    # valor_comissao_comprador = models.CharField(max_length=64, default='', blank=False)
+    # valor_comissao_vendedor = models.CharField(max_length=64, default='', blank=False)
+
     # Taxas
-    taxa_comissao_comprador = models.IntegerField(default=0)
-    taxa_comissao_vendedor = models.IntegerField(default=0)
+    #taxa_comissao_comprador = models.DecimalField(default = 0,decimal_places=2, max_digits=16)
+    #taxa_comissao_vendedor = models.DecimalField(default = 0,decimal_places=2, max_digits=16)
+
+    # Taxas
+    taxa_comissao_comprador = models.FloatField(default=0,blank=False)
+    taxa_comissao_vendedor = models.FloatField(default=0,blank=False)
 
     # Comissoes
-    valor_comissao_comprador = models.CharField(max_length=64, default='', blank=False)
-    valor_comissao_vendedor = models.CharField(max_length=64, default='', blank=False)
+    #valor_comissao_comprador = models.DecimalField(default = 0,decimal_places=2, max_digits=16)
+    #valor_comissao_vendedor = models.DecimalField(default = 0,decimal_places=2, max_digits=16)
+
+    # Comissoes
+    valor_comissao_comprador = models.FloatField(default=0,blank=False)
+    valor_comissao_vendedor = models.FloatField(default=0,blank=False)
 
     def __str__(self):
         return self.name
@@ -312,6 +329,10 @@ class LeilaoDAO(models.Model):
         leilao = Leilao.objects.all()
         data = {}
         data['object_list'] = leilao
+        #print(leilao[0])
+        #teste = Leilao.objects.get(name=leilao[0])
+        #teste = Leilao.objects.filter(status_leilao="FINALIZADO")
+        #print(teste)
         return data
 
     def leilao_list_avail(request, template_name):
@@ -381,9 +402,19 @@ class LeilaoDAO(models.Model):
         form = LanceForm(request.POST or None)
         return form, leilao
 
+
+class LotePendingForm(ModelForm):
+    class Meta:
+        model = Lote
+        fields = ['start_price', 'minimum_bid', 'state']
+
 ####################################################################################
 ### WIP: Relatorio #################################################################
 ####################################################################################
+
+class GetWeekNumbers(ModelForm):
+    class Meta:
+        fields = ['num_weeks']
 
 # class Relatorio(models.Model):
 #     leilao = models.IntegerField(default=1)
