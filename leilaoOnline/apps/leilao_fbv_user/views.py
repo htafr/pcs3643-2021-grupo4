@@ -145,10 +145,10 @@ def update_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html')
         status_leilao = form.cleaned_data.get('status_leilao')
         if status_leilao == 'FINALIZADO':
             leilao = Leilao.objects.get(pk=pk)
-            print(leilao)
             leilao_id = leilao.id
             lances = Lance.objects.filter(leilao_id=leilao_id)
             lances = list(lances)
+            lote = Lote.objects.get(pk=leilao.lote_id)
              
             ultimo_valor = lances[-1]
             ultimo_valor = ultimo_valor.valor
@@ -162,6 +162,9 @@ def update_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html')
             leilao.taxa_comissao_vendedor = taxa_vendedor
             leilao.valor_comissao_comprador = comissao_comprador
             leilao.valor_comissao_vendedor = comissao_vendedor
+            
+            if ultimo_valor >= lote.reserve_price:
+                leilao.arrematado = True
 
             leilao.save()
 

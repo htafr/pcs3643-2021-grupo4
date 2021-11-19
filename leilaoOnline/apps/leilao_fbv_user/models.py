@@ -272,6 +272,7 @@ class Leilao(models.Model):
     opening_date = models.DateField(auto_now=True)
     close_date = models.DateField(auto_now=True)
     status_leilao = models.CharField(max_length=16, choices=LEILAO_CHOICES, blank=False, null=False)
+    arrematado = models.BooleanField(default=False)
 
     ### Atributos Classes
     lote = models.ForeignKey(Lote, on_delete=models.CASCADE)
@@ -341,6 +342,7 @@ class LeilaoDAO(models.Model):
         lances_list = list(lances)
 
         finished_leiloes = Leilao.objects.filter(status_leilao='FINALIZADO')
+        finished_leiloes = finished_leiloes.filter(arrematado=True)
 
         won = []
 
