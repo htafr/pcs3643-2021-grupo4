@@ -273,7 +273,7 @@ class LanceDAO(models.Model):
 class Leilao(models.Model):
     name = models.CharField(max_length=64, default='', blank=False)
     opening_date = models.DateField(auto_now=True)
-    close_date = models.DateField(auto_now=True)
+    close_date = models.DateField(default=datetime.now, blank=False)
     status_leilao = models.CharField(max_length=16, choices=LEILAO_CHOICES, blank=False, null=False)
     arrematado = models.BooleanField(default=False)
 
@@ -301,7 +301,7 @@ class Leilao(models.Model):
 class LeilaoForm(ModelForm):
     class Meta:
         model = Leilao
-        fields = ['name', 'status_leilao']
+        fields = ['name', 'status_leilao', 'close_date']
 
 class LeilaoDAO(models.Model):
     def leilao_create(request, pk, template_name):
