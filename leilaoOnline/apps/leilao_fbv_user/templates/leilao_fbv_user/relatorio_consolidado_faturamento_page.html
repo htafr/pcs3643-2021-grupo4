@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="sub_header">
+    <div>
+        <h2 id="tcolor">Relatório Consolidado de Faturamento</h2>
+    </div>
+    <div>
+        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:relatorio_page' %}">Voltar</a></h2>
+    </div>
+</div>
+
+<div id="user_page">
+    <ul>
+        <li>
+                <b>---------------------------------------------------------------------------------------------------------------------</b><br>
+                <b>---------------------------------------------------------------------------------------------------------------------</b><br>
+                <br>
+                <b>=> Receita Leilões Total </b>(Valor de Arremate de Leilão)<b>:</b> R$ {{ receita_bruta }}<br>
+                <b>(+) Total Comissão Compradores:</b> R$ {{ total_comissoes_compradores }}<br>
+                ------------------------------------------------------------------------------------<br>
+                <b>(=) Receita Bruta Total:</b>R$ {{ receita_bruta_total }}<br>
+                <b>(-) Despesa Vendedores </b>(Repasse Anunciantes)<b>:</b> R$ {{ despesa_vendedores }}<br>
+                ------------------------------------------------------------------------------------<br>
+                <b>(=) Receita Líquida:</b> R$ {{ receita_liquida }}<br>
+                <b>______________________________________________________________________</b><br>
+            <span>
+                    <br>
+                    
+                    <b>Total Comissões Compradores:</b> R$ {{ total_comissoes_compradores }}<br>
+                    <b>Total Comissões Vendedores:</b> R$ {{ total_comissoes_vendedores }}<br>
+
+                    <b>______________________________________________________________________</b><br>
+                    <br>
+                    <b>VALORES MÉDIOS</b> <br><br>
+
+                    <b>-    Taxa de Comissão Média Comprador:</b> {{ taxa_media_comprador }} %<br>
+                    <b>-    Taxa de Comissão Média Vendedor:</b> {{ taxa_media_vendedor }} %<br>
+
+                    ------------------------------------------------------------------------------------<br>
+                    
+                    <b>-    Comissão Média Comprador:</b> R$ {{ comissao_media_comprador }}<br>
+                    <b>-    Comissão Média Vendedor:</b> R$ {{ comissao_media_vendedor }}<br>
+
+                    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>
+                
+                
+            </span>
+        </li>
+    </ul>
+
+</div>
+
+{% endblock %}

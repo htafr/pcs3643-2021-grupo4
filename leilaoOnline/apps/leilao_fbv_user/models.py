@@ -117,11 +117,11 @@ YEAR_CHOICES = (
     ('Ano', 'Ano'),
     ('2021', '2021'),
     ('2022', '2022'),
-    ('2023', '2023'),
-    ('2024', '2024'),
-    ('2025', '2025'),
-    ('2026', '2026'),
-    ('2027', '2027'),
+    # ('2023', '2023'),
+    # ('2024', '2024'),
+    # ('2025', '2025'),
+    # ('2026', '2026'),
+    # ('2027', '2027'),
 )
 
 LEILAO_CHOICES = (
@@ -423,9 +423,15 @@ class LotePendingForm(ModelForm):
 ### WIP: Relatorio #################################################################
 ####################################################################################
 
-class GetWeekNumbers(ModelForm):
-    class Meta:
-        fields = ['num_weeks']
+# class RelatorioDateForm(ModelForm):
+#     class Meta:
+#         fields = ['day', 'month', 'year']
+
+# class Relatorio(models.Model):
+#     day = models.IntegerField(choices=DAY_CHOICES, blank=False, null=False)
+#     month = models.CharField(max_length=16, choices=MONTH_CHOICES, blank=False, null=False)
+#     year = models.IntegerField(choices=YEAR_CHOICES, blank=False, null=False)
+
 
 # class Relatorio(models.Model):
 #     leilao = models.IntegerField(default=1)
