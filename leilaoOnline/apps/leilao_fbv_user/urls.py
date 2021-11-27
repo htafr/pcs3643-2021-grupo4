@@ -82,5 +82,8 @@ urlpatterns = [
 	# path('leiloeiro_page/relatorio/faturamento/', views.create_relatorio_faturamento, name='relatorio_faturamento_page'),
 	path('leiloeiro_page/relatorio/desempenho/', views.list_relatorio_desempenho, name='relatorio_desempenho_page'),
 	path('leiloeiro_page/relatorio/faturamento/', views.list_relatorio_faturamento, name='relatorio_faturamento_page'),
+
+	path('leiloeiro_page/relatorio/desempenho_consolidado/', views.list_relatorio_consolidado_desempenho, name='relatorio_consolidado_desempenho_page'),
+	path('leiloeiro_page/relatorio/faturamento_consolidado/', views.list_relatorio_consolidado_faturamento, name='relatorio_consolidado_faturamento_page'),
 	
 ]

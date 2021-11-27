@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="sub_header">
+    <div>
+        <h2 id="tcolor">Relatório Consolidado de Desempenho</h2>
+    </div>
+    <div>
+        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:relatorio_page' %}">Voltar</a></h2>
+    </div>
+</div>
+
+<div id="user_page">
+    <ul>
+        <li>
+                <b>---------------------------------------------------------------------------------------------------------------------</b><br>
+                <b>---------------------------------------------------------------------------------------------------------------------</b><br>
+                <br>
+                <b>Número Total de Leilões:</b> {{ num_leiloes_total }}<br>
+                --------------------------------------------------------------------------------------------------<br>
+                Número de Leilões <b>Ativos</b>: {{ num_leiloes_ativos }}<br>
+                Número de Leilões <b>Finalizados</b>: {{ num_leiloes_finalizados }}<br>
+                --------------------------------------------------------------------------------------------------<br>
+                     - Número de Leilões <b>Arrematados</b>: {{ num_leiloes_arrematados }}<br>
+                     - Número de Leilões <b>Não Arrematados</b>: {{ num_leiloes_nao_arrematados }}<br>
+                <b>______________________________________________________________________</b><br>
+            <span>
+                    <br>
+                    <!-- Parte que mostra lances -->
+                    <b>Número Total de Lotes:</b> {{ num_lotes_total }}<br>
+                    --------------------------------------------------------------------------------------------------<br>
+                         - Número de Lotes <b>Aprovados</b>: {{ num_lotes_aprovados }}<br>
+                         - Número de Lotes <b>Pendentes</b>: {{ num_lotes_pendentes }}<br>
+                         - Número de Lotes <b>Negados</b>: {{ num_lotes_negados }}<br>
+                    --------------------------------------------------------------------------------------------------<br>
+                    Número de Lotes de <b>Livros Novos</b>: {{ num_lotes_livros_novos }}<br>
+                    Número de Lotes de <b>Livros Usados</b>: {{ num_lotes_livros_usados }}<br>
+
+                    <b>______________________________________________________________________</b><br>
+                    
+                    <br>
+                    <b>Número Total de Lances no Sistema:</b> {{ num_lances_total }}<br>
+
+                    <b>______________________________________________________________________</b><br>
+                    <br>
+                    <b>Número Total de Usuários Cadastrados:</b> {{ num_total_usuarios }}<br>
+                    --------------------------------------------------------------------------------------------------<br>
+                         - Número Total de <b>Compradores</b>: {{ num_compradores_cadastrados }}<br>
+                         - Número Total de <b>Vendedores</b>: {{ num_vendedores_cadastrados }}<br>
+                         - Número Total de <b>Leiloeiros/Administradores</b>: {{ num_leiloeiros_cadastrados }}<br>
+
+                    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>
+                
+                
+            </span>
+        </li>
+    </ul>
+
+</div>
+
+{% endblock %}

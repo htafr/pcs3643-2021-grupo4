@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 
 from leilao_fbv.models import Vendedor, VendedorDAO, Comprador, CompradorDAO, Leiloeiro, LeiloeiroDAO
 from .models import Leilao, LeilaoDAO, Lote, LoteDAO, Lance, LanceDAO
+from leilao_fbv_user import models
 
 ####################################################################################
 ### Lote ###########################################################################
@@ -113,7 +114,8 @@ def create_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html')
 @login_required
 def show_leilao(request, pk, template_name='leilao_fbv_user/show_leilao.html'):
     leilao = LeilaoDAO.get_leilao(request=request, pk=pk, template_name=template_name)
-    return render(request, template_name, {'leilao': leilao})
+    lances = sorted(Lance.objects.filter(leilao_id = pk), key=lambda t: t.valor, reverse=False)
+    return render(request, template_name, {'leilao': leilao, 'lances': lances})
 
 @login_required
 def list_leilao_all(request, template_name='leilao_fbv_user/leilao_list_all.html'):
@@ -388,3 +390,97 @@ def list_relatorio_desempenho(request, template_name='leilao_fbv_user/relatorio_
 def list_relatorio_faturamento(request, template_name='leilao_fbv_user/relatorio_faturamento_page.html'):
     data = LeilaoDAO.leilao_list_all(request=request, template_name=template_name)
     return render(request, template_name, data)
+
+############################################
+######### Consolidados #####################
+############################################
+
+@login_required
+def list_relatorio_consolidado_desempenho(request, template_name='leilao_fbv_user/relatorio_consolidado_desempenho_page.html'):
+
+    data = {}
+    # leilao
+    data['num_leiloes_total'] = Leilao.objects.all().count()
+    data['num_leiloes_ativos'] = Leilao.objects.filter(status_leilao='ATIVO').count()
+    data['num_leiloes_finalizados'] = Leilao.objects.filter(status_leilao='FINALIZADO').count()
+    data['num_leiloes_arrematados'] = Leilao.objects.filter(status_leilao='FINALIZADO', arrematado=1).count()
+    data['num_leiloes_nao_arrematados'] = Leilao.objects.filter(status_leilao='FINALIZADO', arrematado=0).count()
+    # lotes
+    data['num_lotes_total'] = Lote.objects.all().count()
+    data['num_lotes_aprovados'] = Lote.objects.filter(state='Aprovado').count()
+    data['num_lotes_pendentes'] = Lote.objects.filter(state='Pendente').count()
+    data['num_lotes_negados'] = Lote.objects.filter(state='Negado').count()
+    data['num_lotes_livros_novos'] = Lote.objects.filter(condition='Novo').count()
+    data['num_lotes_livros_usados'] = Lote.objects.filter(condition='Usado').count()
+    # lances
+    data['num_lances_total'] = Lance.objects.all().count()
+    # usuarios
+    data['num_total_usuarios'] = User.objects.all().count()
+    data['num_vendedores_cadastrados'] = Vendedor.objects.all().count()
+    data['num_compradores_cadastrados'] = Comprador.objects.all().count()
+    data['num_leiloeiros_cadastrados'] = Leiloeiro.objects.all().count()
+
+    
+    #print(data)
+
+    return render(request, template_name, data)
+
+@login_required
+def list_relatorio_consolidado_faturamento(request, template_name='leilao_fbv_user/relatorio_consolidado_faturamento_page.html'):
+    data = {}
+
+    # receita proveniente de arremates de leiloes
+    data['receita_bruta'] = 0
+
+    # receita proveniente de arremates de leiloes + comissões compradores
+    data['receita_bruta_total'] = 0
+    
+    # comissoes
+    data['total_comissoes_compradores'] = 0
+    data['total_comissoes_vendedores'] = 0
+    
+    # Repasse para vendedor - descontando taxa
+    data['despesa_vendedores'] = 0
+    
+
+    leiloes_finalizados_arrematados = list(Leilao.objects.filter(status_leilao='FINALIZADO', arrematado=1))
+
+    for leilao in leiloes_finalizados_arrematados:
+        lista_de_lances = sorted(Lance.objects.filter(leilao_id = leilao.id), key=lambda t: t.valor, reverse=True)
+        valor_arrematado = float(lista_de_lances[0].valor)
+
+        taxa_vendedor, taxa_comprador = determina_comissoes(valor_arrematado)
+
+        taxa_vendedor = float(taxa_vendedor / 100)
+        taxa_comprador = float(taxa_comprador / 100)
+        
+        data['total_comissoes_compradores'] += taxa_comprador * valor_arrematado
+        data['total_comissoes_vendedores'] += taxa_vendedor * valor_arrematado
+
+        data['receita_bruta'] += valor_arrematado
+
+        data['receita_bruta_total'] += (1 + taxa_comprador) * float(valor_arrematado)
+
+        data['despesa_vendedores'] += valor_arrematado - (taxa_vendedor * valor_arrematado)
+
+    data['receita_bruta'] = round(data['receita_bruta'], 2)
+
+    data['total_comissoes_compradores'] = round(data['total_comissoes_compradores'], 2)
+    data['total_comissoes_vendedores'] = round(data['total_comissoes_vendedores'], 2) 
+
+
+    data['receita_liquida'] = data['total_comissoes_compradores'] + data['total_comissoes_vendedores']
+
+    # taxa media de comissao
+    data['taxa_media_comprador'] = round(data['total_comissoes_compradores'] * 100 / data['receita_bruta'], 2)
+    data['taxa_media_vendedor'] = round(data['total_comissoes_vendedores'] * 100 / data['receita_bruta'], 2)
+
+    # comissao media
+    data['comissao_media_comprador'] = round(data['total_comissoes_compradores'] / len(leiloes_finalizados_arrematados), 2)
+    data['comissao_media_vendedor'] = round(data['total_comissoes_vendedores'] / len(leiloes_finalizados_arrematados), 2)
+
+    print(data)
+
+    return render(request, template_name, data)
+
+

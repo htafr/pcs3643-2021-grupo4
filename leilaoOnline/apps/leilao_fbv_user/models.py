@@ -4,9 +4,10 @@ from django.db.models import fields
 from django.forms.widgets import Textarea
 from django.urls import reverse
 from django.conf import UserSettingsHolder, settings
-from datetime import date, datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import ModelForm
+import datetime
+import pytz
 
 ####################################################################################
 ### Choices ########################################################################
@@ -78,6 +79,7 @@ MONTH_CHOICES = (
     ('Novembro', 'Novembro'),
     ('Dezembro', 'Dezembro'),
 )
+
 DAY_CHOICES = (
     ('Dia', 'Dia'),
     ('1', '1'),
@@ -117,11 +119,11 @@ YEAR_CHOICES = (
     ('Ano', 'Ano'),
     ('2021', '2021'),
     ('2022', '2022'),
-    ('2023', '2023'),
-    ('2024', '2024'),
-    ('2025', '2025'),
-    ('2026', '2026'),
-    ('2027', '2027'),
+    # ('2023', '2023'),
+    # ('2024', '2024'),
+    # ('2025', '2025'),
+    # ('2026', '2026'),
+    # ('2027', '2027'),
 )
 
 LEILAO_CHOICES = (
@@ -272,8 +274,8 @@ class LanceDAO(models.Model):
 
 class Leilao(models.Model):
     name = models.CharField(max_length=64, default='', blank=False)
-    opening_date = models.DateField(auto_now=True)
-    close_date = models.DateField(auto_now=True)
+    opening_date = models.DateTimeField(auto_now=True)
+    close_date = models.DateTimeField(default=datetime.datetime.now, blank=False)
     status_leilao = models.CharField(max_length=16, choices=LEILAO_CHOICES, blank=False, null=False)
     arrematado = models.BooleanField(default=False)
 
@@ -284,7 +286,6 @@ class Leilao(models.Model):
 
     # Infos Leilao
     num_lances = models.IntegerField(default=0)
-    #lance_inicial = models.CharField(max_length=64, default='', blank=False)
     lance_inicial = models.DecimalField(default = 0,decimal_places=2, max_digits=16)
 
     # Taxas
@@ -301,7 +302,7 @@ class Leilao(models.Model):
 class LeilaoForm(ModelForm):
     class Meta:
         model = Leilao
-        fields = ['name', 'status_leilao']
+        fields = ['name', 'status_leilao', 'close_date']
 
 class LeilaoDAO(models.Model):
     def leilao_create(request, pk, template_name):
@@ -311,19 +312,34 @@ class LeilaoDAO(models.Model):
         form = LeilaoForm(request.POST or None)
         return form, lote
 
+    def leilao_update_status():
+        leiloes = Leilao.objects.all()
+        leiloes = list(leiloes)
+        for leilao in leiloes:
+            leilao_close = leilao.close_date.replace(tzinfo=pytz.utc)
+            now = datetime.datetime.now().replace(tzinfo=pytz.utc)
+            if leilao_close <= now:
+                leilao.status_leilao = 'FINALIZADO'
+                leilao.save()
+
+        return
+
     def leilao_list_all(request, template_name):
-        leilao = Leilao.objects.all()
+        LeilaoDAO.leilao_update_status()
+        leiloes = Leilao.objects.all()
         data = {}
-        data['object_list'] = leilao
+        data['object_list'] = leiloes
         return data
 
     def leilao_list_avail(request, template_name):
-        leilao = Leilao.objects.filter(status_leilao='Ativo')
+        LeilaoDAO.leilao_update_status()
+        leiloes = Leilao.objects.filter(status_leilao='ATIVO')
         data = {}
-        data['object_list'] = leilao
+        data['object_list'] = leiloes
         return data
 
     def get_participating_leilao(request, user_id, template_name):
+        LeilaoDAO.leilao_update_status()
         lances = LanceDAO.get_lance(user_id=user_id)
         lances_list = list(lances)
         participating = []
@@ -341,6 +357,7 @@ class LeilaoDAO(models.Model):
         return participating
 
     def get_won_leilao(request, user_id, template_name):
+        LeilaoDAO.leilao_update_status()
         lances = Lance.objects.filter(user_id=user_id)
         leiloes = Leilao.objects.filter(arrematado=True)
 
@@ -357,10 +374,12 @@ class LeilaoDAO(models.Model):
         return won
     
     def get_leilao(request, pk, template_name):
+        LeilaoDAO.leilao_update_status()
         leilao = get_object_or_404(Leilao, pk=pk)
         return leilao
 
     def get_my_leiloes(request, user_id, template_name):
+        LeilaoDAO.leilao_update_status()
         lotes = Lote.objects.filter(user_id=user_id)
         my_leiloes = []
 
@@ -376,6 +395,7 @@ class LeilaoDAO(models.Model):
         return my_leiloes
 
     def get_my_avail_leilao(request, user_id, template_name):
+        LeilaoDAO.leilao_update_status()
         lotes = Lote.objects.filter(user_id=user_id)
         my_leiloes = []
 
@@ -392,6 +412,7 @@ class LeilaoDAO(models.Model):
         return my_leiloes
 
     def leilao_delete(request, pk, template_name):
+        LeilaoDAO.leilao_update_status()
         if request.user.is_staff:
             leilao = get_object_or_404(Leilao, pk=pk)
         else:
@@ -400,15 +421,16 @@ class LeilaoDAO(models.Model):
         return leilao, lote
 
     def leilao_update(request, pk, template_name):
+        LeilaoDAO.leilao_update_status()
         if request.user.is_staff:
             leilao = get_object_or_404(Leilao, pk=pk)
         else:
             leilao = get_object_or_404(Leilao, pk=pk, user=request.user)
-        leilao.close_date = date.today()
         form = LeilaoForm(request.POST or None, instance=leilao)
         return form
 
     def make_bid(request, pk, template_name):
+        LeilaoDAO.leilao_update_status()
         leilao = get_object_or_404(Leilao, pk=pk)
         form = LanceForm(request.POST or None)
         return form, leilao
@@ -423,9 +445,15 @@ class LotePendingForm(ModelForm):
 ### WIP: Relatorio #################################################################
 ####################################################################################
 
-class GetWeekNumbers(ModelForm):
-    class Meta:
-        fields = ['num_weeks']
+# class RelatorioDateForm(ModelForm):
+#     class Meta:
+#         fields = ['day', 'month', 'year']
+
+# class Relatorio(models.Model):
+#     day = models.IntegerField(choices=DAY_CHOICES, blank=False, null=False)
+#     month = models.CharField(max_length=16, choices=MONTH_CHOICES, blank=False, null=False)
+#     year = models.IntegerField(choices=YEAR_CHOICES, blank=False, null=False)
+
 
 # class Relatorio(models.Model):
 #     leilao = models.IntegerField(default=1)
