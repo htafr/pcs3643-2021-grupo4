@@ -82,12 +82,12 @@ WSGI_APPLICATION = 'apps.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 # DATABASES = {
 #     'default': {
@@ -103,19 +103,19 @@ WSGI_APPLICATION = 'apps.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'leilaoOnline',
-        'USER': 'kenji',
-        'PASSWORD': 'pcs3643labengsoft',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'TEST':{
-            'NAME': 'test_leilaoOnline',
-        },
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'leilaoOnline',
+#         'USER': 'kenji',
+#         'PASSWORD': 'pcs3643labengsoft',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#         'TEST':{
+#             'NAME': 'test_leilaoOnline',
+#         },
+#     }
+# }
 
 
 # Password validation
