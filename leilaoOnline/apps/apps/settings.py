@@ -82,26 +82,26 @@ WSGI_APPLICATION = 'apps.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'leilaoOnline',
-#         'USER': 'kenji',
-#         'PASSWORD': 'pcs3643labengsoft',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#         'TEST':{
-#             'NAME': 'test_leilaoOnline',
-#         },
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'leilaoOnline',
+        'USER': 'kenji',
+        'PASSWORD': 'pcs3643labengsoft',
+        'HOST': 'db',
+        'PORT': '3306',
+        'TEST':{
+            'NAME': 'test_leilaoOnline',
+        },
+    }
+}
 
 # DATABASES = {
 #     'default': {

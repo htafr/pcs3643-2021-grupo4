@@ -37,19 +37,32 @@ services: # the different images that will be running as containers
     restart: "on-failure"
     depends_on: # cannot start if db service is not up and running
       - db
-  db: # service name
-    image: postgres:11-alpine # image name of the postgres database. during build, this will be pulled from dockerhub and a container spun up from it
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - postgres_data:/var/lib/postgresql/data/
-    environment: # access credentials from the .env file
-      - POSTGRES_PASSWORD=pscs3643labengsoft
-      - POSTGRES_DB=leilaoOnline
-      - PGPORT=5432
-      - POSTGRES_USER=kenji
-    restart: "on-failure"
+  # db: # service name
+  #   image: postgres:11-alpine # image name of the postgres database. during build, this will be pulled from dockerhub and a container spun up from it
+  #   volumes:
+  #     - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  #     - postgres_data:/var/lib/postgresql/data/
+  #   environment: # access credentials from the .env file
+  #     - POSTGRES_PASSWORD=pscs3643labengsoft
+  #     - POSTGRES_DB=leilaoOnline
+  #     - PGPORT=5432
+  #     - POSTGRES_USER=kenji
+  #   restart: "on-failure"
+
+  db:
+    image: mariasql:5.5
+    restart: always
+    environment:
+      - MYSQL_HOST=localhost
+      - MYSQL_PORT=3306  # cannot change this port to other number
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=leilaoOnline
+      - MYSQL_USER=kenji
+      - MYSQL_PASSWORD=pcs3643labengsoft
+      - MYSQL_ROOT_PASSWORD=123456_abc
+    ports:
+      - "3302:3306"
   
 volumes:
-  postgres_data:
   static_volume:
   
