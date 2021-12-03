@@ -27,8 +27,8 @@ services: # the different images that will be running as containers
     #  - .env # name of the env file
     environment:
       - DJANGO_SUPERUSER_PASSWORD=pcs3643labengsoft
-      - DJANGO_SUPERUSER_USERNAME=kenji
-      - DJANGO_SUPERUSER_EMAIL=kenji@mail.com
+      - DJANGO_SUPERUSER_USERNAME=offreitas
+      - DJANGO_SUPERUSER_EMAIL=offreitas@mail.com
 
     image: microservice_app # name of the image
 
