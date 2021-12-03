@@ -480,6 +480,7 @@ def list_relatorio_consolidado_faturamento(request, template_name='leilao_fbv_us
         data['despesa_vendedores'] += valor_arrematado - (taxa_vendedor * valor_arrematado)
 
     data['receita_bruta'] = round(data['receita_bruta'], 2)
+    data['receita_bruta_total'] = round(data['receita_bruta_total'], 2)
 
     data['total_comissoes_compradores'] = round(data['total_comissoes_compradores'], 2)
     data['total_comissoes_vendedores'] = round(data['total_comissoes_vendedores'], 2) 
