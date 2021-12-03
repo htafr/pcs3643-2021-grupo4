@@ -95,7 +95,7 @@ DATABASES = {
         'NAME': 'leilaoOnline',
         'USER': 'kenji',
         'PASSWORD': 'pcs3643labengsoft',
-        'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': '3306',
         'TEST':{
             'NAME': 'test_leilaoOnline',
