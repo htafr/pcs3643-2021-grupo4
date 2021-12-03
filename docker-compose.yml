@@ -50,7 +50,7 @@ services: # the different images that will be running as containers
   #   restart: "on-failure"
 
   db:
-    image: mariasql:5.5
+    image: mysql
     restart: always
     environment:
       - MYSQL_HOST=localhost
