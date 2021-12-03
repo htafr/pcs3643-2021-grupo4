@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="sub_header">
+    <div>
+        <h2 id="tcolor">Confirmação de Cancelamento</h2>
+    </div>
+    <div>
+        <h2 id="voltar"><a href="{% url 'leilao_fbv_user:list_cancel_req' %}">Voltar</a></h2>
+    </div>
+</div>
+
+<form method="post"  id = "tcolor">{% csrf_token %}
+    Tem certeza de que deseja cancelar "{{ leilao }}"?<br/>
+    <input type="submit" value="Cancelar" />
+</form>
+
+{% endblock %}

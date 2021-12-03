@@ -1,4 +1,4 @@
-# PCS3643
+Companhia das Letras# PCS3643
 
 ## Baseline
 
@@ -37,11 +37,25 @@ Executar a instalação via arquivo *requirements.txt*. Nesse arquivo existem as
 pip install -r requirements.txt
 ```
 
-Também é necessário criar um banco de dados ```leilaoOnline``` o qual é acessado com o usuário ```kenji``` e senha ```pcs3643labengsoft``` que está no arquivo ```settings.py```.
+### **Banco de Dados:**
+
+O projeto utiliza  sistema de gerenciamento de Banco de dados do MySQL. Você pode utilizar o software de interface de sua preferência. O grupo utiliza a extensão ```DataBase``` do ```VSCode``` no desenvolvimento do projeto.
+
+#### **Configuração do Banco de Dados:**
+
+Para o funcionamento correto, realize a criação do banco de dados com o comando a seguir:
+
+```
+CREATE DATABASE leilaoOnline;
+```
+
+Também é necessário criar um usuário e senha. Utilize usuário - ```kenji``` - e senha - ```pcs3643labengsoft``` - que também está disponível no arquivo ```settings.py```.
+
+No atual estágio do projeto não é necessário a criação de superusuários.
 
 ### **Set up do Projeto**
 
-Antes de executar o projeto, deve-se migrar os aplicativos criados. Portanto deve-se executar os seguintes comandos:
+Antes de executar o projeto, deve-se migrar os aplicativos criados. Portanto execute os seguintes comandos:
 
 ```
 python3 manage.py makemigrations leilao_fbv
@@ -56,6 +70,18 @@ Para executar o projeto, o comando a seguir deve ser executado:
 ```
 python3 manage.py runserver
 ```
+
+### **Funcionalidades**
+
+No estado atual do projeto é possível realizar a criação de 3 tipos de usuários:
+
+- Comprador - pode participar de leilões fazendo lances e competindo em um leilão
+- Vendedor - Pode vender objetos anunciando lotes no sistema
+- Leiloeiro - Gerencia o sistema e avalia os lotes criados por vendedores
+
+A funcionalidade de cada usuário é exclusiva de sua classe, ou seja, o comprador não pode criar lotes - o vendedor e o leiloeiro não podem dar lances.
+
+Para teste das funcionalidades do sistema, crie ao menos um usuário de cada tipo.
 
 ---
 
