@@ -25,7 +25,8 @@ SECRET_KEY = '0ux_%=7!81&z=^uj5iw@tue#7zkfn9lk)=*d147(g+$5t$l9nz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost']
+#ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
 
 GRAPH_MODELS = {
   'all_applications': True,
