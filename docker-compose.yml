@@ -52,9 +52,6 @@ services: # the different images that will be running as containers
     expose:
       # Opens port 3306 on the container
       - '3306'
-      # Where our data will be persisted
-    volumes:
-      - my-db:/var/lib/mysql
   
 volumes:
   mysql_data:
