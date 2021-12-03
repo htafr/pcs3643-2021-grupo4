@@ -163,6 +163,10 @@ class Lote(models.Model):
     ### Preenchido automaticamente
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
     has_leilao = models.BooleanField(default=False)
+
+    # PGTO vendedor
+    taxa_comissao_vendedor = models.FloatField(default=0,blank=False)
+    valor_comissao_vendedor = models.FloatField(default=0,blank=False)
     
     def __str__(self):
         return self.name
@@ -272,6 +276,28 @@ class LanceDAO(models.Model):
 ### Leilao #########################################################################
 ####################################################################################
 
+def determina_comissoes(valor):
+    if valor == 0:
+        taxa_vendedor = 0
+        taxa_comprador = 0
+    elif valor <= 1000:
+        taxa_vendedor = 1
+        taxa_comprador = 3
+    elif valor <= 10000:
+        taxa_vendedor = 2
+        taxa_comprador = 4
+    elif valor <= 50000:
+        taxa_vendedor = 3
+        taxa_comprador = 5
+    elif valor <= 100000:
+        taxa_vendedor = 4
+        taxa_comprador = 6
+    else:
+        taxa_vendedor = 4
+        taxa_comprador = 6
+    
+    return taxa_vendedor, taxa_comprador
+
 class Leilao(models.Model):
     name = models.CharField(max_length=64, default='', blank=False)
     opening_date = models.DateTimeField(auto_now=True)
@@ -320,7 +346,25 @@ class LeilaoDAO(models.Model):
             leilao_close = leilao.close_date.replace(tzinfo=pytz.utc)
             now = datetime.datetime.now().replace(tzinfo=pytz.utc)
             if leilao_close <= now:
-                leilao.status_leilao = 'FINALIZADO'
+                if leilao.status_leilao != 'CANCELADO':
+                    leilao.status_leilao = 'FINALIZADO'
+
+                leilao_id = leilao.id
+                lances = Lance.objects.filter(leilao_id=leilao_id)
+                lances = list(lances)
+                lote = Lote.objects.get(pk=leilao.lote_id)
+                
+                ultimo_valor = lances[-1]
+                ultimo_valor = ultimo_valor.valor
+            
+                if ultimo_valor >= lote.reserve_price:
+                    leilao.arrematado = True
+
+                    taxa_vendedor, taxa_comprador = determina_comissoes(ultimo_valor)
+                    comissao_comprador = (taxa_comprador / 100) * float(ultimo_valor)
+                    leilao.taxa_comissao_comprador = taxa_comprador
+                    leilao.valor_comissao_comprador = comissao_comprador
+
                 leilao.save()
 
         return
