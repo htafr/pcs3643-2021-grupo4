@@ -18,7 +18,7 @@ services: # the different images that will be running as containers
                     python manage.py makemigrations leilao_fbv &&
                     python manage.py makemigrations leilao_fbv_user &&
                     python manage.py migrate &&
-                    python manage.py createsuperuser --no-input &&
+                    python manage.py createsuperuser --noinput &&
                     gunicorn locallibrary.wsgi:application --bind 0.0.0.0:8000" # Django commands to run app using gunicorn
     volumes:
       - .:/microservice # map data and files from parent directory in host to microservice directory in docker container
