@@ -4,7 +4,7 @@
 
 <div class="sub_header">
     <div>
-        <h2 id="tcolor">Seus Leilões Disponíveis</h2>
+        <h2 id="tcolor">Todos Os Leilões</h2>
     </div>
     <div>
         <h2 id="voltar"><a href="{% url 'leilao_fbv_user:redirect_user' %}">Voltar</a></h2>
@@ -29,16 +29,26 @@
                 Número de Páginas: {{ leilao.lote.number_of_pages }}<br>
                 Condição: {{ leilao.lote.condition }}<br>
                 Anunciante: {{ leilao.lote.user }}<br>
-                Preço Atual: R${{ leilao.lance.valor }}<br>
-                Vencedor Atual: {{ leilao.lance.user }}<br>
-            </span>
 
-            <div id="leilao_options">
-                {% if not leilao.cancelar %}
-                    <a href="{% url 'leilao_fbv_user:ask_cancellation' leilao.id %}">Pedir Cancelamento</a>
+
+                Preço Atual: R${{ leilao.lance.valor }}<br>
+
+                {% if leilao.lance.user.is_staff %}
+                    Vencedor Atual: Sem Lances<br>
+                {% else %}
+                    Vencedor Atual: {{ leilao.lance.user }}<br>
                 {% endif %}
-            </div>
-        </li><br>
+
+                Intervalo Mínimo de Lance: R${{ leilao.lote.minimum_bid }}<br>
+
+
+                <div id="leilao_options">
+                    <a id="edit" href="{% url 'leilao_fbv_user:update_leilao' leilao.id %}">Editar</a>
+                    <a id="delete" href="{% url 'leilao_fbv_user:cancel_leilao' leilao.id %}">Cancelar</a>
+                    <a id="entrar" href="{% url 'leilao_fbv_user:show_leilao' leilao.id %}">Entrar</a>
+                </div>
+            </span>
+        </li>
         {% endfor %}
     </ul>
 </div>

@@ -140,6 +140,11 @@ def show_won_leilao(request, template_name="leilao_fbv_user/show_won_leilao.html
     return render(request, template_name, {'leiloes': leiloes})
 
 @login_required
+def show_cancel_request(request, template_name="leilao_fbv_user/show_cancel_request.html"):
+    leiloes = LeilaoDAO.get_cancel_request(request=request, template_name=template_name)
+    return render(request, template_name, {'leiloes': leiloes})
+
+@login_required
 def update_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html'):
     form = LeilaoDAO.leilao_update(request=request, pk=pk, template_name=template_name)
     if form.is_valid():
@@ -174,6 +179,15 @@ def update_leilao(request, pk, template_name='leilao_fbv_user/leilao_form.html')
     return render(request, template_name, {'form':form})
 
 @login_required
+def confirm_cancellation(request, pk, template_name='leilao_fbv_user/ask_cancellation.html'):
+    leilao = LeilaoDAO.get_leilao(request=request, pk=pk, template_name=template_name)
+    if request.method == 'POST':
+        leilao.cancelar = True
+        leilao.save()
+        return redirect('leilao_fbv_user:my_avail_leiloes')
+    return render(request, template_name, {'leilao':leilao})
+
+@login_required
 def delete_leilao(request, pk, template_name='leilao_fbv_user/leilao_confirm_delete.html'):
     leilao, lote = LeilaoDAO.leilao_delete(request=request, pk=pk, template_name=template_name)
     if request.method=='POST':
@@ -182,6 +196,16 @@ def delete_leilao(request, pk, template_name='leilao_fbv_user/leilao_confirm_del
         leilao.delete()
         return redirect('leilao_fbv_user:list_leilao_all')
     return render(request, template_name, {'leilao':leilao})
+
+@login_required
+def cancel_leilao(request, pk, template_name='leilao_fbv_user/auctioneer_cancel_auction.html'):
+    leilao = LeilaoDAO.get_leilao(request=request, pk=pk, template_name=template_name)
+    if request.method == 'POST':
+        leilao.status_leilao = 'CANCELADO'
+        leilao.cancelar = False
+        leilao.save()
+        return redirect('leilao_fbv_user:list_cancel_req')
+    return render(request, template_name, {'leilao': leilao})
 
 def determina_comissoes(valor):
     if valor <= 1000:

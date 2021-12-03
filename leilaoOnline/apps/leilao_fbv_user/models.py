@@ -129,7 +129,7 @@ YEAR_CHOICES = (
 LEILAO_CHOICES = (
     ("ATIVO", "Ativo"),
     ("FINALIZADO","Finalizado"),
-    #("ESPERA", "Espera")
+    ("CANCELADO", "Cancelado")
 )
 
 LOTE_CHOICES = (
@@ -278,6 +278,7 @@ class Leilao(models.Model):
     close_date = models.DateTimeField(default=datetime.datetime.now, blank=False)
     status_leilao = models.CharField(max_length=16, choices=LEILAO_CHOICES, blank=False, null=False)
     arrematado = models.BooleanField(default=False)
+    cancelar = models.BooleanField(default=False)
 
     ### Atributos Classes
     lote = models.ForeignKey(Lote, on_delete=models.CASCADE)
@@ -323,6 +324,11 @@ class LeilaoDAO(models.Model):
                 leilao.save()
 
         return
+
+    def get_leilao(request, pk, template_name):
+        LeilaoDAO.leilao_update_status()
+        leilao = Leilao.objects.filter(pk=pk)
+        return leilao
 
     def leilao_list_all(request, template_name):
         LeilaoDAO.leilao_update_status()
@@ -410,6 +416,11 @@ class LeilaoDAO(models.Model):
                 leiloes = None
 
         return my_leiloes
+
+    def get_cancel_request(request, template_name):
+        LeilaoDAO.leilao_update_status()
+        leiloes = Leilao.objects.filter(cancelar=True)
+        return leiloes
 
     def leilao_delete(request, pk, template_name):
         LeilaoDAO.leilao_update_status()

@@ -10,11 +10,6 @@ urlpatterns = [
 	### Lote #####################################################################
 	##############################################################################
 
-	# path('', views.lote_list, name='lote_list'),
-	# path('new/', views.lote_create, name='lote_new'),
-	# path('edit/<int:pk>/', views.lote_update, name='lote_edit'),
-	# path('delete/<int:pk>/', views.lote_delete, name='lote_delete'),
-
 	path('user_lotes/', views.list_lote, name='lote_list'),
 	path('alllotes/', views.list_available, name='available_lote'),
 	path('new/', views.create_lote, name='lote_new'),
@@ -29,9 +24,11 @@ urlpatterns = [
 
 	path('list_leilao_avail/', views.list_leilao_avail, name='list_leilao_avail'),
 	path('list_leilao_all/', views.list_leilao_all, name='list_leilao_all'),
+	path('list_cancel_req/', views.show_cancel_request, name='list_cancel_req'),
 	path('create_leilao/<int:pk>/', views.create_leilao, name='create_leilao'),
 	path('leilao_update/<int:pk>/', views.update_leilao, name='update_leilao'),
 	path('leilao_delete/<int:pk>/', views.delete_leilao, name='delete_leilao'),
+	path('leilao_cancel/<int:pk>', views.cancel_leilao, name="cancel_leilao"),
 	path('show_leilao/<int:pk>/', views.show_leilao, name='show_leilao'),
 	path('make_bid/<int:pk>/', views.make_bid, name='make_bid'),
 
@@ -46,12 +43,10 @@ urlpatterns = [
 
 	path('', views.list_vendedor, name='vendedor_list'),
 	path('new/', views.create_vendedor, name='vendedor_new'),
-	
 	path('vendedor_page/', views.redirect_vendedor, name='vendedor_page'),
 	path('my_leiloes/', views.show_my_leiloes, name='my_leiloes'),
 	path('my_avail_leiloes/', views.show_my_avail_leiloes, name='my_avail_leiloes'),
-	# path('edit/<int:pk>/', views.update_vendedor, name='vendedor_edit'),
-	# path('delete/<int:pk>/', views.delete_vendedor, name='vendedor_delete'),
+	path('ask_cacellation/<int:pk>', views.confirm_cancellation, name='ask_cancellation'),
 
 	##############################################################################
 	### Comprador ################################################################
