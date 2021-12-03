@@ -13,9 +13,7 @@ services: # the different images that will be running as containers
   web: # service name
     build: . #build the image for the web service from the dockerfile in parent directory.
     # command directive passes the parameters to the service and they will be executed by the service. In this example, these are django commands which will be executed in the container where django lives.
-    command: sh -c "cd leilaoOnline &&
-                    cd apps &&
-                    python manage.py makemigrations leilao_fbv &&
+    command: sh -c "python manage.py makemigrations leilao_fbv &&
                     python manage.py makemigrations leilao_fbv_user &&
                     python manage.py migrate &&
                     python manage.py createsuperuser --no-input &&
@@ -41,7 +39,7 @@ services: # the different images that will be running as containers
     image: mysql:5.7
     restart: always
     environment:
-      MYSQL_DATABASE: 'db'
+      MYSQL_DATABASE: 'leilaoOnline'
       # So you don't have to use root, but you can if you like
       MYSQL_USER: 'kenji'
       # You can use whatever password you like
