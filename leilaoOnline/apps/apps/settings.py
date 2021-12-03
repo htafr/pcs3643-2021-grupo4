@@ -89,14 +89,28 @@ WSGI_APPLICATION = 'apps.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'leilaoOnline',
+#         'USER': 'kenji',
+#         'PASSWORD': 'pcs3643labengsoft',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#         'TEST':{
+#             'NAME': 'test_leilaoOnline',
+#         },
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'leilaoOnline',
         'USER': 'kenji',
         'PASSWORD': 'pcs3643labengsoft',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '5432',
         'TEST':{
             'NAME': 'test_leilaoOnline',
         },

@@ -37,25 +37,19 @@ services: # the different images that will be running as containers
     restart: "on-failure"
     depends_on: # cannot start if db service is not up and running
       - db
-  db:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_DATABASE: 'leilaoOnline'
-      # So you don't have to use root, but you can if you like
-      MYSQL_USER: 'kenji'
-      # You can use whatever password you like
-      MYSQL_PASSWORD: 'pcs3643labengsoft'
-      # Password for root access
-      MYSQL_ROOT_PASSWORD: 'root'
-    ports:
-      # <Port exposed> : < MySQL Port running inside container>
-      - '3306:3306'
-    expose:
-      # Opens port 3306 on the container
-      - '3306'
+  db: # service name
+    image: postgres:11-alpine # image name of the postgres database. during build, this will be pulled from dockerhub and a container spun up from it
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data/
+    environment: # access credentials from the .env file
+      - POSTGRES_PASSWORD=pscs3643labengsoft
+      - POSTGRES_DB=leilaoOnline
+      - PGPORT=5432
+      - POSTGRES_USER=kenji
+    restart: "on-failure"
   
 volumes:
-  mysql_data:
+  postgres_data:
   static_volume:
   
