@@ -355,7 +355,7 @@ class LeilaoDAO(models.Model):
                 lote = Lote.objects.get(pk=leilao.lote_id)
                 
                 ultimo_valor = lances[-1]
-                ultimo_valor = ultimo_valor.valor
+                ultimo_valor = ultimo_valor.valor 
             
                 if ultimo_valor >= lote.reserve_price:
                     leilao.arrematado = True
