@@ -1,4 +1,4 @@
-Companhia das Letras# PCS3643
+# PCS3643
 
 ## Baseline
 
@@ -43,13 +43,15 @@ O projeto utiliza  sistema de gerenciamento de Banco de dados do MySQL. Você po
 
 #### **Configuração do Banco de Dados:**
 
-Para o funcionamento correto, realize a criação do banco de dados com o comando a seguir:
+Também é necessário criar um usuário e senha. Utilize usuário - ```kenji``` - e senha - ```pcs3643labengsoft``` - que também está disponível no arquivo ```settings.py```.
+
+Para o funcionamento correto, realize a criação do usuário e do banco de dados com os comandos a seguir:
 
 ```
+CREATE USER 'kenji'@'localhost' IDENTIFIED BY 'pcs3643labengsoft';
+GRANT ALL PRIVILEGES ON * - * TO 'kenji'@'localhost';
 CREATE DATABASE leilaoOnline;
 ```
-
-Também é necessário criar um usuário e senha. Utilize usuário - ```kenji``` - e senha - ```pcs3643labengsoft``` - que também está disponível no arquivo ```settings.py```.
 
 No atual estágio do projeto não é necessário a criação de superusuários.
 
