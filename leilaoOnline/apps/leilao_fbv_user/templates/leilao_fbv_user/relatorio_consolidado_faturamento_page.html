@@ -35,13 +35,13 @@
                     <br>
                     <b>VALORES MÉDIOS</b> <br><br>
 
-                    <b>-    Taxa de Comissão Média Comprador:</b> {{ taxa_media_comprador }} %<br>
-                    <b>-    Taxa de Comissão Média Vendedor:</b> {{ taxa_media_vendedor }} %<br>
+                    <b>-    Taxa de Comissão Média Comprador:</b> {{ taxa_media_comprador|default:'0' }} %<br>
+                    <b>-    Taxa de Comissão Média Vendedor:</b> {{ taxa_media_vendedor|default:'0' }} %<br>
 
                     ------------------------------------------------------------------------------------<br>
                     
-                    <b>-    Comissão Média Comprador:</b> R$ {{ comissao_media_comprador }}<br>
-                    <b>-    Comissão Média Vendedor:</b> R$ {{ comissao_media_vendedor }}<br>
+                    <b>-    Comissão Média Comprador:</b> R$ {{ comissao_media_comprador|default:'0' }}<br>
+                    <b>-    Comissão Média Vendedor:</b> R$ {{ comissao_media_vendedor|default:'0' }}<br>
 
                     ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||<br>
                 
