@@ -1,0 +1,226 @@
+/***************************************
+** CSS Base ****************************
+***************************************/
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    width:100%;
+    margin:auto;
+    background-color: beige;
+}
+
+p,li,label, #tcolor{
+    color: tomato;
+}
+
+/***************************************
+** Navigation bar **********************
+***************************************/
+.header ul {
+    list-style-type: none;
+    overflow: hidden;
+    background-color: tomato;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    float: left;
+}
+
+/***************************************
+** Dropdown Menu ***********************
+***************************************/
+li a, .drop-btn {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.header li a:hover, .user:hover .drop-btn {
+    background-color: #98ff98;
+}
+
+.header li.user {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: tomato;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1
+}
+
+.user:hover .dropdown-content {
+    display: block;
+}
+
+/***************************************
+** User Page ***********************
+***************************************/
+.user_menu ul {
+    list-style-type: none;
+    align-self: center;
+    margin: 15%;
+    padding: 0;
+    width: 70%;
+    height: 27.8%;
+    border: 1px solid #555;
+}
+
+.user_menu li {
+    text-align: center;
+    border-bottom: 1px solid #555;
+    width: 100%;
+}
+
+.user_menu li:last-child {
+    border-bottom: none;
+}
+
+.user_menu li:hover {
+    background-color: tomato;
+}
+
+.user_menu li a {
+    display: block;
+}
+
+/***************************************
+** Sub Header **************************
+***************************************/
+.sub_header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sub_header a {
+    color: tomato;
+    text-decoration: none;
+}
+
+.sub_header a:hover {
+    color: #98ff98;
+}
+
+/***************************************
+** Lote List ***************************
+***************************************/
+#user_page #lote_options {
+    display: flex;
+    justify-content: space-between;
+}
+
+#lote_list li {
+    list-style-type: none;
+    float: left;
+    clear: left;
+}
+
+/***************************************
+** Login Page **************************
+***************************************/
+#login { 
+    color: rgb(181, 245, 236);
+    width: 100%;
+    display: block;
+    justify-content: center;
+    margin: 10%;
+}
+
+#login_table {
+    padding-bottom: 1%;
+}
+
+#login_form, #lost_pass {
+    padding-inline: 20%;
+}
+
+#loginbtn_container {
+    display: flex;
+    justify-content: center;
+    padding-right: 55%;
+}
+
+#login_error {
+    padding-inline: 20%;
+}
+
+/***************************************
+** Leilao List ***************************
+***************************************/
+#user_page #leilao_options {
+    display: flex;
+    justify-content: space-between;
+}
+
+#leilao_list li {
+    list-style-type: none;
+    float: left;
+    clear: left;
+}
+
+/***************************************
+** Content Standard ********************
+***************************************/
+#content {
+    width: 50%;
+    margin: auto;
+}
+
+#intro_fim {
+    /* background-image: url(../images/background_auction.jpg); */
+    color: #000;
+}
+
+#intro_comprador{
+    color: dimgray;
+}
+
+#intro_vendedor{
+    color: dimgray;
+}
+
+#introducao{
+    color: #000;
+}
+
+#user {
+    float:right; 
+    color: black;
+}
+
+#home_link {
+    margin: auto;
+    text-align: center;
+}
+
+#cadastro, #user {
+    text-align: right;
+}
+
+#login_slash {
+    color: dimgray;
+    font-size: large;
+}
+
+#user_page {
+    margin:  10px;
+    align-items: center;
+}
