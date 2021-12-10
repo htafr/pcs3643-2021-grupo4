@@ -1,4 +1,4 @@
-Companhia das Letras# PCS3643
+# PCS3643
 
 ## Baseline
 
